@@ -2309,6 +2309,15 @@
         "description": "Build and fight in this fast-paced battle royale style game.",
         "url": "https://raw.githack.com/genizy/cg-rip/main/buildnow-gg/index.html",
         "thumb": "buildnowgg.png"
+    }, 
+    {
+        "id": "kebabclicker",
+        "title": "Kebab Clicker",
+        "category": "Simulation",
+        "genre": "Idle / CLicker",
+        "description": "The original addictive idle game. Produce kebabs and buy upgrades to produce more.",
+        "url": "https://raw.githack.com/genizy/cg-rip/main/buildnow-gg/index.html",
+        "thumb": "kebabclicker.jpg"
     },
     {
         "id": "smashkarts",
