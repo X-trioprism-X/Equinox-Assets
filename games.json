@@ -259,15 +259,6 @@
         "thumb": "subwaysurfers.png"
     },
     {
-        "id": "3d",
-        "title": "3Dash",
-        "category": "Action",
-        "genre": "Rhythm Platformer",
-        "description": "Geometry Dash style game with amazing user-created levels and music.",
-        "url": "https://raw.githack.com/hazzatazza/ugs-singlefile/main/UGS-Files/cl3dasheditor.html",
-        "thumb": "3dash.png"
-    },
-    {
         "id": "ec",
         "title": "Eaglercraft",
         "category": "Adventure",
