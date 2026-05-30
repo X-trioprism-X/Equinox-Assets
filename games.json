@@ -961,15 +961,6 @@
         "thumb": "dune.png"
     },
     {
-        "id": "fmidsh",
-        "title": "Famidash",
-        "category": "Action",
-        "genre": "Rhythm Platformer",
-        "description": "Geometry Dash style game with famitracker music.",
-        "url": "https://raw.githack.com/hazzatazza/stuff-it-emu/main/famidash.html",
-        "thumb": "famidash.png"
-    },
-    {
         "id": "gdsubzero",
         "title": "Geometry Dash Subzero",
         "category": "Action",
