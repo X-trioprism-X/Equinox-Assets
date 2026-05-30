@@ -1060,15 +1060,6 @@
         "thumb": "pacman.png"
     },
     {
-        "id": "agar",
-        "title": "Agar.io Lite",
-        "category": "Strategy",
-        "genre": "IO / Survival",
-        "description": "Eat dots and other players to grow bigger in this lite version.",
-        "url": "https://raw.githack.com/shayderrr/Offline-HTML-Games-Pack/master/offline/agariolite.html",
-        "thumb": "agariolite.png"
-    },
-    {
         "id": "vrandom",
         "title": "Volley Random",
         "category": "Sports",
