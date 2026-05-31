@@ -320,6 +320,15 @@
         "description": "Lite version of the popular rhythm-based platformer with great music and levels.",
         "url": "https://raw.githack.com/threekho/gdl/main/index.html",
         "thumb": "gdlite.png"
+    }, 
+    {
+        "id": "veck.io",
+        "title": "Veck.io",
+        "category": "Action",
+        "genre": "Shooter",
+        "description": "Engage in fast-paced 3D arena firefights by blasting blocky rivals and swapping wacky weapons in this neon-tinted browser shooter.",
+        "url": "veck.io",
+        "thumb": "veck-io.avif"
     },
     {
         "id": "trush",
