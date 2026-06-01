@@ -1339,15 +1339,6 @@
         "thumb": "sandtris.png"
     },
     {
-        "id": "dleo",
-        "title": "Dont Let Ehren Out",
-        "category": "Puzzle",
-        "genre": "Escape / Challenge",
-        "description": "Keep Ehren trapped with clever puzzles.",
-        "url": "https://raw.githack.com/hazzatazza/algebra-originals/main/dontletenrenout.html",
-        "thumb": "dontletehrenout.png"
-    },
-    {
         "id": "blumball",
         "title": "Blumgi Ball",
         "category": "Sports",
