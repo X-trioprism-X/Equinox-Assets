@@ -259,6 +259,15 @@
         "thumb": "subwaysurfers.png"
     },
     {
+        "id": "ballguys",
+        "title": "Ball Guys",
+        "category": "Action",
+        "genre": "Platformer",
+        "description": "A chaotic ball-launching battle royale. Dash through obstacles, merge to score, and outlast 255 other players to win.",
+        "url": "https://example.com",
+        "thumb": "ballguys.webp"
+    },
+    {
         "id": "ec",
         "title": "Eaglercraft",
         "category": "Adventure",
