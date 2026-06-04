@@ -169,6 +169,15 @@
         "thumb": "happywheels.png"
     },
     {
+        "id": "moviestream",
+        "title": "Movies",
+        "category": "Action",
+        "genre": "Streaming",
+        "description": "Expand your cinematic territory and conquer the screen with an unlimited library of blockbuster movies and hit shows.",
+        "url": "https://dulo.tv/",
+        "thumb": "movies.png"
+    },
+    {
         "id": "p2s",
         "title": "Paper.io 2 (Skinless)",
         "category": "Strategy",
