@@ -38,16 +38,6 @@
         "url": "https://cloouud.gdharry123.workers.dev/",
         "thumb": "maddoxcloud.png",
         "type": "app"
-    }, 
-    {
-        "id": "moviestream",
-        "title": "Movies",
-        "category": "Action",
-        "genre": "Streaming",
-        "description": "Expand your cinematic territory and conquer the screen with an unlimited library of blockbuster movies and hit shows.",
-        "url": "https://dulo.tv/",
-        "thumb": "movies.png"
-        "type": "app"
     },
     {
         "id": "scratch",
@@ -77,6 +67,16 @@
         "description": "Create your own beats and music with this powerful online music studio.",
         "url": "https://raw.githack.com/hazzatazza/the-stash/main/html%20for%20other%20stuff/musicmakerpro.html",
         "thumb": "musicmakerpro.png",
+        "type": "app"
+    },
+    {
+        "id": "moviestream",
+        "title": "Movies",
+        "category": "Action",
+        "genre": "Streaming",
+        "description": "Expand your cinematic territory and conquer the screen with an unlimited library of blockbuster movies and hit shows.",
+        "url": "https://dulo.tv/",
+        "thumb": "movies.png"
         "type": "app"
     },
     {
