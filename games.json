@@ -176,6 +176,7 @@
         "description": "Expand your cinematic territory and conquer the screen with an unlimited library of blockbuster movies and hit shows.",
         "url": "https://dulo.tv/",
         "thumb": "movies.png"
+        "type": "app"
     },
     {
         "id": "p2s",
