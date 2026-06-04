@@ -38,6 +38,16 @@
         "url": "https://cloouud.gdharry123.workers.dev/",
         "thumb": "maddoxcloud.png",
         "type": "app"
+    }, 
+    {
+        "id": "moviestream",
+        "title": "Movies",
+        "category": "Action",
+        "genre": "Streaming",
+        "description": "Expand your cinematic territory and conquer the screen with an unlimited library of blockbuster movies and hit shows.",
+        "url": "https://dulo.tv/",
+        "thumb": "movies.png"
+        "type": "app"
     },
     {
         "id": "scratch",
@@ -167,16 +177,6 @@
         "description": "The legendary ragdoll physics game. Complete crazy levels while trying not to die in hilarious ways.",
         "url": "https://raw.githack.com/hazzatazza/ugs-singlefile/main/UGS-Files/clhappywheels.html",
         "thumb": "happywheels.png"
-    },
-    {
-        "id": "moviestream",
-        "title": "Movies",
-        "category": "Action",
-        "genre": "Streaming",
-        "description": "Expand your cinematic territory and conquer the screen with an unlimited library of blockbuster movies and hit shows.",
-        "url": "https://dulo.tv/",
-        "thumb": "movies.png"
-        "type": "app"
     },
     {
         "id": "p2s",
