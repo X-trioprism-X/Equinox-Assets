@@ -2312,6 +2312,24 @@
         "thumb": "kebabclicker.jpg"
     },
     {
+        "id": "fivenightsatepsteins",
+        "title": "Five Nights at Epsteins'",
+        "category": "Horror",
+        "genre": "Survival Horror",
+        "description": "Race against sinister elites and haunting figures from the past. Time is ticking!",
+        "url": "https://fnae.n1yshi.dev/",
+        "thumb": "five-nights-at-epsteins.png"
+    },
+    { 
+        "id": "1v1lol",
+        "title": "1v1.lol'",
+        "category": "Action",
+        "genre": "Physics Shooter",
+        "description": "",
+        "url": "1v1.lol is a fast-paced competitive shooter that combines tactical building mechanics with intense, one-on-one multiplayer battles. Players must rapidly construct walls, ramps, and platforms to defend themselves while taking down opponents using an arsenal of weapons.",
+        "thumb": "five-nights-at-epsteins.png"
+    },
+    {
         "id": "smashkarts",
         "title": "Smash Karts",
         "category": "Racing",
