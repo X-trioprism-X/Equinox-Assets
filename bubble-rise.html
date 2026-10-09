@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bubble Rise</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#020617}
+canvas{display:block;width:100%;height:100%}
+</style></head>
+<body><canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+function resize(){c.width=innerWidth;c.height=innerHeight}
+addEventListener('resize',resize);resize();
+
+let b=Array.from({length:40},()=>({x:Math.random()*c.width,y:c.height+Math.random()*c.height,r:3+Math.random()*12,vy:-(0.5+Math.random()*1.5)}));
+function draw(){x.fillStyle='rgba(2,20,40,0.15)';x.fillRect(0,0,c.width,c.height);
+b.forEach(o=>{o.y+=o.vy;o.x+=Math.sin(o.y*0.02)*0.5;if(o.y<-20){o.y=c.height+10;o.x=Math.random()*c.width}
+x.strokeStyle='rgba(125,211,252,0.5)';x.lineWidth=1.5;x.beginPath();x.arc(o.x,o.y,o.r,0,7);x.stroke()});
+requestAnimationFrame(draw)}draw();
+</script></body></html>

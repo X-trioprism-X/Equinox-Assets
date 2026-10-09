@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grid Pulse</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#020617}
+canvas{display:block;width:100%;height:100%}
+</style></head>
+<body><canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+function resize(){c.width=innerWidth;c.height=innerHeight}
+addEventListener('resize',resize);resize();
+
+let t=0;function draw(){t+=0.03;x.fillStyle='#020617';x.fillRect(0,0,c.width,c.height);
+const s=40;for(let i=0;i<c.width/s;i++)for(let j=0;j<c.height/s;j++){
+const pulse=Math.sin(t+i*0.4+j*0.4)*0.5+0.5;
+x.fillStyle=`rgba(168,85,247,${0.05+pulse*0.3})`;x.fillRect(i*s+2,j*s+2,s-4,s-4)}
+requestAnimationFrame(draw)}draw();
+</script></body></html>

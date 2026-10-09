@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Triangle Field</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#020617}
+canvas{display:block;width:100%;height:100%}
+</style></head>
+<body><canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+function resize(){c.width=innerWidth;c.height=innerHeight}
+addEventListener('resize',resize);resize();
+
+let tris=Array.from({length:20},()=>({x:Math.random()*c.width,y:Math.random()*c.height,s:20+Math.random()*40,rot:Math.random()*6,vr:(Math.random()-0.5)*0.02,vx:(Math.random()-0.5)*0.5,vy:(Math.random()-0.5)*0.5,h:Math.random()*360}));
+function draw(){x.fillStyle='rgba(2,6,23,0.12)';x.fillRect(0,0,c.width,c.height);
+tris.forEach(t=>{t.x+=t.vx;t.y+=t.vy;t.rot+=t.vr;if(t.x<-50||t.x>c.width+50)t.vx*=-1;if(t.y<-50||t.y>c.height+50)t.vy*=-1;
+x.save();x.translate(t.x,t.y);x.rotate(t.rot);x.strokeStyle=`hsla(${t.h},70%,55%,0.4)`;x.lineWidth=1.5;
+x.beginPath();x.moveTo(0,-t.s);x.lineTo(t.s*0.87,t.s*0.5);x.lineTo(-t.s*0.87,t.s*0.5);x.closePath();x.stroke();x.restore()});
+requestAnimationFrame(draw)}draw();
+</script></body></html>

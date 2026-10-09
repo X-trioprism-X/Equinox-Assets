@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Starfield Warp</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#020617}
+canvas{display:block;width:100%;height:100%}
+</style></head>
+<body><canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+function resize(){c.width=innerWidth;c.height=innerHeight}
+addEventListener('resize',resize);resize();
+
+let stars=Array.from({length:200},()=>({x:Math.random()*c.width-c.width/2,y:Math.random()*c.height-c.height/2,z:Math.random()*c.width}));
+function draw(){
+  x.fillStyle='rgba(2,6,23,0.4)';x.fillRect(0,0,c.width,c.height);
+  x.translate(c.width/2,c.height/2);
+  stars.forEach(s=>{
+    s.z-=8;if(s.z<=0){s.z=c.width;s.x=Math.random()*c.width-c.width/2;s.y=Math.random()*c.height-c.height/2}
+    const k=128/s.z,px=s.x*k,py=s.y*k,s2=128/(s.z+8),px2=s.x*s2,py2=s.y*s2;
+    x.strokeStyle=`rgba(200,180,255,${1-s.z/c.width})`;x.lineWidth=2;
+    x.beginPath();x.moveTo(px2,py2);x.lineTo(px,py);x.stroke();
+  });
+  x.setTransform(1,0,0,1,0,0);
+  requestAnimationFrame(draw)
+}draw();
+
+</script></body></html>

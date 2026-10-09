@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Comet Tails</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#020617}
+canvas{display:block;width:100%;height:100%}
+</style></head>
+<body><canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+function resize(){c.width=innerWidth;c.height=innerHeight}
+addEventListener('resize',resize);resize();
+
+let comets=Array.from({length:6},()=>({x:Math.random()*c.width,y:Math.random()*c.height,vx:2+Math.random()*3,vy:1+Math.random()*2,len:30+Math.random()*40}));
+function draw(){x.fillStyle='rgba(2,6,23,0.2)';x.fillRect(0,0,c.width,c.height);
+comets.forEach(co=>{co.x+=co.vx;co.y+=co.vy;if(co.x>c.width+50||co.y>c.height+50){co.x=-50;co.y=Math.random()*c.height}
+const g=x.createLinearGradient(co.x,co.y,co.x-co.len,co.y-co.len*0.5);
+g.addColorStop(0,'rgba(255,255,255,0.9)');g.addColorStop(1,'transparent');
+x.strokeStyle=g;x.lineWidth=2;x.beginPath();x.moveTo(co.x,co.y);x.lineTo(co.x-co.len,co.y-co.len*0.5);x.stroke()});
+requestAnimationFrame(draw)}draw();
+</script></body></html>

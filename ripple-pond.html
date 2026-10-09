@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Silk Waves</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#020617}
+canvas{display:block;width:100%;height:100%}
+</style></head>
+<body><canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+function resize(){c.width=innerWidth;c.height=innerHeight}
+addEventListener('resize',resize);resize();
+
+let t=0;function draw(){t+=0.02;x.fillStyle='rgba(2,6,23,0.15)';x.fillRect(0,0,c.width,c.height);
+for(let layer=0;layer<5;layer++){x.beginPath();
+for(let i=0;i<=c.width;i+=4){const y=c.height/2+Math.sin(i*0.01+t+layer)*40+Math.sin(i*0.005-t+layer*0.5)*30+layer*15;
+i?x.lineTo(i,y):x.moveTo(i,y)}x.strokeStyle=`hsla(${270+layer*15},60%,60%,0.3)`;x.lineWidth=2;x.stroke()}
+requestAnimationFrame(draw)}draw();
+</script></body></html>

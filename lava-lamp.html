@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lightning Field</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#020617}
+canvas{display:block;width:100%;height:100%}
+</style></head>
+<body><canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+function resize(){c.width=innerWidth;c.height=innerHeight}
+addEventListener('resize',resize);resize();
+
+let bolts=[];setInterval(()=>{if(Math.random()>0.7){const segs=[];let x0=Math.random()*c.width,y0=0;
+for(let i=0;i<8;i++){const x1=x0+(Math.random()-0.5)*80;const y1=y0+c.height/8;segs.push([x0,y0,x1,y1]);x0=x1;y0=y1}
+bolts.push({segs,life:1})}},400);
+function draw(){x.fillStyle='rgba(2,6,23,0.25)';x.fillRect(0,0,c.width,c.height);
+bolts=bolts.filter(b=>{b.life-=0.05;if(b.life<=0)return false;
+x.strokeStyle=`rgba(200,220,255,${b.life})`;x.lineWidth=2;x.shadowColor='#aaf';x.shadowBlur=10;
+b.segs.forEach(s=>{x.beginPath();x.moveTo(s[0],s[1]);x.lineTo(s[2],s[3]);x.stroke()});x.shadowBlur=0;return true});
+requestAnimationFrame(draw)}draw();
+</script></body></html>

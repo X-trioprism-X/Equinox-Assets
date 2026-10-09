@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Radar Sweep</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#020617}
+canvas{display:block;width:100%;height:100%}
+</style></head>
+<body><canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+function resize(){c.width=innerWidth;c.height=innerHeight}
+addEventListener('resize',resize);resize();
+
+let ang=0;function draw(){ang+=0.03;x.fillStyle='rgba(2,20,10,0.15)';x.fillRect(0,0,c.width,c.height);
+const cx=c.width/2,cy=c.height/2,R=Math.min(cx,cy)*0.8;
+x.strokeStyle='rgba(34,197,94,0.3)';for(let r=R/4;r<=R;r+=R/4){x.beginPath();x.arc(cx,cy,r,0,7);x.stroke()}
+x.beginPath();x.moveTo(cx,cy);x.lineTo(cx+Math.cos(ang)*R,cy+Math.sin(ang)*R);x.strokeStyle='#22c55e';x.lineWidth=2;x.stroke();
+const g=x.createRadialGradient(cx,cy,0,cx,cy,R);/* sweep trail */
+x.strokeStyle=`rgba(34,197,94,0.15)`;x.beginPath();x.moveTo(cx,cy);x.arc(cx,cy,R,ang-0.4,ang);x.closePath();x.fillStyle='rgba(34,197,94,0.08)';x.fill();
+requestAnimationFrame(draw)}draw();
+</script></body></html>

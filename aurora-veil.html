@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aurora Veil</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#020617}
+canvas{display:block;width:100%;height:100%}
+</style></head>
+<body><canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+function resize(){c.width=innerWidth;c.height=innerHeight}
+addEventListener('resize',resize);resize();
+
+let t=0;
+function draw(){
+  t+=0.008;
+  const g=x.createLinearGradient(0,0,0,c.height);
+  g.addColorStop(0,'#020617');g.addColorStop(1,'#0f172a');
+  x.fillStyle=g;x.fillRect(0,0,c.width,c.height);
+  for(let band=0;band<4;band++){
+    x.beginPath();
+    for(let i=0;i<=c.width;i+=4){
+      const y=c.height*0.3+band*40+Math.sin(i*0.008+t+band)*50+Math.sin(i*0.02-t*1.5)*20;
+      i===0?x.moveTo(i,y):x.lineTo(i,y);
+    }
+    x.lineTo(c.width,c.height);x.lineTo(0,c.height);x.closePath();
+    const hues=[160,180,200,280];
+    x.fillStyle=`hsla(${hues[band]},70%,55%,0.12)`;x.fill();
+  }
+  requestAnimationFrame(draw)
+}draw();
+
+</script></body></html>

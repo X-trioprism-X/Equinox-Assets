@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Circuit Board</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#020617}
+canvas{display:block;width:100%;height:100%}
+</style></head>
+<body><canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+function resize(){c.width=innerWidth;c.height=innerHeight}
+addEventListener('resize',resize);resize();
+
+let t=0;const paths=[];for(let i=0;i<15;i++){const segs=[];let x0=Math.random()*800,y0=Math.random()*600;
+for(let j=0;j<4;j++){const horiz=Math.random()>0.5;segs.push({x:x0,y:y0});if(horiz)x0+=50+Math.random()*100;else y0+=50+Math.random()*80}paths.push(segs)}
+function draw(){t+=2;x.fillStyle='#020617';x.fillRect(0,0,c.width,c.height);
+paths.forEach((segs,pi)=>{x.strokeStyle=`hsla(${180+pi*10},70%,50%,0.4)`;x.lineWidth=1.5;x.beginPath();
+segs.forEach((s,i)=>i?x.lineTo(s.x,s.y):x.moveTo(s.x,s.y));x.stroke();
+const idx=Math.floor((t/20+pi*3)%(segs.length-1));const a=segs[idx],b=segs[idx+1]||a;
+const p=((t/20+pi)%1);x.beginPath();x.arc(a.x+(b.x-a.x)*p,a.y+(b.y-a.y)*p,3,0,7);x.fillStyle='#38bdf8';x.fill()});
+requestAnimationFrame(draw)}draw();
+</script></body></html>

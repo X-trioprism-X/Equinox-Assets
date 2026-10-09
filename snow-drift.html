@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sonic Rings</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#020617}
+canvas{display:block;width:100%;height:100%}
+</style></head>
+<body><canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+function resize(){c.width=innerWidth;c.height=innerHeight}
+addEventListener('resize',resize);resize();
+
+let rings=[];setInterval(()=>rings.push({r:0,x:c.width/2,y:c.height/2}),500);
+function draw(){x.fillStyle='rgba(2,6,23,0.15)';x.fillRect(0,0,c.width,c.height);
+rings=rings.filter(r=>{r.r+=3;if(r.r>Math.max(c.width,c.height))return false;
+x.strokeStyle=`rgba(56,189,248,${1-r.r/Math.max(c.width,c.height)})`;x.lineWidth=2;x.beginPath();x.arc(r.x,r.y,r.r,0,7);x.stroke();return true});
+requestAnimationFrame(draw)}draw();
+</script></body></html>

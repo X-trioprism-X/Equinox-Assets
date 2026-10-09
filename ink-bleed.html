@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ink Bleed</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#020617}
+canvas{display:block;width:100%;height:100%}
+</style></head>
+<body><canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+function resize(){c.width=innerWidth;c.height=innerHeight}
+addEventListener('resize',resize);resize();
+
+let blots=Array.from({length:8},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:5,max:60+Math.random()*80,vr:0.3+Math.random()*0.4,h:Math.random()*60+240}));
+function draw(){x.fillStyle='rgba(2,6,23,0.05)';x.fillRect(0,0,c.width,c.height);
+blots.forEach(b=>{b.r+=b.vr;if(b.r>b.max){b.r=5;b.x=Math.random()*c.width;b.y=Math.random()*c.height}
+x.beginPath();x.arc(b.x,b.y,b.r,0,7);x.fillStyle=`hsla(${b.h},50%,30%,${0.15*(1-b.r/b.max)})`;x.fill()});
+requestAnimationFrame(draw)}draw();
+</script></body></html>

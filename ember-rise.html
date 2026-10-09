@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ember Rise</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#020617}
+canvas{display:block;width:100%;height:100%}
+</style></head>
+<body><canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+function resize(){c.width=innerWidth;c.height=innerHeight}
+addEventListener('resize',resize);resize();
+
+let p=Array.from({length:80},()=>({x:Math.random()*c.width,y:c.height+Math.random()*c.height,vy:-(1+Math.random()*2),vx:(Math.random()-0.5)*0.5,r:Math.random()*3,life:Math.random()}));
+function draw(){x.fillStyle='rgba(12,10,9,0.15)';x.fillRect(0,0,c.width,c.height);
+p.forEach(e=>{e.y+=e.vy;e.x+=e.vx;e.life-=0.003;if(e.y<0||e.life<=0){e.y=c.height;e.x=Math.random()*c.width;e.life=1}
+x.beginPath();x.arc(e.x,e.y,e.r,0,7);x.fillStyle=`rgba(249,${100+e.life*80},22,${e.life})`;x.fill()});requestAnimationFrame(draw)}draw();
+</script></body></html>

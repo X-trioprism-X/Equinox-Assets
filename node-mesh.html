@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ocean Waves</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#020617}
+canvas{display:block;width:100%;height:100%}
+</style></head>
+<body><canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+function resize(){c.width=innerWidth;c.height=innerHeight}
+addEventListener('resize',resize);resize();
+
+let t=0;
+function draw(){
+  t+=0.02;
+  const g=x.createLinearGradient(0,0,0,c.height);
+  g.addColorStop(0,'#0c4a6e');g.addColorStop(1,'#020617');
+  x.fillStyle=g;x.fillRect(0,0,c.width,c.height);
+  for(let layer=0;layer<5;layer++){
+    x.beginPath();x.moveTo(0,c.height);
+    for(let i=0;i<=c.width;i+=5){
+      const y=c.height*0.5+layer*30+Math.sin(i*0.01+t+layer)*20+Math.sin(i*0.02-t*0.7+layer)*12;
+      x.lineTo(i,y);
+    }
+    x.lineTo(c.width,c.height);x.closePath();
+    x.fillStyle=`rgba(14,165,233,${0.08+layer*0.04})`;x.fill();
+  }
+  requestAnimationFrame(draw)
+}draw();
+
+</script></body></html>
