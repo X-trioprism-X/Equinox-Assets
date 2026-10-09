@@ -1,11 +1,452 @@
 [
   {
-    "id": "spatialnetworking",
+    "id": "spatial-networking",
     "title": "Spatial Networking",
     "category": "Abstract",
     "genre": "Sci-Fi",
-    "description": "A vast dynamic geometric grid, containing [Theme coloured] polydispersitic particles (+a trail which follows said paricle), whom each connects with a line.",
+    "description": "Geometric grid with theme-coloured particles and connecting lines.",
     "file": "spatial-networking.html",
     "thumb": "spatial-networking.html"
+  },
+  {
+    "id": "matrix-rain",
+    "title": "Matrix Rain",
+    "category": "Sci-Fi",
+    "genre": "Digital",
+    "description": "Classic cascading code rain.",
+    "file": "matrix-rain.html",
+    "thumb": "matrix-rain.html"
+  },
+  {
+    "id": "aurora-veil",
+    "title": "Aurora Veil",
+    "category": "Nature",
+    "genre": "Atmospheric",
+    "description": "Northern lights sweeping across the night sky.",
+    "file": "aurora-veil.html",
+    "thumb": "aurora-veil.html"
+  },
+  {
+    "id": "starfield-warp",
+    "title": "Starfield Warp",
+    "category": "Sci-Fi",
+    "genre": "Space",
+    "description": "Hyperspace star streak tunnel.",
+    "file": "starfield-warp.html",
+    "thumb": "starfield-warp.html"
+  },
+  {
+    "id": "neon-grid",
+    "title": "Neon Grid",
+    "category": "Sci-Fi",
+    "genre": "Cyberpunk",
+    "description": "Infinite perspective grid in neon purple.",
+    "file": "neon-grid.html",
+    "thumb": "neon-grid.html"
+  },
+  {
+    "id": "particle-fountain",
+    "title": "Particle Fountain",
+    "category": "Abstract",
+    "genre": "Particles",
+    "description": "Upward fountain of glowing particles.",
+    "file": "particle-fountain.html",
+    "thumb": "particle-fountain.html"
+  },
+  {
+    "id": "ocean-waves",
+    "title": "Ocean Waves",
+    "category": "Nature",
+    "genre": "Water",
+    "description": "Layered animated ocean waves.",
+    "file": "ocean-waves.html",
+    "thumb": "ocean-waves.html"
+  },
+  {
+    "id": "fireflies",
+    "title": "Fireflies",
+    "category": "Nature",
+    "genre": "Organic",
+    "description": "Glowing fireflies in a dark forest night.",
+    "file": "fireflies.html",
+    "thumb": "fireflies.html"
+  },
+  {
+    "id": "hex-grid",
+    "title": "Hex Grid",
+    "category": "Sci-Fi",
+    "genre": "Geometric",
+    "description": "Pulsing hexagonal mesh.",
+    "file": "hex-grid.html",
+    "thumb": "hex-grid.html"
+  },
+  {
+    "id": "plasma-orbs",
+    "title": "Plasma Orbs",
+    "category": "Abstract",
+    "genre": "Energy",
+    "description": "Floating plasma energy orbs.",
+    "file": "plasma-orbs.html",
+    "thumb": "plasma-orbs.html"
+  },
+  {
+    "id": "ember-rise",
+    "title": "Ember Rise",
+    "category": "Warm",
+    "genre": "Fire",
+    "description": "Rising fire embers.",
+    "file": "ember-rise.html",
+    "thumb": "ember-rise.html"
+  },
+  {
+    "id": "snow-drift",
+    "title": "Snow Drift",
+    "category": "Nature",
+    "genre": "Weather",
+    "description": "Gentle falling snow.",
+    "file": "snow-drift.html",
+    "thumb": "snow-drift.html"
+  },
+  {
+    "id": "constellation",
+    "title": "Constellation Map",
+    "category": "Sci-Fi",
+    "genre": "Space",
+    "description": "Connected star constellations.",
+    "file": "constellation.html",
+    "thumb": "constellation.html"
+  },
+  {
+    "id": "ripple-pond",
+    "title": "Ripple Pond",
+    "category": "Nature",
+    "genre": "Water",
+    "description": "Expanding water ripples.",
+    "file": "ripple-pond.html",
+    "thumb": "ripple-pond.html"
+  },
+  {
+    "id": "cyber-tunnel",
+    "title": "Cyber Tunnel",
+    "category": "Sci-Fi",
+    "genre": "Cyberpunk",
+    "description": "Racing rings down a digital tunnel.",
+    "file": "cyber-tunnel.html",
+    "thumb": "cyber-tunnel.html"
+  },
+  {
+    "id": "lava-lamp",
+    "title": "Lava Lamp",
+    "category": "Retro",
+    "genre": "Organic",
+    "description": "Blobby lava lamp morphs.",
+    "file": "lava-lamp.html",
+    "thumb": "lava-lamp.html"
+  },
+  {
+    "id": "radar-sweep",
+    "title": "Radar Sweep",
+    "category": "Sci-Fi",
+    "genre": "Military",
+    "description": "Classic radar sweep.",
+    "file": "radar-sweep.html",
+    "thumb": "radar-sweep.html"
+  },
+  {
+    "id": "dna-helix",
+    "title": "DNA Helix",
+    "category": "Sci-Fi",
+    "genre": "Bio",
+    "description": "Rotating double helix.",
+    "file": "dna-helix.html",
+    "thumb": "dna-helix.html"
+  },
+  {
+    "id": "metro-lines",
+    "title": "Metro Lines",
+    "category": "Abstract",
+    "genre": "Transit",
+    "description": "Animated transit map lines.",
+    "file": "metro-lines.html",
+    "thumb": "metro-lines.html"
+  },
+  {
+    "id": "pixel-storm",
+    "title": "Pixel Storm",
+    "category": "Retro",
+    "genre": "Arcade",
+    "description": "Falling coloured pixels.",
+    "file": "pixel-storm.html",
+    "thumb": "pixel-storm.html"
+  },
+  {
+    "id": "bokeh-lights",
+    "title": "Bokeh Lights",
+    "category": "Abstract",
+    "genre": "Soft",
+    "description": "Soft out-of-focus light circles.",
+    "file": "bokeh-lights.html",
+    "thumb": "bokeh-lights.html"
+  },
+  {
+    "id": "spiral-galaxy",
+    "title": "Spiral Galaxy",
+    "category": "Sci-Fi",
+    "genre": "Space",
+    "description": "Rotating spiral galaxy arms.",
+    "file": "spiral-galaxy.html",
+    "thumb": "spiral-galaxy.html"
+  },
+  {
+    "id": "lightning-field",
+    "title": "Lightning Field",
+    "category": "Weather",
+    "genre": "Storm",
+    "description": "Random lightning bolts.",
+    "file": "lightning-field.html",
+    "thumb": "lightning-field.html"
+  },
+  {
+    "id": "bubble-rise",
+    "title": "Bubble Rise",
+    "category": "Nature",
+    "genre": "Water",
+    "description": "Rising underwater bubbles.",
+    "file": "bubble-rise.html",
+    "thumb": "bubble-rise.html"
+  },
+  {
+    "id": "grid-pulse",
+    "title": "Grid Pulse",
+    "category": "Sci-Fi",
+    "genre": "Tech",
+    "description": "Pulsing square grid nodes.",
+    "file": "grid-pulse.html",
+    "thumb": "grid-pulse.html"
+  },
+  {
+    "id": "comet-tails",
+    "title": "Comet Tails",
+    "category": "Sci-Fi",
+    "genre": "Space",
+    "description": "Comets streaking across space.",
+    "file": "comet-tails.html",
+    "thumb": "comet-tails.html"
+  },
+  {
+    "id": "silk-waves",
+    "title": "Silk Waves",
+    "category": "Abstract",
+    "genre": "Fabric",
+    "description": "Flowing silk-like curves.",
+    "file": "silk-waves.html",
+    "thumb": "silk-waves.html"
+  },
+  {
+    "id": "binary-stream",
+    "title": "Binary Stream",
+    "category": "Sci-Fi",
+    "genre": "Digital",
+    "description": "Streaming binary digits.",
+    "file": "binary-stream.html",
+    "thumb": "binary-stream.html"
+  },
+  {
+    "id": "moon-phases",
+    "title": "Moon Orbit",
+    "category": "Nature",
+    "genre": "Celestial",
+    "description": "Orbiting moon with glow.",
+    "file": "moon-phases.html",
+    "thumb": "moon-phases.html"
+  },
+  {
+    "id": "tri-field",
+    "title": "Triangle Field",
+    "category": "Abstract",
+    "genre": "Geometric",
+    "description": "Floating translucent triangles.",
+    "file": "tri-field.html",
+    "thumb": "tri-field.html"
+  },
+  {
+    "id": "smoke-plume",
+    "title": "Smoke Plume",
+    "category": "Abstract",
+    "genre": "Atmosphere",
+    "description": "Soft rising smoke plumes.",
+    "file": "smoke-plume.html",
+    "thumb": "smoke-plume.html"
+  },
+  {
+    "id": "circuit-board",
+    "title": "Circuit Board",
+    "category": "Sci-Fi",
+    "genre": "Tech",
+    "description": "Animated circuit traces.",
+    "file": "circuit-board.html",
+    "thumb": "circuit-board.html"
+  },
+  {
+    "id": "rain-glass",
+    "title": "Rain on Glass",
+    "category": "Nature",
+    "genre": "Weather",
+    "description": "Raindrops sliding on glass.",
+    "file": "rain-glass.html",
+    "thumb": "rain-glass.html"
+  },
+  {
+    "id": "kaleido",
+    "title": "Kaleidoscope",
+    "category": "Abstract",
+    "genre": "Pattern",
+    "description": "Symmetric kaleidoscope.",
+    "file": "kaleido.html",
+    "thumb": "kaleido.html"
+  },
+  {
+    "id": "orbit-rings",
+    "title": "Orbit Rings",
+    "category": "Sci-Fi",
+    "genre": "Space",
+    "description": "Concentric orbiting rings.",
+    "file": "orbit-rings.html",
+    "thumb": "orbit-rings.html"
+  },
+  {
+    "id": "glitch-bars",
+    "title": "Glitch Bars",
+    "category": "Retro",
+    "genre": "Glitch",
+    "description": "Horizontal glitch colour bars.",
+    "file": "glitch-bars.html",
+    "thumb": "glitch-bars.html"
+  },
+  {
+    "id": "petal-fall",
+    "title": "Petal Fall",
+    "category": "Nature",
+    "genre": "Organic",
+    "description": "Falling flower petals.",
+    "file": "petal-fall.html",
+    "thumb": "petal-fall.html"
+  },
+  {
+    "id": "sonic-rings",
+    "title": "Sonic Rings",
+    "category": "Abstract",
+    "genre": "Audio",
+    "description": "Expanding sonic shockwaves.",
+    "file": "sonic-rings.html",
+    "thumb": "sonic-rings.html"
+  },
+  {
+    "id": "prism-beams",
+    "title": "Prism Beams",
+    "category": "Abstract",
+    "genre": "Light",
+    "description": "Crossing prism light beams.",
+    "file": "prism-beams.html",
+    "thumb": "prism-beams.html"
+  },
+  {
+    "id": "dust-motes",
+    "title": "Dust Motes",
+    "category": "Abstract",
+    "genre": "Soft",
+    "description": "Floating dust in a light beam.",
+    "file": "dust-motes.html",
+    "thumb": "dust-motes.html"
+  },
+  {
+    "id": "iso-cubes",
+    "title": "Isometric Cubes",
+    "category": "Abstract",
+    "genre": "Geometric",
+    "description": "Floating isometric cubes.",
+    "file": "iso-cubes.html",
+    "thumb": "iso-cubes.html"
+  },
+  {
+    "id": "vortex",
+    "title": "Vortex Spiral",
+    "category": "Abstract",
+    "genre": "Energy",
+    "description": "Spinning vortex spiral.",
+    "file": "vortex.html",
+    "thumb": "vortex.html"
+  },
+  {
+    "id": "horizon-glow",
+    "title": "Horizon Glow",
+    "category": "Nature",
+    "genre": "Sky",
+    "description": "Animated dawn horizon.",
+    "file": "horizon-glow.html",
+    "thumb": "horizon-glow.html"
+  },
+  {
+    "id": "node-mesh",
+    "title": "Node Mesh",
+    "category": "Sci-Fi",
+    "genre": "Network",
+    "description": "3D-ish node mesh network.",
+    "file": "node-mesh.html",
+    "thumb": "node-mesh.html"
+  },
+  {
+    "id": "spark-trail",
+    "title": "Spark Trails",
+    "category": "Warm",
+    "genre": "Fire",
+    "description": "Trailing sparks.",
+    "file": "spark-trail.html",
+    "thumb": "spark-trail.html"
+  },
+  {
+    "id": "wave-bars",
+    "title": "Wave Bars",
+    "category": "Abstract",
+    "genre": "Audio",
+    "description": "Audio equalizer wave bars.",
+    "file": "wave-bars.html",
+    "thumb": "wave-bars.html"
+  },
+  {
+    "id": "ink-bleed",
+    "title": "Ink Bleed",
+    "category": "Abstract",
+    "genre": "Art",
+    "description": "Spreading ink blots.",
+    "file": "ink-bleed.html",
+    "thumb": "ink-bleed.html"
+  },
+  {
+    "id": "geo-storm",
+    "title": "Geometry Storm",
+    "category": "Abstract",
+    "genre": "Geometric",
+    "description": "Spinning polygons storm.",
+    "file": "geo-storm.html",
+    "thumb": "geo-storm.html"
+  },
+  {
+    "id": "portal-rings",
+    "title": "Portal Rings",
+    "category": "Sci-Fi",
+    "genre": "Portal",
+    "description": "Concentric portal rings.",
+    "file": "portal-rings.html",
+    "thumb": "portal-rings.html"
+  },
+  {
+    "id": "frost-crystal",
+    "title": "Frost Crystal",
+    "category": "Nature",
+    "genre": "Ice",
+    "description": "Growing frost patterns.",
+    "file": "frost-crystal.html",
+    "thumb": "frost-crystal.html"
   }
 ]
