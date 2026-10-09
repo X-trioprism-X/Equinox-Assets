@@ -767,7 +767,7 @@ button:hover:not(:disabled) {
 #welcomeBack {
   position: fixed; inset: 0; z-index: 90000;
   display: none; align-items: center; justify-content: center;
-  background: radial-gradient(ellipse at center, #0f172a 0%, #020617 70%);
+  background: #020617;
   flex-direction: column; gap: 18px;
   opacity: 0; transition: opacity 0.45s ease;
 }
@@ -893,7 +893,7 @@ body.mat-translucent .cat-tab {
 
 /* Auth panels above settings */
 #passkeyPanel, #profilePanel, #avatarCropPanel, #reviewEditModal {
-  z-index: 50000 !important;
+  z-index: 100001 !important;
 }
 
 /* PIN pad */
@@ -1007,6 +1007,75 @@ body.mat-translucent .cat-tab {
 }
 .settings-body-pane.hiding {
   opacity: 0; transform: translateY(8px);
+}
+
+/* Game details tabs */
+.details-tab {
+  padding: 8px 20px; cursor: pointer; position: relative;
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+  color: #94a3b8; border-bottom: 3px solid transparent;
+  border-radius: 10px 10px 0 0;
+}
+.details-tab:hover {
+  transform: scale(1.08);
+  color: #fff;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--primary) 25%, transparent);
+}
+.details-tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+.details-tab-content {
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.details-tab-content.hiding {
+  opacity: 0; transform: translateY(10px); pointer-events: none;
+}
+.details-tab-content.hidden { display: none; }
+.details-tab-spin {
+  display: none; width: 28px; height: 28px; margin: 24px auto;
+  border: 3px solid rgba(255,255,255,0.12);
+  border-top-color: var(--primary); border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+.details-tab-spin.show { display: block; }
+
+/* Settings tabs smoother */
+.settings-tab {
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1) !important;
+}
+.settings-tab:hover {
+  transform: scale(1.08) !important;
+  box-shadow: 0 0 16px color-mix(in srgb, var(--primary) 30%, transparent);
+  color: #fff !important;
+}
+
+#pinUnlockOverlay {
+  position: fixed; inset: 0; z-index: 100050;
+  display: none; align-items: center; justify-content: center;
+  background: rgba(2,6,23,0.8); backdrop-filter: blur(12px);
+}
+#pinUnlockOverlay.show { display: flex; }
+.pin-unlock-card {
+  background: rgba(15,23,42,0.96); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 28px; padding: 32px 36px; width: min(340px, 92vw);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+  transform: scale(0.9); opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.35s;
+}
+#pinUnlockOverlay.show .pin-unlock-card { transform: scale(1); opacity: 1; }
+.settings-tab-spin {
+  display: none; width: 26px; height: 26px; margin: 16px auto;
+  border: 3px solid rgba(255,255,255,0.1);
+  border-top-color: var(--primary); border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+.settings-tab-spin.show { display: block; }
+.pinned-group-label {
+  font-size: 0.55rem; letter-spacing: 1px; text-transform: uppercase;
+  color: rgba(255,255,255,0.35); padding: 0 4px; align-self: center;
 }
 </style>
 </head>
@@ -1156,10 +1225,6 @@ body.mat-translucent .cat-tab {
 </header>
 
 <main class="max-w-7xl mx-auto pt-6 px-4">
-  <div id="favoritesSection" class="mb-8 hidden">
-    <h3 class="text-xl mb-4 text-white/80 flex items-center gap-2"><i class="fas fa-star text-yellow-400"></i> Favorites</h3>
-    <div id="favoritesGrid" class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4"></div>
-  </div>
   <div id="recentlyPlayed" class="mb-8 hidden">
     <h3 class="text-xl mb-4 text-white/80">Recently Played</h3>
     <div id="recentGrid" class="recent-scroll"></div>
@@ -1188,7 +1253,7 @@ body.mat-translucent .cat-tab {
     <div id="stab-system" class="settings-body-pane">
       <div class="settings-collapse" data-sc="profile">
         <div class="settings-collapse-head" onclick="toggleSettingsCollapse(this)">
-          <span class="sc-title"><i class="fas fa-user" style="margin-right:8px"></i>Profile</span>
+          <span class="sc-title"><i class="fas fa-user" style="margin-right:8px"></i>Profile & Security</span>
           <i class="fas fa-chevron-down sc-chevron"></i>
         </div>
         <div class="settings-collapse-body">
@@ -1196,15 +1261,6 @@ body.mat-translucent .cat-tab {
             <b><i class="fas fa-user" style="margin-right:8px"></i>Change Details</b>
             <p>View and edit your account details, email, and display name.</p>
           </div>
-        </div>
-      </div>
-
-      <div class="settings-collapse" data-sc="passkeys">
-        <div class="settings-collapse-head" onclick="toggleSettingsCollapse(this)">
-          <span class="sc-title"><i class="fas fa-key" style="margin-right:8px"></i>Passkeys & Sign-In</span>
-          <i class="fas fa-chevron-down sc-chevron"></i>
-        </div>
-        <div class="settings-collapse-body">
           <div class="settings-card">
             <b><i class="fas fa-key" style="margin-right:8px"></i>Authentication Methods</b>
             <p>Choose how you unlock and sign in to Project Subterranean.</p>
@@ -1218,6 +1274,10 @@ body.mat-translucent .cat-tab {
           <div class="settings-row">
             <label>Session Lock</label>
             <button class="settings-toggle" id="sessionLockToggle" onclick="toggleSettingToggle(this, 'sessionLock')"></button>
+          </div>
+          <div class="settings-card" onclick="logout()" style="border-left-color:#ef4444">
+            <b style="color:#f87171"><i class="fas fa-sign-out-alt" style="margin-right:8px"></i>Log Out</b>
+            <p>Sign out of Project Subterranean on this device.</p>
           </div>
         </div>
       </div>
@@ -1348,18 +1408,7 @@ body.mat-translucent .cat-tab {
         </div>
       </div>
 
-      <div class="settings-collapse" data-sc="account">
-        <div class="settings-collapse-head" onclick="toggleSettingsCollapse(this)">
-          <span class="sc-title"><i class="fas fa-right-from-bracket" style="margin-right:8px"></i>Account</span>
-          <i class="fas fa-chevron-down sc-chevron"></i>
-        </div>
-        <div class="settings-collapse-body">
-          <div class="settings-card" onclick="logout()" style="border-left-color:#ef4444">
-            <b style="color:#f87171"><i class="fas fa-sign-out-alt" style="margin-right:8px"></i>Log Out</b>
-            <p>Sign out of Project Subterranean on this device.</p>
-          </div>
-        </div>
-      </div>
+
     </div>
 
   </div>
@@ -1465,21 +1514,22 @@ body.mat-translucent .cat-tab {
       <button onclick="closeDetailsModal()" class="text-3xl text-gray-400 hover:text-white">×</button>
     </div>
     <div class="flex border-b border-white/10 mb-6 gap-1">
-      <div onclick="switchDetailsTab(0)" id="dtab0" class="px-5 py-2 cursor-pointer relative transition-all">Information</div>
-      <div onclick="switchDetailsTab(1)" id="dtab1" class="px-5 py-2 cursor-pointer relative transition-all">Analytics</div>
-      <div onclick="switchDetailsTab(2)" id="dtab2" class="px-5 py-2 cursor-pointer relative transition-all">Reviews</div>
+      <div onclick="switchDetailsTab(0)" id="dtab0" class="details-tab active">Information</div>
+      <div onclick="switchDetailsTab(1)" id="dtab1" class="details-tab">Analytics</div>
+      <div onclick="switchDetailsTab(2)" id="dtab2" class="details-tab">Reviews</div>
     </div>
-    <div id="dtabContent0">
+    <div id="detailsTabSpin" class="details-tab-spin"></div>
+    <div id="dtabContent0" class="details-tab-content">
       <img id="detailsThumb" class="w-full rounded-2xl mb-6" style="max-height:260px;object-fit:cover">
       <p class="mb-2"><strong>Genre:</strong> <span id="detailsGenre" class="text-green-400"></span></p>
       <p id="detailsDesc" class="text-gray-300 leading-relaxed"></p>
       <button onclick="openWikiFromDetails()" class="mt-5 w-full py-3 rounded-2xl font-bold transition-all" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15)">📖 Game Wiki</button>
     </div>
-    <div id="dtabContent1" class="hidden">
+    <div id="dtabContent1" class="details-tab-content hidden">
       <canvas id="analyticsChart" height="180"></canvas>
       <p class="text-center mt-4 opacity-60 text-sm">Live data from Supabase</p>
     </div>
-    <div id="dtabContent2" class="hidden">
+    <div id="dtabContent2" class="details-tab-content hidden">
       <div id="reviewsList" class="max-h-64 overflow-y-auto space-y-4 mb-6 text-sm"></div>
       <textarea id="reviewInput" rows="3" placeholder="Write your review..." class="w-full bg-slate-800 border border-white/20 rounded-xl p-4"></textarea>
       <button onclick="submitReview()" class="mt-3 w-full btn-theme py-3 rounded-2xl font-bold transition-all">Submit Review</button>
@@ -1510,12 +1560,57 @@ body.mat-translucent .cat-tab {
 </div>
 
 <script>
-/* ==================== SUPABASE ==================== */
+/* ==================== SUPABASE + LOCAL AUTH ==================== */
 const SUPABASE_URL = 'https://jabilmvxomeacgurmtse.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_c4OmajHD6y-HaPEIyTL_hg_Svc3ikKC';
 
-// Use a different variable name because the CDN already declares `supabase`
-const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let sb = null;
+try {
+  if (window.supabase && typeof window.supabase.createClient === 'function') {
+    sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+} catch (e) {
+  console.warn('Supabase init failed, using local auth only', e);
+  sb = null;
+}
+
+function getLocalAccounts() {
+  try { return JSON.parse(localStorage.getItem('equinox_accounts') || '{}'); }
+  catch (e) { return {}; }
+}
+function saveLocalAccounts(map) {
+  localStorage.setItem('equinox_accounts', JSON.stringify(map));
+}
+function hashPw(pw) {
+  // lightweight reversible store for local-only unlock (same as rest of app)
+  try { return btoa(unescape(encodeURIComponent(pw))); } catch (e) { return btoa(pw); }
+}
+function localSignUp(email, password) {
+  const accounts = getLocalAccounts();
+  const key = email.toLowerCase();
+  if (accounts[key]) return { error: 'This email is already registered. Please sign in instead.' };
+  accounts[key] = { email, pw: hashPw(password), name: email.split('@')[0], created: Date.now() };
+  saveLocalAccounts(accounts);
+  return { ok: true, account: accounts[key] };
+}
+function localSignIn(email, password) {
+  const accounts = getLocalAccounts();
+  const key = email.toLowerCase();
+  const acc = accounts[key];
+  if (!acc) return { error: 'Incorrect email or password.' };
+  if (acc.pw !== hashPw(password)) return { error: 'Incorrect email or password.' };
+  return { ok: true, account: acc };
+}
+function completeLogin(email, password, displayName) {
+  localStorage.setItem('equinox_logged_in', 'true');
+  localStorage.setItem('user_email', email);
+  localStorage.setItem('account_pw_check', hashPw(password));
+  if (displayName) localStorage.setItem('user_display_name', displayName);
+  else if (!localStorage.getItem('user_display_name')) {
+    localStorage.setItem('user_display_name', email.split('@')[0]);
+  }
+  enterMainSite();
+}
 
 
 /* ==================== TOAST ==================== */
@@ -1584,7 +1679,6 @@ async function handleAuth(e, mode) {
   const spinner = document.getElementById(mode + 'Spinner');
   const span = btn ? btn.querySelector('span') : null;
 
-  // Show loading state
   if (span) span.style.display = 'none';
   if (spinner) spinner.style.display = 'inline-block';
   if (btn) btn.disabled = true;
@@ -1592,73 +1686,296 @@ async function handleAuth(e, mode) {
   const email = document.getElementById(mode + 'Email')?.value?.trim() || '';
   const password = document.getElementById(mode + 'Password')?.value || '';
 
-  try {
-    let result;
-
-    if (mode === 'login') {
-      result = await sb.auth.signInWithPassword({ email, password });
-    } else {
-      result = await sb.auth.signUp({ email, password });
-    }
-
-    if (result.error) {
-      // Friendly error messages
-      let msg = result.error.message;
-
-      if (msg.includes('Invalid login credentials')) {
-        msg = 'Incorrect email or password.';
-      } else if (msg.includes('User already registered')) {
-        msg = 'This email is already registered. Please sign in instead.';
-      } else if (msg.includes('Password should be') || msg.includes('password')) {
-        msg = 'Password is too weak. Please use a stronger password.';
-      } else if (msg.includes('Email not confirmed')) {
-        msg = 'Please check your email and confirm your account first.';
-      }
-
-      showToast(msg, 'error');
-
-      // Reset button
-      if (span) span.style.display = 'inline';
-      if (spinner) spinner.style.display = 'none';
-      if (btn) btn.disabled = false;
-      return;
-    }
-
-    // Success
-    localStorage.setItem('equinox_logged_in', 'true');
-    if (password) localStorage.setItem('account_pw_check', btoa(password));
-    if (email) localStorage.setItem('user_email', email);
-    enterMainSite();
-
-  } catch (err) {
-    console.error(err);
-    showToast('An unexpected error occurred. Please try again later.', 'error');
+  const resetBtn = () => {
     if (span) span.style.display = 'inline';
     if (spinner) spinner.style.display = 'none';
     if (btn) btn.disabled = false;
+  };
+
+  if (!email || !password) {
+    showToast('Please enter email and password.', 'error');
+    resetBtn();
+    return;
+  }
+
+  try {
+    // 1) Try Supabase when available
+    if (sb && sb.auth) {
+      try {
+        let result;
+        if (mode === 'login') {
+          result = await sb.auth.signInWithPassword({ email, password });
+        } else {
+          result = await sb.auth.signUp({ email, password });
+        }
+        if (!result.error) {
+          completeLogin(email, password, email.split('@')[0]);
+          showToast(mode === 'login' ? 'Welcome back!' : 'Account created!', 'success');
+          return;
+        }
+        // If user already registered on signup, fall through to local
+        const msg = (result.error.message || '').toLowerCase();
+        // For login: also try local accounts (accounts created offline)
+        if (mode === 'login') {
+          const local = localSignIn(email, password);
+          if (local.ok) {
+            completeLogin(email, password, local.account.name);
+            showToast('Welcome back!', 'success');
+            return;
+          }
+        }
+        if (mode === 'signup' && (msg.includes('already') || msg.includes('registered'))) {
+          // still create local so they can use the site
+          const local = localSignUp(email, password);
+          if (local.ok) {
+            completeLogin(email, password, local.account.name);
+            showToast('Account ready (local).', 'success');
+            return;
+          }
+        }
+        // Map friendly errors
+        let friendly = result.error.message || 'Authentication failed.';
+        if (msg.includes('invalid login') || msg.includes('invalid credentials')) friendly = 'Incorrect email or password.';
+        else if (msg.includes('already registered')) friendly = 'This email is already registered. Please sign in instead.';
+        else if (msg.includes('password')) friendly = 'Password is too weak. Please use a stronger password.';
+        else if (msg.includes('email not confirmed')) friendly = 'Please confirm your email first, or use local sign-in.';
+        showToast(friendly, 'error');
+        resetBtn();
+        return;
+      } catch (supaErr) {
+        console.warn('Supabase request failed, using local auth', supaErr);
+      }
+    }
+
+    // 2) Local-only auth (works offline / when Supabase key is invalid)
+    if (mode === 'signup') {
+      const local = localSignUp(email, password);
+      if (local.error) {
+        showToast(local.error, 'error');
+        resetBtn();
+        return;
+      }
+      completeLogin(email, password, local.account.name);
+      showToast('Account created!', 'success');
+      return;
+    }
+
+    // login local
+    const local = localSignIn(email, password);
+    if (local.error) {
+      // also accept legacy single-account stored password
+      const legacyEmail = (localStorage.getItem('user_email') || '').toLowerCase();
+      const legacyPw = localStorage.getItem('account_pw_check');
+      if (legacyEmail === email.toLowerCase() && legacyPw && legacyPw === hashPw(password)) {
+        completeLogin(email, password, localStorage.getItem('user_display_name') || email.split('@')[0]);
+        showToast('Welcome back!', 'success');
+        return;
+      }
+      showToast(local.error, 'error');
+      resetBtn();
+      return;
+    }
+    completeLogin(email, password, local.account.name);
+    showToast('Welcome back!', 'success');
+  } catch (err) {
+    console.error(err);
+    showToast('An unexpected error occurred. Please try again later.', 'error');
+    resetBtn();
   }
 }
 
 async function signInWithProvider(provider) {
+  if (!sb || !sb.auth) {
+    showToast('Social sign-in requires Supabase. Use email/password for now.', 'error');
+    return;
+  }
   try {
     const { error } = await sb.auth.signInWithOAuth({
       provider: provider,
-      options: {
-        redirectTo: window.location.href
-      }
+      options: { redirectTo: window.location.href }
     });
-    if (error) {
-      showToast(error.message, 'error');
-    }
+    if (error) showToast(error.message, 'error');
   } catch (err) {
     showToast('An unexpected error occurred. Please try again later.', 'error');
   }
 }
 
+
+/* ==================== PIN / PASSWORD UNLOCK ==================== */
+let _unlockBuf = '';
+function openPinUnlock() {
+  _unlockBuf = '';
+  let ov = document.getElementById('pinUnlockOverlay');
+  if (!ov) {
+    ov = document.createElement('div');
+    ov.id = 'pinUnlockOverlay';
+    ov.innerHTML = `
+      <div class="pin-unlock-card">
+        <h3 style="text-align:center;color:var(--primary);font-size:1.3rem;margin-bottom:6px">Enter PIN</h3>
+        <p style="text-align:center;opacity:0.5;font-size:0.85rem;margin-bottom:14px">Unlock Project Subterranean</p>
+        <div class="pin-dots" id="unlockPinDots">
+          <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+          <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+        </div>
+        <div class="pin-pad" id="unlockPinPad">
+          <button type="button" class="pin-key" data-n="1" onmousedown="unlockPinKey('1')">1</button>
+          <button type="button" class="pin-key" data-n="2" onmousedown="unlockPinKey('2')">2</button>
+          <button type="button" class="pin-key" data-n="3" onmousedown="unlockPinKey('3')">3</button>
+          <button type="button" class="pin-key" data-n="4" onmousedown="unlockPinKey('4')">4</button>
+          <button type="button" class="pin-key" data-n="5" onmousedown="unlockPinKey('5')">5</button>
+          <button type="button" class="pin-key" data-n="6" onmousedown="unlockPinKey('6')">6</button>
+          <button type="button" class="pin-key" data-n="7" onmousedown="unlockPinKey('7')">7</button>
+          <button type="button" class="pin-key" data-n="8" onmousedown="unlockPinKey('8')">8</button>
+          <button type="button" class="pin-key" data-n="9" onmousedown="unlockPinKey('9')">9</button>
+          <button type="button" class="pin-key action" onmousedown="unlockPinKey('back')">⌫</button>
+          <button type="button" class="pin-key" data-n="0" onmousedown="unlockPinKey('0')">0</button>
+          <button type="button" class="pin-key action" onmousedown="unlockPinKey('ok')">✓</button>
+        </div>
+        <button type="button" onclick="closePinUnlock()" style="width:100%;margin-top:16px;padding:10px;border:none;border-radius:12px;background:rgba(255,255,255,0.06);color:#94a3b8;cursor:pointer">Cancel</button>
+      </div>`;
+    document.body.appendChild(ov);
+  }
+  updateUnlockDots();
+  ov.style.display = 'flex';
+  void ov.offsetWidth;
+  ov.classList.add('show');
+  window._pinUnlockActive = true;
+}
+function closePinUnlock() {
+  const ov = document.getElementById('pinUnlockOverlay');
+  if (!ov) return;
+  ov.classList.remove('show');
+  window._pinUnlockActive = false;
+  setTimeout(() => { ov.style.display = 'none'; }, 280);
+}
+function flashUnlockKey(n) {
+  const btn = document.querySelector('#unlockPinPad .pin-key[data-n="'+n+'"]');
+  if (!btn) return;
+  btn.classList.add('flash');
+  setTimeout(() => btn.classList.remove('flash'), 160);
+}
+function flashUnlockAction(label) {
+  document.querySelectorAll('#unlockPinPad .pin-key.action').forEach(b => {
+    if (b.textContent.includes(label)) {
+      b.classList.add('flash');
+      setTimeout(() => b.classList.remove('flash'), 160);
+    }
+  });
+}
+function unlockPinKey(key) {
+  if (key === 'back') {
+    flashUnlockAction('⌫');
+    _unlockBuf = _unlockBuf.slice(0, -1);
+    updateUnlockDots();
+    return;
+  }
+  if (key === 'ok') {
+    flashUnlockAction('✓');
+    verifyUnlockPin();
+    return;
+  }
+  if (_unlockBuf.length >= 8) return;
+  flashUnlockKey(key);
+  _unlockBuf += String(key);
+  updateUnlockDots();
+  const stored = localStorage.getItem('passkeyPin');
+  if (stored) {
+    try {
+      if (_unlockBuf.length === atob(stored).length) verifyUnlockPin();
+    } catch (e) {}
+  }
+}
+function updateUnlockDots() {
+  document.querySelectorAll('#unlockPinDots .pin-dot').forEach((d, i) => {
+    d.classList.toggle('filled', i < _unlockBuf.length);
+  });
+}
+function verifyUnlockPin() {
+  const stored = localStorage.getItem('passkeyPin');
+  if (!stored) {
+    showToast('No PIN set — create one in Settings', 'error');
+    return;
+  }
+  let ok = false;
+  try { ok = (hashPw(_unlockBuf) === stored) || (_unlockBuf === atob(stored)); }
+  catch (e) { ok = hashPw(_unlockBuf) === stored; }
+  if (!ok) {
+    showToast('Incorrect PIN', 'error');
+    _unlockBuf = '';
+    updateUnlockDots();
+    return;
+  }
+  closePinUnlock();
+  finishWelcomeUnlock();
+}
+function openPasswordUnlock() {
+  let ov = document.getElementById('pwUnlockOverlay');
+  if (ov) ov.remove();
+  ov = document.createElement('div');
+  ov.id = 'pwUnlockOverlay';
+  ov.style.cssText = 'position:fixed;inset:0;z-index:100050;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,0.8);backdrop-filter:blur(12px)';
+  ov.innerHTML = `<div id="pwUnlockCard" style="background:rgba(15,23,42,0.96);border:1px solid rgba(255,255,255,0.1);border-radius:28px;padding:32px;width:min(340px,92vw);transform:scale(0.92);opacity:0;transition:all 0.35s cubic-bezier(0.16,1,0.3,1)">
+    <h3 style="text-align:center;color:var(--primary);font-size:1.25rem;margin-bottom:8px">Enter Password</h3>
+    <p style="text-align:center;opacity:0.5;font-size:0.85rem;margin-bottom:16px">Unlock Project Subterranean</p>
+    <input type="password" id="pwUnlockInput" placeholder="••••••••" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:12px 16px;color:#fff;outline:none;margin-bottom:14px">
+    <button onclick="submitPasswordUnlock()" style="width:100%;padding:12px;border:none;border-radius:999px;background:var(--primary);color:#000;font-weight:800;cursor:pointer">Unlock</button>
+    <button onclick="document.getElementById('pwUnlockOverlay').remove()" style="width:100%;margin-top:10px;padding:10px;border:none;border-radius:999px;background:rgba(255,255,255,0.06);color:#94a3b8;cursor:pointer">Cancel</button>
+  </div>`;
+  document.body.appendChild(ov);
+  requestAnimationFrame(() => {
+    const card = document.getElementById('pwUnlockCard');
+    if (card) { card.style.transform = 'scale(1)'; card.style.opacity = '1'; }
+    document.getElementById('pwUnlockInput')?.focus();
+  });
+  document.getElementById('pwUnlockInput')?.addEventListener('keydown', e => {
+    if (e.key === 'Enter') submitPasswordUnlock();
+  });
+}
+function submitPasswordUnlock() {
+  const val = document.getElementById('pwUnlockInput')?.value || '';
+  const stored = localStorage.getItem('account_pw_check') || localStorage.getItem('passkeyPw');
+  if (stored && stored !== hashPw(val)) {
+    showToast('Incorrect password', 'error');
+    return;
+  }
+  if (!stored && !val) {
+    showToast('Enter your password', 'error');
+    return;
+  }
+  document.getElementById('pwUnlockOverlay')?.remove();
+  finishWelcomeUnlock();
+}
+document.addEventListener('keydown', e => {
+  const unlockOpen = document.getElementById('pinUnlockOverlay')?.classList.contains('show');
+  const setupOpen = document.getElementById('passkeyPanel')?.classList.contains('open');
+  if (!unlockOpen && !(setupOpen && typeof _passkeyType !== 'undefined' && _passkeyType === 'pin')) return;
+  if (e.key >= '0' && e.key <= '9') {
+    e.preventDefault();
+    if (unlockOpen) unlockPinKey(e.key);
+    else if (typeof pinKey === 'function') pinKey(e.key);
+  } else if (e.key === 'Backspace') {
+    e.preventDefault();
+    if (unlockOpen) unlockPinKey('back');
+    else if (typeof pinKey === 'function') pinKey('back');
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    if (unlockOpen) unlockPinKey('ok');
+    else if (typeof pinKey === 'function') pinKey('ok');
+  }
+});
+
 function enterMainSite() {
   const auth = document.getElementById('authScreen');
   const main = document.getElementById('mainSite');
-  if (auth) auth.classList.add('hidden');
+  const wb = document.getElementById('welcomeBack');
+  if (auth) {
+    auth.classList.add('hidden');
+    auth.style.display = 'none';
+  }
+  if (wb) {
+    wb.classList.remove('show');
+    wb.style.display = 'none';
+  }
   if (main) main.classList.add('visible');
   initSite();
 }
@@ -1704,17 +2021,17 @@ function showWelcomeBack() {
 
 function welcomeUnlock() {
   const method = localStorage.getItem('passkeyType') || 'password';
-  if (method === 'password' || method === 'pin') {
-    const label = method === 'pin' ? 'PIN' : 'Password';
-    const val = prompt('Enter your ' + label + ' to unlock');
-    if (val == null) return;
-    const stored = method === 'pin' ? localStorage.getItem('passkeyPin') : (localStorage.getItem('account_pw_check') || localStorage.getItem('passkeyPw'));
-    if (stored && stored !== btoa(val)) return showToast('Incorrect ' + label, 'error');
-  } else if (method === 'pattern' || method === 'drawing' || method === 'security') {
-    // open passkey panel as unlock gate
+  if (method === 'pin') {
+    openPinUnlock();
+    return;
+  }
+  if (method === 'password') {
+    openPasswordUnlock();
+    return;
+  }
+  if (method === 'pattern' || method === 'drawing' || method === 'security') {
     openPasskeyPanel(method);
     showToast('Confirm your ' + method + ' to unlock', 'info');
-    // After confirmPasskeySetup we'll also need to enter - for simplicity unlock on confirm if coming from welcome
     window._unlockAfterPasskey = true;
     return;
   }
@@ -1990,34 +2307,42 @@ function renderPinnedFavs() {
     return;
   }
   if (divider) divider.style.display = 'block';
-  favorites.slice(0, 6).forEach(id => {
+  const isApp = (g) => {
+    const cat = (g.category || '').toLowerCase();
+    const title = (g.title || '').toLowerCase();
+    return cat === 'utility' || cat === 'tools' || cat === 'application' || cat === 'apps'
+      || /calculator|notepad|emulator|browser|proxy|converter/.test(title);
+  };
+  const gameFavs = [], appFavs = [];
+  favorites.forEach(id => {
     const g = games.find(x => x.id === id);
     if (!g) return;
-    const el = document.createElement('div');
-    el.className = 'pinned-fav';
-    el.title = g.title;
-    el.innerHTML = `<img src="${cdnBase}${g.thumb}" alt="${g.title}">`;
-    el.onclick = () => openGame(id);
-    container.appendChild(el);
+    (isApp(g) ? appFavs : gameFavs).push(g);
   });
+  const addGroup = (label, list) => {
+    if (!list.length) return;
+    const lab = document.createElement('span');
+    lab.className = 'pinned-group-label';
+    lab.textContent = label;
+    container.appendChild(lab);
+    list.slice(0, 4).forEach(g => {
+      const el = document.createElement('div');
+      el.className = 'pinned-fav';
+      el.title = g.title;
+      const thumb = g.thumb ? (g.thumb.startsWith('http') ? g.thumb : cdnBase + g.thumb) : '';
+      el.innerHTML = thumb ? `<img src="${thumb}" alt="">` : `<span style="font-size:0.6rem">${(g.title||'?')[0]}</span>`;
+      el.onclick = () => openGame(g.id);
+      container.appendChild(el);
+    });
+  };
+  addGroup('Games', gameFavs);
+  addGroup('Apps', appFavs);
 }
 
 function renderFavorites() {
-  const c = document.getElementById('favoritesGrid');
-  c.innerHTML = '';
-  const list = games.filter(g => favorites.includes(g.id));
-  if (!list.length) {
-    document.getElementById('favoritesSection').classList.add('hidden');
-    return;
-  }
-  document.getElementById('favoritesSection').classList.remove('hidden');
-  list.forEach(g => {
-    const d = document.createElement('div');
-    d.className = 'game-card';
-    d.innerHTML = `<img src="${cdnBase}${g.thumb}"><div class="card-title"><span>${g.title}</span></div>`;
-    d.onclick = () => openGame(g.id);
-    c.appendChild(d);
-  });
+  // Favorites column removed — stars only pin to the dynamic header
+  const sec = document.getElementById('favoritesSection');
+  if (sec) sec.classList.add('hidden');
 }
 
 function renderRecentlyPlayed() {
@@ -2043,8 +2368,8 @@ function renderRecentlyPlayed() {
 function openScalePanel(id) {
   const el = document.getElementById(id);
   if (!el) return;
-  if (id === 'passkeyPanel' || id === 'profilePanel' || id === 'avatarCropPanel') {
-    el.style.zIndex = '50000';
+  if (id === 'passkeyPanel' || id === 'profilePanel' || id === 'avatarCropPanel' || id === 'reviewEditModal') {
+    el.style.zIndex = '100001';
   }
   el.style.display = 'flex';
   el.classList.remove('closing', 'hidden');
@@ -2120,19 +2445,50 @@ function closeDetailsModal() {
 }
 
 function switchDetailsTab(n) {
+  const spin = document.getElementById('detailsTabSpin');
+  // fade out current
   for (let i = 0; i < 3; i++) {
     const tab = document.getElementById('dtab' + i);
     const content = document.getElementById('dtabContent' + i);
-    if (i === n) {
-      tab.style.color = 'var(--primary)';
-      tab.style.borderBottom = '3px solid var(--primary)';
-      content.classList.remove('hidden');
-    } else {
-      tab.style.color = '';
-      tab.style.borderBottom = '3px solid transparent';
-      content.classList.add('hidden');
+    if (!tab || !content) continue;
+    tab.classList.toggle('active', i === n);
+    if (i !== n && !content.classList.contains('hidden')) {
+      content.classList.add('hiding');
     }
   }
+  if (spin) { spin.classList.add('show'); spin.style.display = 'block'; }
+  setTimeout(() => {
+    for (let i = 0; i < 3; i++) {
+      const content = document.getElementById('dtabContent' + i);
+      if (!content) continue;
+      if (i === n) {
+        content.classList.remove('hidden', 'hiding');
+        content.style.opacity = '0';
+        content.style.transform = 'translateY(10px)';
+        void content.offsetWidth;
+        content.style.opacity = '1';
+        content.style.transform = 'translateY(0)';
+      } else {
+        content.classList.add('hidden');
+        content.classList.remove('hiding');
+      }
+    }
+    // wait for images in the active pane
+    const active = document.getElementById('dtabContent' + n);
+    const imgs = active ? [...active.querySelectorAll('img')] : [];
+    const finish = () => { if (spin) { spin.classList.remove('show'); spin.style.display = 'none'; } };
+    if (!imgs.length) { setTimeout(finish, 150); return; }
+    let left = imgs.length;
+    const tick = () => { left--; if (left <= 0) finish(); };
+    imgs.forEach(img => {
+      if (img.complete) tick();
+      else {
+        img.addEventListener('load', tick, { once: true });
+        img.addEventListener('error', tick, { once: true });
+      }
+    });
+    setTimeout(finish, 1000);
+  }, 200);
 }
 async function loadReviews(gameId) {
   const { data } = await sb.from('reviews').select('*').eq('game_id', gameId).order('created_at', { ascending: false });
@@ -2883,22 +3239,43 @@ function toggleSettingsCollapse(head) {
 function switchSettingsTab(tab, btn) {
   document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
   if (btn) btn.classList.add('active');
-  ['system', 'appearance', 'misc'].forEach(id => {
+  let spin = document.getElementById('settingsTabSpin');
+  if (!spin) {
+    spin = document.createElement('div');
+    spin.id = 'settingsTabSpin';
+    spin.className = 'settings-tab-spin';
+    const body = document.querySelector('.settings-body');
+    if (body) body.insertBefore(spin, body.firstChild);
+  }
+  spin.classList.add('show');
+  spin.style.display = 'block';
+  const panes = ['system', 'appearance', 'misc'];
+  panes.forEach(id => {
     const el = document.getElementById('stab-' + id);
     if (!el) return;
-    if (id === tab) {
-      el.style.display = 'block';
-      el.classList.remove('hiding');
-      void el.offsetWidth;
-      el.style.opacity = '1';
-      el.style.transform = 'translateY(0)';
-    } else {
+    if (id !== tab) {
       el.classList.add('hiding');
       setTimeout(() => {
-        if (el.classList.contains('hiding')) el.style.display = 'none';
-      }, 280);
+        if (el.classList.contains('hiding')) {
+          el.style.display = 'none';
+          el.classList.remove('hiding');
+        }
+      }, 260);
     }
   });
+  setTimeout(() => {
+    const el = document.getElementById('stab-' + tab);
+    if (el) {
+      el.style.display = 'block';
+      el.classList.add('hiding');
+      void el.offsetWidth;
+      el.classList.remove('hiding');
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }
+    spin.classList.remove('show');
+    spin.style.display = 'none';
+  }, 280);
 }
 
 function setPasskey(type, el) {
@@ -3590,7 +3967,7 @@ window.addEventListener('resize', resizeCanvas);
 
 
 <!-- Passkey Setup Panel -->
-<div id="passkeyPanel" class="scale-overlay" style="z-index:50000" onclick="if(event.target===this)closePasskeyPanel()">
+<div id="passkeyPanel" class="scale-overlay" style="z-index:100001" onclick="if(event.target===this)closePasskeyPanel()">
   <div class="scale-panel bg-slate-900 border border-white/10 rounded-3xl max-w-md w-full mx-4 p-8" onclick="event.stopPropagation()">
     <div class="flex justify-between items-center mb-6">
       <h2 id="passkeyPanelTitle" class="text-2xl" style="color:var(--primary)">Set Up Auth</h2>
@@ -3605,7 +3982,7 @@ window.addEventListener('resize', resizeCanvas);
 </div>
 
 <!-- Profile Panel -->
-<div id="profilePanel" class="scale-overlay" style="z-index:50000" onclick="if(event.target===this)closeProfilePanel()">
+<div id="profilePanel" class="scale-overlay" style="z-index:100001" onclick="if(event.target===this)closeProfilePanel()">
   <div class="scale-panel bg-slate-900 border border-white/10 rounded-3xl max-w-md w-full mx-4 p-8" onclick="event.stopPropagation()">
     <div class="flex justify-between items-center mb-6">
       <h2 class="text-2xl" style="color:var(--primary)">Profile</h2>
