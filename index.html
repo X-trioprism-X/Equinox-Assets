@@ -136,10 +136,7 @@ body {
   margin: 35px 0 15px 10px; text-shadow: 0 0 10px var(--primary);
 }
 
-/* Settings */
-#settingsPanel {
-  transition: transform 0.45s cubic-bezier(0.32,0.72,0,1);
-}
+/* Settings panel styles are defined in the new settings block */
 .theme-circle {
   width: 68px; height: 68px; border-radius: 50%; border: 5px solid white;
   cursor: pointer; transition: all 0.35s; box-shadow: 0 0 25px var(--primary);
@@ -354,18 +351,6 @@ body {
 .auth-footer a { color: #c4b5fd; text-decoration: none; }
 .auth-footer a:hover { text-decoration: underline; }
 
-/* Game Modal Animations */
-#gameModal {
-  position: fixed; inset: 0; z-index: 200; background: #000;
-  display: none; opacity: 0; flex-direction: column;
-  transition: opacity 0.4s ease;
-}
-#gameModal.open { display: flex; opacity: 1; }
-#gameModal.closing {
-  clip-path: inset(0 50% 0 50%);
-  transition: clip-path 0.55s cubic-bezier(0.7,0,0.3,1);
-}
-
 /* Wiki */
 .wiki-toolbar {
   display: flex; flex-wrap: wrap; gap: 6px;
@@ -386,11 +371,664 @@ body {
 
 #mainSite { display: none; }
 #mainSite.visible { display: block; }
+
+/* Toast notifications */
+#toastContainer {
+  position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
+  z-index: 10000; display: flex; flex-direction: column; gap: 10px;
+  pointer-events: none; width: min(420px, 90vw);
+}
+.toast {
+  pointer-events: auto;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 18px;
+  padding: 14px 18px;
+  display: flex; align-items: flex-start; gap: 12px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+  animation: toastIn 0.35s cubic-bezier(0.16,1,0.3,1);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.9rem;
+  color: #e2e8f0;
+}
+.toast.out { animation: toastOut 0.3s ease forwards; }
+.toast-error { border-color: rgba(248,113,113,0.45); background: rgba(69,10,10,0.92); }
+.toast-success { border-color: rgba(52,211,153,0.45); background: rgba(6,40,30,0.92); }
+.toast-info { border-color: color-mix(in srgb, var(--primary) 50%, transparent); background: rgba(15,23,42,0.95); }
+.toast-icon { font-size: 1.15rem; margin-top: 1px; flex-shrink: 0; }
+.toast-body { flex: 1; line-height: 1.4; }
+.toast-close {
+  background: transparent; border: none; color: #94a3b8; cursor: pointer;
+  font-size: 1.1rem; padding: 0 2px; transition: color 0.2s, transform 0.25s;
+}
+.toast-close:hover { color: #fff; transform: scale(1.2); }
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(-16px) scale(0.94); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes toastOut {
+  to { opacity: 0; transform: translateY(-10px) scale(0.96); }
+}
+
+/* Smooth expand on all interactive buttons/icons */
+.nav-icon, .more-btn, .fav-btn, .auth-btn, .social-btn,
+.top-bar-info, .theme-circle, .cat-tab, button, .review-action {
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1),
+              background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease !important;
+}
+.nav-icon:hover, .more-btn:hover, .fav-btn:hover {
+  transform: scale(1.22);
+}
+.more-btn:hover, .fav-btn:hover {
+  background: rgba(0,0,0,0.9);
+  box-shadow: 0 0 12px rgba(255,255,255,0.2);
+}
+button:hover:not(:disabled) {
+  transform: scale(1.04);
+}
+
+/* Review cards with expand actions */
+.review-card {
+  position: relative; background: rgba(255,255,255,0.05);
+  border-radius: 14px; padding: 14px 16px;
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+  overflow: hidden;
+}
+.review-card:hover {
+  background: rgba(255,255,255,0.09);
+  transform: scale(1.015);
+}
+.review-actions {
+  display: flex; gap: 8px; max-height: 0; opacity: 0; overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+  margin-top: 0;
+}
+.review-card:hover .review-actions {
+  max-height: 40px; opacity: 1; margin-top: 10px;
+}
+.review-action {
+  padding: 5px 12px; border-radius: 10px; font-size: 0.78rem;
+  border: none; cursor: pointer; font-weight: 500;
+  background: rgba(255,255,255,0.08); color: #e2e8f0;
+}
+.review-action:hover { transform: scale(1.08); }
+.review-action.edit:hover { background: rgba(168,85,247,0.35); color: #e9d5ff; }
+.review-action.delete:hover { background: rgba(239,68,68,0.3); color: #fca5a5; }
+
+/* Theme-colored primary buttons */
+.btn-theme {
+  background: var(--primary) !important;
+  color: #000 !important;
+  font-weight: 700;
+  border: none;
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--primary) 40%, transparent);
+}
+.btn-theme:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 6px 28px color-mix(in srgb, var(--primary) 55%, transparent);
+}
+
+/* Pinned favorites in island header */
+.pinned-favs {
+  display: flex; align-items: center; gap: 6px;
+  margin-left: 4px;
+}
+.pinned-fav {
+  width: 34px; height: 34px; border-radius: 10px;
+  overflow: hidden; cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+  flex-shrink: 0;
+}
+.pinned-fav:hover {
+  transform: scale(1.2);
+  border-color: var(--primary);
+  box-shadow: 0 0 14px var(--primary);
+}
+.pinned-fav img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Smooth game modal open/close (no bounce) */
+#gameModal {
+  position: fixed; inset: 0; z-index: 200; background: #000;
+  display: none; opacity: 0; flex-direction: column;
+  transform: scale(0.92);
+  transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1),
+              transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+#gameModal.open {
+  display: flex; opacity: 1; transform: scale(1);
+}
+#gameModal.closing {
+  opacity: 0; transform: scale(0.92);
+  transition: opacity 0.35s cubic-bezier(0.4,0,0.2,1),
+              transform 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* Settings slide is already transitioned via transform */
+
+
+/* Recently Played - single row horizontal scroll */
+.recent-scroll {
+  display: flex;
+  flex-direction: row;
+  gap: 14px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 12px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+.recent-scroll .game-card {
+  flex: 0 0 110px;
+  width: 110px;
+  height: 110px;
+  aspect-ratio: 1;
+}
+.recent-scroll::-webkit-scrollbar { height: 8px; }
+.recent-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--primary), #7c3aed);
+  border-radius: 10px;
+}
+
+/* New Settings Panel (chess-style side panel) */
+#settingsPanel {
+  position: fixed; top: 0; right: -420px; width: 400px; height: 100vh;
+  background: #050505; border-left: 2px solid var(--primary);
+  z-index: 45000; transition: right 0.55s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex; flex-direction: column;
+  box-sizing: border-box; overflow: hidden;
+}
+#settingsPanel.open { right: 0; }
+#settingsGear {
+  position: absolute; left: -62px; top: 50%; transform: translateY(-50%);
+  width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 46000; background: #050505;
+  border: 2px solid var(--primary); border-right: none;
+  border-radius: 14px 0 0 14px;
+  transition: all 0.35s ease;
+}
+#settingsGear:hover { background: rgba(255,255,255,0.05); }
+#settingsGear i { font-size: 1.6rem; color: var(--primary); transition: transform 0.55s cubic-bezier(0.25,0.8,0.25,1); }
+#settingsPanel.open #settingsGear i { transform: rotate(180deg); }
+
+.settings-header {
+  padding: 28px 28px 16px; border-bottom: 1px solid #1a1a1a;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.settings-header h2 {
+  color: var(--primary); letter-spacing: 4px; font-size: 1.1rem;
+  text-transform: uppercase; font-weight: 600; margin: 0;
+}
+.settings-tabs {
+  display: flex; gap: 6px; padding: 14px 20px;
+  border-bottom: 1px solid #1a1a1a; flex-wrap: wrap;
+}
+.settings-tab {
+  background: none; border: 1px solid #333; color: #aaa;
+  padding: 8px 14px; cursor: pointer; border-radius: 8px;
+  font-weight: 600; text-transform: uppercase; font-size: 0.7rem;
+  letter-spacing: 0.5px; transition: all 0.25s;
+}
+.settings-tab:hover { border-color: var(--primary); color: #fff; }
+.settings-tab.active {
+  border-color: var(--primary); color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--primary) 25%, transparent);
+}
+.settings-body {
+  flex: 1; overflow-y: auto; padding: 20px 24px 40px;
+}
+.settings-group-label {
+  color: var(--primary); font-size: 0.7rem; letter-spacing: 2px;
+  text-transform: uppercase; margin: 22px 0 12px; border-bottom: 1px solid #222;
+  display: block; padding-bottom: 6px; font-weight: 700;
+}
+.settings-group-label:first-child { margin-top: 0; }
+.settings-card {
+  border-left: 3px solid var(--primary); background: #0f0f0f;
+  padding: 14px 16px; margin-bottom: 12px; cursor: pointer;
+  transition: 0.3s; border-radius: 0 12px 12px 0;
+}
+.settings-card:hover {
+  transform: scale(1.02); background: #151515;
+  box-shadow: 0 0 20px color-mix(in srgb, var(--primary) 30%, transparent);
+}
+.settings-card b { color: #f1c40f; display: block; margin-bottom: 4px; font-size: 0.95rem; }
+.settings-card p { color: #888; font-size: 0.8rem; margin: 0; line-height: 1.4; }
+.settings-row {
+  display: flex; align-items: center; justify-content: space-between;
+  background: #0f0f0f; border: 1px solid #222; border-radius: 12px;
+  padding: 12px 16px; margin-bottom: 10px;
+}
+.settings-row label { font-size: 0.9rem; color: #ddd; }
+.settings-select, .settings-input {
+  background: #111; color: var(--primary); border: 1px solid #333;
+  padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; outline: none;
+  max-width: 55%;
+}
+.settings-select:focus, .settings-input:focus { border-color: var(--primary); }
+.settings-toggle {
+  width: 48px; height: 26px; border-radius: 999px; background: #333;
+  position: relative; cursor: pointer; transition: background 0.3s; border: none;
+}
+.settings-toggle.on { background: var(--primary); }
+.settings-toggle::after {
+  content: ''; position: absolute; top: 3px; left: 3px;
+  width: 20px; height: 20px; border-radius: 50%; background: #fff;
+  transition: transform 0.3s cubic-bezier(0.25,0.8,0.25,1);
+}
+.settings-toggle.on::after { transform: translateX(22px); }
+.passkey-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px;
+}
+.passkey-btn {
+  background: #0f0f0f; border: 1px solid #333; border-radius: 12px;
+  padding: 16px 12px; text-align: center; cursor: pointer; transition: all 0.3s;
+  color: #ccc; font-size: 0.8rem;
+}
+.passkey-btn i { display: block; font-size: 1.4rem; margin-bottom: 8px; color: var(--primary); }
+.passkey-btn:hover {
+  border-color: var(--primary); transform: scale(1.04);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--primary) 25%, transparent);
+}
+.passkey-btn.active { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 15%, transparent); }
+.dev-badge {
+  display: inline-block; background: #8b0000; color: #ff6b6b;
+  font-size: 0.65rem; padding: 2px 8px; border-radius: 6px;
+  letter-spacing: 1px; margin-left: 8px; vertical-align: middle;
+}
+
+
+
+/* Backdrop tiles */
+.bg-card {
+  position: relative; aspect-ratio: 1/1; overflow: hidden;
+  border-radius: 1.2rem; border: 2px solid transparent;
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+  background: var(--card); cursor: pointer;
+}
+.bg-card:hover {
+  border-color: var(--primary); transform: scale(1.05);
+  box-shadow: 0 0 25px var(--primary);
+}
+.bg-card.equipped {
+  border-color: #22c55e !important;
+  box-shadow: 0 0 22px rgba(34, 197, 94, 0.55), 0 0 8px rgba(34, 197, 94, 0.35) !important;
+}
+.bg-card.equipped::after {
+  content: 'Equipped';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(34, 197, 94, 0.85));
+  color: #fff; font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.5px; text-align: center;
+  padding: 18px 8px 8px; pointer-events: none; z-index: 2;
+  text-transform: uppercase;
+}
+.bg-card img, .bg-card .bg-placeholder {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.bg-card .bg-placeholder {
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #1e1b4b, #0f172a); font-size: 2rem;
+}
+.bg-card .card-title {
+  position: absolute; bottom: -100%; left: 0; width: 100%;
+  background: linear-gradient(transparent, rgba(0,0,0,0.92));
+  padding: 22px 12px 10px; transition: bottom 0.4s cubic-bezier(0.16,1,0.3,1);
+  font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center;
+  z-index: 3;
+}
+.bg-card:hover .card-title { bottom: 0; }
+.bg-card.equipped:hover .card-title { bottom: 28px; } /* sit above Equipped bar */
+.bg-card .more-btn {
+  opacity: 0; transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+  background: rgba(0,0,0,0.7); width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; color: white; transform: scale(0.85);
+}
+.bg-card:hover .more-btn { opacity: 1; transform: scale(1); }
+.bg-card .more-btn:hover { transform: scale(1.15); background: rgba(0,0,0,0.9); }
+
+/* Backdrop details mini modal */
+/* bgDetails uses scale-overlay */
+
+/* Unified smooth scale panel open/close */
+.scale-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(10px);
+  z-index: 360;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.scale-overlay.open {
+  display: flex;
+  opacity: 1;
+}
+.scale-overlay.closing {
+  opacity: 0;
+}
+.scale-panel {
+  transform: scale(0.88);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.scale-overlay.open .scale-panel {
+  transform: scale(1);
+  opacity: 1;
+}
+.scale-overlay.closing .scale-panel {
+  transform: scale(0.88);
+  opacity: 0;
+}
+
+/* Profile chip in top bar */
+.profile-chip {
+  background: rgba(255,255,255,0.18);
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+  border: 2px solid rgba(255,255,255,0.35);
+  font-size: 1.1rem; color: #fff;
+}
+.profile-chip:hover {
+  transform: scale(1.12);
+  background: rgba(255,255,255,0.3);
+  box-shadow: 0 0 18px rgba(255,255,255,0.3);
+}
+
+/* Pattern lock grid */
+.pattern-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+  width: 200px; margin: 20px auto;
+}
+.pattern-dot {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: #1e293b; border: 2px solid #334155;
+  cursor: pointer; transition: all 0.2s;
+}
+.pattern-dot.active, .pattern-dot.selected {
+  background: var(--primary); border-color: var(--primary);
+  box-shadow: 0 0 14px var(--primary); transform: scale(1.1);
+}
+#drawCanvas {
+  width: 100%; height: 220px; border-radius: 16px;
+  background: #0f172a; border: 1px solid #334155; cursor: crosshair;
+  touch-action: none;
+}
+
+/* Welcome back screen */
+#welcomeBack {
+  position: fixed; inset: 0; z-index: 90000;
+  display: none; align-items: center; justify-content: center;
+  background: radial-gradient(ellipse at center, #0f172a 0%, #020617 70%);
+  flex-direction: column; gap: 18px;
+  opacity: 0; transition: opacity 0.45s ease;
+}
+#welcomeBack.show { display: flex; opacity: 1; }
+.wb-avatar {
+  width: 110px; height: 110px; border-radius: 50%;
+  object-fit: cover; border: 3px solid var(--primary);
+  box-shadow: 0 0 30px color-mix(in srgb, var(--primary) 45%, transparent);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  background: #1e293b; display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem; color: #94a3b8; overflow: hidden;
+}
+.wb-avatar:hover { transform: scale(1.18); }
+.wb-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.wb-name { font-size: 1.8rem; color: #fff; letter-spacing: 1px; }
+.wb-method { font-size: 0.9rem; color: #94a3b8; margin-bottom: 8px; }
+.wb-unlock {
+  background: var(--primary); color: #000; border: none;
+  padding: 14px 40px; border-radius: 999px; font-weight: 800;
+  font-size: 1rem; cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s;
+}
+.wb-unlock:hover { transform: scale(1.08); box-shadow: 0 0 24px var(--primary); }
+.wb-switch {
+  background: rgba(255,255,255,0.08); color: #94a3b8; border: 1px solid #334155;
+  padding: 10px 28px; border-radius: 999px; font-size: 0.85rem; cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1); margin-top: 6px;
+}
+.wb-switch:hover {
+  transform: scale(1.06); background: rgba(255,255,255,0.14); color: #fff;
+}
+
+/* Wiki toolbar active states + style dropdown */
+.wiki-toolbar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 12px; }
+.wiki-toolbar button, .wiki-toolbar label.tool-btn {
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+  color: #e2e8f0; padding: 6px 12px; border-radius: 10px; cursor: pointer;
+  font-size: 0.85rem; transition: all 0.25s;
+}
+.wiki-toolbar button:hover, .wiki-toolbar label.tool-btn:hover { background: rgba(255,255,255,0.16); }
+.wiki-toolbar button.active {
+  background: var(--primary); color: #000; border-color: var(--primary);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--primary) 40%, transparent);
+}
+.style-group { position: relative; display: inline-block; }
+.style-group-btn {
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+  color: #e2e8f0; padding: 6px 14px; border-radius: 10px; cursor: pointer; font-size: 0.85rem;
+}
+.style-group-menu {
+  display: none; position: absolute; top: 110%; left: 0; z-index: 20;
+  background: #0f172a; border: 1px solid #334155; border-radius: 12px;
+  min-width: 160px; padding: 6px; box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+}
+.style-group.open .style-group-menu { display: block; }
+.style-group-menu button {
+  display: block; width: 100%; text-align: left; background: transparent;
+  border: none; color: #e2e8f0; padding: 8px 12px; border-radius: 8px; cursor: pointer;
+}
+.style-group-menu button:hover { background: rgba(255,255,255,0.08); }
+.style-group-menu button.active { color: var(--primary); }
+
+/* Global material surfaces */
+body.mat-mica .island-header,
+body.mat-mica #settingsPanel,
+body.mat-mica .scale-panel,
+body.mat-mica .top-bar,
+body.mat-mica .auth-card,
+body.mat-mica #gameModal,
+body.mat-mica .clock-panel,
+body.mat-mica .weather-shell,
+body.mat-mica #cosmicPicker,
+body.mat-mica .cat-tab {
+  background: rgba(15, 23, 42, 0.72) !important;
+  backdrop-filter: blur(40px) saturate(180%) !important;
+}
+body.mat-mica-alt .island-header,
+body.mat-mica-alt #settingsPanel,
+body.mat-mica-alt .scale-panel,
+body.mat-mica-alt .top-bar,
+body.mat-mica-alt .auth-card,
+body.mat-mica-alt #gameModal,
+body.mat-mica-alt .clock-panel,
+body.mat-mica-alt .weather-shell,
+body.mat-mica-alt #cosmicPicker {
+  background: rgba(30, 41, 59, 0.5) !important;
+  backdrop-filter: blur(50px) saturate(200%) !important;
+}
+body.mat-translucent .island-header,
+body.mat-translucent #settingsPanel,
+body.mat-translucent .scale-panel,
+body.mat-translucent .top-bar,
+body.mat-translucent .auth-card,
+body.mat-translucent #gameModal,
+body.mat-translucent .clock-panel,
+body.mat-translucent .weather-shell,
+body.mat-translucent #cosmicPicker,
+body.mat-translucent .cat-tab {
+  background: rgba(2, 6, 23, 0.35) !important;
+  backdrop-filter: blur(22px) !important;
+}
+
+/* Profile avatar hover edit */
+.profile-avatar-wrap {
+  position: relative; width: 64px; height: 64px; border-radius: 50%;
+  overflow: hidden; cursor: pointer; transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+  background: #1e293b; border: 2px solid rgba(255,255,255,0.25);
+  flex-shrink: 0;
+}
+.profile-avatar-wrap:hover { transform: scale(1.12); }
+.profile-avatar-wrap img, .profile-avatar-wrap video {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.profile-avatar-wrap .edit-overlay {
+  position: absolute; inset: 0; background: rgba(0,0,0,0.55);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.3s; color: #fff; font-size: 1.1rem;
+}
+.profile-avatar-wrap:hover .edit-overlay { opacity: 1; }
+
+/* Crop modal */
+#avatarCropPanel canvas { max-width: 100%; border-radius: 12px; background: #000; }
+
+/* Auth panels above settings */
+#passkeyPanel, #profilePanel, #avatarCropPanel, #reviewEditModal {
+  z-index: 50000 !important;
+}
+
+/* PIN pad */
+.pin-dots {
+  display: flex; justify-content: center; gap: 14px; margin: 18px 0 22px;
+}
+.pin-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.35);
+  background: transparent; transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
+}
+.pin-dot.filled {
+  background: var(--primary); border-color: var(--primary);
+  box-shadow: 0 0 12px var(--primary); transform: scale(1.15);
+}
+.pin-pad {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  max-width: 260px; margin: 0 auto;
+}
+.pin-key {
+  aspect-ratio: 1; border-radius: 50%;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+  color: #fff; font-size: 1.35rem; font-weight: 600; cursor: pointer;
+  transition: all 0.15s; display: flex; align-items: center; justify-content: center;
+  user-select: none;
+}
+.pin-key:hover { background: rgba(255,255,255,0.12); border-color: var(--primary); }
+.pin-key.flash {
+  background: var(--primary) !important; color: #000 !important;
+  box-shadow: 0 0 20px var(--primary); transform: scale(1.08);
+}
+.pin-key.wide { grid-column: span 1; font-size: 0.85rem; }
+.pin-key.action { font-size: 0.9rem; opacity: 0.8; }
+
+/* Welcome back matches auth background */
+#welcomeBack {
+  background: #020617 !important;
+}
+#welcomeBack .auth-orbs { position: absolute; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+#welcomeBack > *:not(.auth-orbs) { position: relative; z-index: 2; }
+
+/* Collapsible settings groups */
+.settings-collapse {
+  border: 1px solid #1a1a1a; border-radius: 12px; margin-bottom: 12px;
+  overflow: hidden; background: #0a0a0a;
+}
+.settings-collapse-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px; cursor: pointer; user-select: none;
+  transition: background 0.25s;
+}
+.settings-collapse-head:hover { background: rgba(255,255,255,0.04); }
+.settings-collapse-head .sc-title {
+  color: var(--primary); font-size: 0.72rem; letter-spacing: 2px;
+  text-transform: uppercase; font-weight: 700;
+}
+.settings-collapse-head .sc-chevron {
+  color: #666; transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); font-size: 0.85rem;
+}
+.settings-collapse.open .sc-chevron { transform: rotate(180deg); color: var(--primary); }
+.settings-collapse-body {
+  max-height: 0; overflow: hidden; opacity: 0;
+  transition: max-height 0.45s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease, padding 0.35s;
+  padding: 0 14px;
+}
+.settings-collapse.open .settings-collapse-body {
+  max-height: 900px; opacity: 1; padding: 4px 14px 16px;
+}
+
+/* Category tabs hover expand + theme glow */
+.cat-tab {
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1) !important;
+}
+.cat-tab:hover {
+  transform: scale(1.08);
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 16px color-mix(in srgb, var(--primary) 35%, transparent);
+  color: #fff;
+}
+.category-tabs {
+  transition: opacity 0.35s ease;
+}
+.category-tabs.loading {
+  opacity: 0.35; pointer-events: none; position: relative;
+}
+.tab-loading-spin {
+  display: none; width: 28px; height: 28px; margin: 12px auto;
+  border: 3px solid rgba(255,255,255,0.15);
+  border-top-color: var(--primary); border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+.category-tabs.loading + .tab-loading-spin,
+.tabs-loading-wrap .tab-loading-spin.show { display: block; }
+.game-grid-fade {
+  transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.game-grid-fade.switching {
+  opacity: 0; transform: translateY(12px);
+}
+
+/* Settings tab hover expand */
+.settings-tab {
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1) !important;
+}
+.settings-tab:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--primary) 30%, transparent);
+}
+.settings-body-pane {
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.settings-body-pane.hiding {
+  opacity: 0; transform: translateY(8px);
+}
 </style>
 </head>
 <body>
+<div id="toastContainer"></div>
 
 <!-- ==================== AUTH SCREEN ==================== -->
+
+<!-- Welcome Back Screen -->
+<div id="welcomeBack">
+  <div class="auth-orbs">
+    <div class="auth-orb auth-orb-1"></div>
+    <div class="auth-orb auth-orb-2"></div>
+    <div class="auth-orb auth-orb-3"></div>
+  </div>
+  <div class="wb-avatar" id="wbAvatar"><i class="fas fa-user"></i></div>
+  <div class="wb-name">Welcome back, <span id="wbUsername">Player</span></div>
+  <div class="wb-method" id="wbMethod">Sign-in: Password</div>
+  <button class="wb-unlock" id="wbUnlockBtn" onclick="welcomeUnlock()">Unlock</button>
+  <button class="wb-switch" onclick="welcomeSwitchAccount()">Sign in with a different account</button>
+</div>
+
 <div id="authScreen">
   <div class="auth-orbs">
     <div class="auth-orb auth-orb-1"></div>
@@ -457,9 +1095,14 @@ body {
       <span id="batteryDisplay">--</span>%
     </span>
   </div>
-  <div class="relative">
-    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-white/70"></i>
-    <input type="text" id="searchInput" placeholder="Search games or genres..." class="bg-white/10 border border-white/20 pl-10 pr-4 py-2 rounded-full w-72 focus:outline-none focus:border-white text-white placeholder:text-white/70">
+  <div class="flex items-center gap-3">
+    <div class="relative">
+      <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-white/70"></i>
+      <input type="text" id="searchInput" placeholder="Search games or genres..." class="bg-white/10 border border-white/20 pl-10 pr-4 py-2 rounded-full w-64 focus:outline-none focus:border-white text-white placeholder:text-white/70">
+    </div>
+    <div class="profile-chip" onclick="openProfilePanel()" title="Profile">
+      <i class="fas fa-user"></i>
+    </div>
   </div>
 </div>
 
@@ -502,6 +1145,8 @@ body {
 <header class="island-header">
   <img id="penguinHeadImg" src="" onclick="location.reload()" class="penguin-nav-btn" title="Home">
   <div class="h-6 w-[1px] bg-white/20"></div>
+  <div id="pinnedFavs" class="pinned-favs"></div>
+  <div id="pinnedDivider" class="h-6 w-[1px] bg-white/20" style="display:none"></div>
   <i class="fas fa-gamepad nav-icon" onclick="renderGames('games')"></i>
   <i class="fas fa-th-large nav-icon" onclick="renderGames('apps')"></i>
   <i class="fas fa-dice nav-icon" onclick="openRandomGame()"></i>
@@ -517,34 +1162,206 @@ body {
   </div>
   <div id="recentlyPlayed" class="mb-8 hidden">
     <h3 class="text-xl mb-4 text-white/80">Recently Played</h3>
-    <div id="recentGrid" class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4"></div>
+    <div id="recentGrid" class="recent-scroll"></div>
   </div>
   <div id="categoryTabs" class="category-tabs"></div>
-  <div id="gameGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5 pb-20"></div>
+  <div id="gameGrid" class="game-grid-fade grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5 pb-20"></div>
 </main>
 
 <!-- Settings Panel -->
-<div id="settingsPanel" class="fixed top-0 right-0 h-full w-80 bg-slate-900 border-l border-white/10 p-8 transform translate-x-full shadow-2xl overflow-y-auto z-[200]">
-  <div class="flex justify-between items-center mb-8">
-    <h2 class="text-3xl">Settings</h2>
-    <button onclick="toggleSettings()"><i class="fas fa-times text-xl"></i></button>
+<div id="settingsPanel">
+  <div id="settingsGear" onclick="toggleSettings()" title="Settings">
+    <i class="fas fa-cog"></i>
   </div>
-  <div class="space-y-6">
-    <div>
-      <label class="block text-xs opacity-50 mb-3 uppercase tracking-widest">Theme Color</label>
-      <div onclick="openColorPicker(event)" id="themeCircle" class="theme-circle mx-auto" style="background:var(--primary)"></div>
+  <div class="settings-header">
+    <h2>Settings</h2>
+    <button onclick="toggleSettings()" style="background:none;border:none;color:#666;font-size:1.3rem;cursor:pointer;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#666'">✕</button>
+  </div>
+  <div class="settings-tabs">
+    <button class="settings-tab active" data-stab="system" onclick="switchSettingsTab('system', this)">System</button>
+    <button class="settings-tab" data-stab="appearance" onclick="switchSettingsTab('appearance', this)">Appearance</button>
+    <button class="settings-tab" data-stab="misc" onclick="switchSettingsTab('misc', this)">Misc</button>
+  </div>
+  <div class="settings-body">
+
+    <!-- TAB: SYSTEM -->
+    <div id="stab-system" class="settings-body-pane">
+      <div class="settings-collapse" data-sc="profile">
+        <div class="settings-collapse-head" onclick="toggleSettingsCollapse(this)">
+          <span class="sc-title"><i class="fas fa-user" style="margin-right:8px"></i>Profile</span>
+          <i class="fas fa-chevron-down sc-chevron"></i>
+        </div>
+        <div class="settings-collapse-body">
+          <div class="settings-card" onclick="openProfileEdit()">
+            <b><i class="fas fa-user" style="margin-right:8px"></i>Change Details</b>
+            <p>View and edit your account details, email, and display name.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-collapse" data-sc="passkeys">
+        <div class="settings-collapse-head" onclick="toggleSettingsCollapse(this)">
+          <span class="sc-title"><i class="fas fa-key" style="margin-right:8px"></i>Passkeys & Sign-In</span>
+          <i class="fas fa-chevron-down sc-chevron"></i>
+        </div>
+        <div class="settings-collapse-body">
+          <div class="settings-card">
+            <b><i class="fas fa-key" style="margin-right:8px"></i>Authentication Methods</b>
+            <p>Choose how you unlock and sign in to Project Subterranean.</p>
+            <div class="passkey-grid">
+              <div class="passkey-btn" onclick="setPasskey('pin', this)"><i class="fas fa-hashtag"></i>PIN</div>
+              <div class="passkey-btn" onclick="setPasskey('pattern', this)"><i class="fas fa-th"></i>Pattern</div>
+              <div class="passkey-btn" onclick="setPasskey('drawing', this)"><i class="fas fa-paint-brush"></i>Drawing</div>
+              <div class="passkey-btn" onclick="setPasskey('security', this)"><i class="fas fa-usb"></i>Security Key</div>
+            </div>
+          </div>
+          <div class="settings-row">
+            <label>Session Lock</label>
+            <button class="settings-toggle" id="sessionLockToggle" onclick="toggleSettingToggle(this, 'sessionLock')"></button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="flex items-center justify-between bg-white/5 p-3 rounded-xl">
-      <span>Particles</span>
-      <button id="partToggle" onclick="toggleParticles()" style="color:var(--primary)">ON</button>
+
+    <!-- TAB: APPEARANCE -->
+<div id="stab-appearance" class="settings-body-pane" style="display:none">
+      <div class="settings-collapse" data-sc="wallpaper">
+        <div class="settings-collapse-head" onclick="toggleSettingsCollapse(this)">
+          <span class="sc-title"><i class="fas fa-image" style="margin-right:8px"></i>Wallpaper</span>
+          <i class="fas fa-chevron-down sc-chevron"></i>
+        </div>
+        <div class="settings-collapse-body">
+          <div class="settings-row">
+            <label>Wallpaper Mode</label>
+            <select class="settings-select" id="wallpaperMode" onchange="onWallpaperModeChange(this.value)">
+              <option value="default">Select Wallpaper</option>
+              <option value="disable">Disable</option>
+              <option value="custom">Custom File…</option>
+            </select>
+          </div>
+          <input type="file" id="customWallpaperInput" accept="image/*" style="display:none" onchange="onCustomWallpaper(this)">
+          <div class="settings-card" onclick="openBackgroundTypeMenu()">
+            <b><i class="fas fa-image" style="margin-right:8px"></i>Browse Backdrops</b>
+            <p>Open the backdrop library and pick a preset wallpaper.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-collapse" data-sc="theme">
+        <div class="settings-collapse-head" onclick="toggleSettingsCollapse(this)">
+          <span class="sc-title"><i class="fas fa-palette" style="margin-right:8px"></i>Theme</span>
+          <i class="fas fa-chevron-down sc-chevron"></i>
+        </div>
+        <div class="settings-collapse-body">
+          <div class="settings-row">
+            <label>Color Mode</label>
+            <select class="settings-select" id="colorMode" onchange="setColorMode(this.value)">
+              <option value="dark">Dark</option>
+              <option value="light">Light</option>
+            </select>
+          </div>
+          <div class="settings-card" onclick="openColorPicker(event)">
+            <b><i class="fas fa-palette" style="margin-right:8px"></i>Accent Color</b>
+            <p>Open the Color Engine to pick a custom theme hue.</p>
+          </div>
+          <div style="display:flex;justify-content:center;margin:12px 0">
+            <div onclick="openColorPicker(event)" id="themeCircle" class="theme-circle" style="background:var(--primary)"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-collapse" data-sc="material">
+        <div class="settings-collapse-head" onclick="toggleSettingsCollapse(this)">
+          <span class="sc-title"><i class="fas fa-layer-group" style="margin-right:8px"></i>Window Material</span>
+          <i class="fas fa-chevron-down sc-chevron"></i>
+        </div>
+        <div class="settings-collapse-body">
+          <div class="settings-row">
+            <label>Material</label>
+            <select class="settings-select" id="windowMaterial" onchange="setWindowMaterial(this.value)">
+              <option value="solid">Solid</option>
+              <option value="mica">Mica</option>
+              <option value="mica-alt">Mica Alt</option>
+              <option value="translucent">Translucent</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-collapse" data-sc="effects">
+        <div class="settings-collapse-head" onclick="toggleSettingsCollapse(this)">
+          <span class="sc-title"><i class="fas fa-sparkles" style="margin-right:8px"></i>Effects</span>
+          <i class="fas fa-chevron-down sc-chevron"></i>
+        </div>
+        <div class="settings-collapse-body">
+          <div class="settings-row">
+            <label>Particles</label>
+            <button class="settings-toggle on" id="partToggleBtn" onclick="toggleParticlesBtn(this)"></button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div onclick="openBackgroundTypeMenu()" class="flex items-center justify-between bg-white/5 p-3 rounded-xl cursor-pointer hover:bg-white/10">
-      <span>Background Type</span><span class="text-xs opacity-70">Change →</span>
+
+    
+    <div id="stab-misc" class="settings-body-pane" style="display:none">
+      <div class="settings-collapse" data-sc="mods">
+        <div class="settings-collapse-head" onclick="toggleSettingsCollapse(this)">
+          <span class="sc-title"><i class="fas fa-sliders" style="margin-right:8px"></i>Modifications</span>
+          <i class="fas fa-chevron-down sc-chevron"></i>
+        </div>
+        <div class="settings-collapse-body">
+          <div class="settings-card" onclick="openAboutBlank()">
+            <b><i class="fas fa-external-link-alt" style="margin-right:8px"></i>Open in about:blank</b>
+            <p>Cloak the current page inside an about:blank window.</p>
+          </div>
+          <div class="settings-row">
+            <label>Hide Download Popup</label>
+            <button class="settings-toggle" id="hidePopupToggle" onclick="toggleSettingToggle(this, 'hideDownloadPopup')"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-collapse" data-sc="dev">
+        <div class="settings-collapse-head" onclick="toggleSettingsCollapse(this)">
+          <span class="sc-title"><i class="fas fa-code" style="margin-right:8px"></i>Developer <span class="dev-badge">ADV</span></span>
+          <i class="fas fa-chevron-down sc-chevron"></i>
+        </div>
+        <div class="settings-collapse-body">
+          <div class="settings-row">
+            <label>Developer Mode</label>
+            <button class="settings-toggle" id="devModeToggle" onclick="toggleDevMode(this)"></button>
+          </div>
+          <div id="devOptions" style="display:none">
+            <div class="settings-card" onclick="console.log('games', games); showToast('Logged games to console', 'info')">
+              <b><i class="fas fa-bug" style="margin-right:8px"></i>Dump Games JSON</b>
+              <p>Print the full games array to the browser console.</p>
+            </div>
+            <div class="settings-card" onclick="localStorage.clear(); showToast('Local storage cleared', 'success'); setTimeout(()=>location.reload(), 800)">
+              <b><i class="fas fa-trash" style="margin-right:8px"></i>Clear Local Storage</b>
+              <p>Wipe all saved preferences, favorites, and recents.</p>
+            </div>
+            <div class="settings-row">
+              <label>CDN Cache Bust</label>
+              <button onclick="loadData(); showToast('Reloading assets…', 'info')" style="background:#111;border:1px solid #333;color:var(--primary);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:0.8rem">Reload</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-collapse" data-sc="account">
+        <div class="settings-collapse-head" onclick="toggleSettingsCollapse(this)">
+          <span class="sc-title"><i class="fas fa-right-from-bracket" style="margin-right:8px"></i>Account</span>
+          <i class="fas fa-chevron-down sc-chevron"></i>
+        </div>
+        <div class="settings-collapse-body">
+          <div class="settings-card" onclick="logout()" style="border-left-color:#ef4444">
+            <b style="color:#f87171"><i class="fas fa-sign-out-alt" style="margin-right:8px"></i>Log Out</b>
+            <p>Sign out of Project Subterranean on this device.</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <button onclick="setBg()" class="w-full bg-white/10 py-3 rounded-xl text-sm">Set Custom Background</button>
-    <button onclick="resetBg()" class="w-full bg-red-500/10 text-red-400 py-2 rounded-xl text-xs">Reset Background</button>
-    <button onclick="openAboutBlank()" class="w-full bg-white/10 py-3 rounded-xl text-sm">Open in About:Blank</button>
-    <button onclick="logout()" class="w-full bg-red-500/20 text-red-400 py-3 rounded-xl text-sm mt-4">Log Out</button>
+
   </div>
 </div>
 
@@ -573,8 +1390,8 @@ body {
 </div>
 
 <!-- Background Type Menu -->
-<div id="backgroundTypeMenu" class="fixed inset-0 bg-black/90 hidden flex items-center justify-center z-[350]">
-  <div class="bg-slate-900 border border-white/10 rounded-3xl max-w-5xl w-full mx-4 p-8 max-h-[90vh] overflow-y-auto">
+<div id="backgroundTypeMenu" class="scale-overlay" style="z-index:350" onclick="if(event.target===this)closeBackgroundTypeMenu()">
+  <div class="scale-panel bg-slate-900 border border-white/10 rounded-3xl max-w-5xl w-full mx-4 p-8">
     <div class="flex justify-between items-center mb-6">
       <h2 class="text-3xl">Background Types</h2>
       <button onclick="closeBackgroundTypeMenu()" class="text-3xl text-gray-400 hover:text-white">×</button>
@@ -585,8 +1402,8 @@ body {
 </div>
 
 <!-- Info + Wiki Modal -->
-<div id="infoModal" class="fixed inset-0 bg-black/90 z-50 hidden flex items-center justify-center p-4">
-  <div class="bg-slate-900 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-8">
+<div id="infoModal" class="scale-overlay" style="z-index:50" onclick="if(event.target===this)closeInfoModal()">
+  <div class="scale-panel bg-slate-900 rounded-3xl max-w-4xl w-full p-8">
     <div class="flex justify-between items-center mb-6">
       <h2 class="text-3xl">About & Wiki</h2>
       <button onclick="closeInfoModal()" class="text-3xl">×</button>
@@ -606,28 +1423,43 @@ body {
         <input id="wikiTitle" placeholder="Page title..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 outline-none">
         <button onclick="saveWikiPage()" class="bg-purple-600 px-6 py-2 rounded-xl font-bold">Save Page</button>
       </div>
-      <div class="wiki-toolbar">
-        <button onclick="format('bold')"><b>B</b></button>
-        <button onclick="format('italic')"><i>I</i></button>
-        <button onclick="format('underline')"><u>U</u></button>
-        <button onclick="format('strikeThrough')"><s>S</s></button>
-        <button onclick="format('formatBlock','h1')">Title</button>
-        <button onclick="format('formatBlock','h2')">Subtitle</button>
-        <button onclick="format('formatBlock','p')">Paragraph</button>
-        <input type="color" onchange="format('foreColor',this.value)" title="Text colour">
-        <input type="color" onchange="format('hiliteColor',this.value)" title="Highlight">
-        <button onclick="format('insertUnorderedList')">• List</button>
-        <button onclick="format('insertOrderedList')">1. List</button>
+      <div class="wiki-toolbar" id="globalWikiToolbar">
+        <button type="button" data-cmd="bold" onclick="toggleFormat(this,'bold')"><b>B</b></button>
+        <button type="button" data-cmd="italic" onclick="toggleFormat(this,'italic')"><i>I</i></button>
+        <button type="button" data-cmd="underline" onclick="toggleFormat(this,'underline')"><u>U</u></button>
+        <button type="button" data-cmd="strikeThrough" onclick="toggleFormat(this,'strikeThrough')"><s>S</s></button>
+        <div class="style-group" id="styleGroupGlobal">
+          <button type="button" class="style-group-btn" onclick="toggleStyleGroup('styleGroupGlobal')">Styles ▾</button>
+          <div class="style-group-menu">
+            <button type="button" onclick="applyBlockStyle('h1', this)">Title</button>
+            <button type="button" onclick="applyBlockStyle('h2', this)">Subtitle</button>
+            <button type="button" onclick="applyBlockStyle('p', this)">Paragraph</button>
+          </div>
+        </div>
+        <select onchange="formatFont(this.value)" title="Font" style="background:#1e293b;color:#fff;border:1px solid #334155;border-radius:10px;padding:6px 8px">
+          <option value="">Font</option>
+          <option value="Chewy, cursive">Chewy</option>
+          <option value="Inter, sans-serif">Inter</option>
+          <option value="Georgia, serif">Georgia</option>
+          <option value="Courier New, monospace">Mono</option>
+          <option value="Comic Sans MS, cursive">Comic</option>
+        </select>
+        <input type="color" onchange="format('foreColor',this.value)" title="Text colour" value="#ffffff">
+        <input type="color" onchange="format('hiliteColor',this.value)" title="Highlight" value="#a855f7">
+        <button type="button" onclick="insertWikiLink()">🔗 Link</button>
+        <label class="tool-btn">🖼<input type="file" accept="image/*" hidden onchange="insertWikiImage(this)"></label>
+        <button type="button" onclick="format('insertUnorderedList')">• List</button>
+        <button type="button" onclick="format('insertOrderedList')">1. List</button>
       </div>
-      <div id="wikiEditor" contenteditable="true"></div>
+      <div id="wikiEditor" contenteditable="true" onmouseup="syncFormatButtons('globalWikiToolbar')" onkeyup="syncFormatButtons('globalWikiToolbar')"></div>
       <div id="wikiPagesList" class="mt-8 space-y-3"></div>
     </div>
   </div>
 </div>
 
 <!-- Game Details Modal -->
-<div id="gameDetailsModal" class="fixed inset-0 bg-black/90 backdrop-blur-md hidden flex items-center justify-center z-[150]">
-  <div class="bg-slate-900 border border-white/10 rounded-3xl max-w-lg w-full mx-4 p-8" onclick="event.stopPropagation()">
+<div id="gameDetailsModal" class="scale-overlay" style="z-index:150" onclick="if(event.target===this)closeDetailsModal()">
+  <div class="scale-panel bg-slate-900 border border-white/10 rounded-3xl max-w-lg w-full mx-4 p-8" onclick="event.stopPropagation()">
     <div class="flex justify-between items-start mb-6">
       <h2 id="detailsTitle" class="text-3xl" style="color:var(--primary)"></h2>
       <button onclick="closeDetailsModal()" class="text-3xl text-gray-400 hover:text-white">×</button>
@@ -641,6 +1473,7 @@ body {
       <img id="detailsThumb" class="w-full rounded-2xl mb-6" style="max-height:260px;object-fit:cover">
       <p class="mb-2"><strong>Genre:</strong> <span id="detailsGenre" class="text-green-400"></span></p>
       <p id="detailsDesc" class="text-gray-300 leading-relaxed"></p>
+      <button onclick="openWikiFromDetails()" class="mt-5 w-full py-3 rounded-2xl font-bold transition-all" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15)">📖 Game Wiki</button>
     </div>
     <div id="dtabContent1" class="hidden">
       <canvas id="analyticsChart" height="180"></canvas>
@@ -649,9 +1482,9 @@ body {
     <div id="dtabContent2" class="hidden">
       <div id="reviewsList" class="max-h-64 overflow-y-auto space-y-4 mb-6 text-sm"></div>
       <textarea id="reviewInput" rows="3" placeholder="Write your review..." class="w-full bg-slate-800 border border-white/20 rounded-xl p-4"></textarea>
-      <button onclick="submitReview()" class="mt-3 w-full bg-green-500 text-black py-3 rounded-2xl font-bold">Submit Review</button>
+      <button onclick="submitReview()" class="mt-3 w-full btn-theme py-3 rounded-2xl font-bold transition-all">Submit Review</button>
     </div>
-    <button onclick="playFromDetails()" class="mt-6 w-full bg-green-500 text-black py-3 rounded-2xl font-bold">▶ Play Game</button>
+    <button onclick="playFromDetails()" class="mt-6 w-full btn-theme py-3 rounded-2xl font-bold transition-all">▶ Play Game</button>
   </div>
 </div>
 
@@ -679,66 +1512,236 @@ body {
 <script>
 /* ==================== SUPABASE ==================== */
 const SUPABASE_URL = 'https://jabilmvxomeacgurmtse.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_c4OmajHD6y-HaPEIyTL_hg_Svc3ikKC'; // ← PASTE YOUR PUBLISHABLE KEY HERE
+const SUPABASE_ANON_KEY = 'sb_publishable_c4OmajHD6y-HaPEIyTL_hg_Svc3ikKC';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Use a different variable name because the CDN already declares `supabase`
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+
+/* ==================== TOAST ==================== */
+function showToast(message, type = 'info', duration = 3000) {
+  const container = document.getElementById('toastContainer');
+  if (!container) return;
+  const toast = document.createElement('div');
+  toast.className = 'toast toast-' + type;
+  const icons = { error: '⚠️', success: '✓', info: 'ℹ️' };
+  toast.innerHTML = `
+    <span class="toast-icon">${icons[type] || icons.info}</span>
+    <div class="toast-body">${message}</div>
+    <button class="toast-close" onclick="this.parentElement.classList.add('out');setTimeout(()=>this.parentElement.remove(),300)">×</button>
+  `;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('out');
+    setTimeout(() => toast.remove(), 300);
+  }, duration);
+}
 
 /* ==================== AUTH ==================== */
 function switchAuthTab(tab) {
+  // Update tab styles
   document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
-  document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
-  document.getElementById('signupForm').style.display = tab === 'signup' ? 'block' : 'none';
+  const tabEl = document.querySelector(`.auth-tab[data-tab="${tab}"]`);
+  if (tabEl) tabEl.classList.add('active');
+
+  // Show / hide forms
+  const loginForm = document.getElementById('loginForm');
+  const signupForm = document.getElementById('signupForm');
+  if (loginForm && signupForm) {
+    if (tab === 'login') {
+      loginForm.style.display = 'block';
+      signupForm.style.display = 'none';
+    } else {
+      loginForm.style.display = 'none';
+      signupForm.style.display = 'block';
+    }
+  }
 }
+
 function checkPassword(v) {
-  const c = {
+  const checks = {
     length: v.length >= 8,
     upper: /[A-Z]/.test(v),
     lower: /[a-z]/.test(v),
     number: /[0-9]/.test(v),
     special: /[^A-Za-z0-9]/.test(v)
   };
-  ['length','upper','lower','number','special'].forEach(k => {
-    document.getElementById('req-' + k).classList.toggle('valid', c[k]);
+
+  Object.keys(checks).forEach(key => {
+    const el = document.getElementById('req-' + key);
+    if (el) el.classList.toggle('valid', checks[key]);
   });
-  document.getElementById('signupBtn').disabled = !Object.values(c).every(Boolean);
+
+  const allValid = Object.values(checks).every(Boolean);
+  const btn = document.getElementById('signupBtn');
+  if (btn) btn.disabled = !allValid;
 }
+
 async function handleAuth(e, mode) {
   e.preventDefault();
-  const btn = document.getElementById(mode + 'Btn');
-  const sp = document.getElementById(mode + 'Spinner');
-  const span = btn.querySelector('span');
-  span.style.display = 'none'; sp.style.display = 'inline-block'; btn.disabled = true;
 
-  const email = document.getElementById(mode + 'Email').value;
-  const password = document.getElementById(mode + 'Password').value;
-  let result;
-  if (mode === 'login') {
-    result = await supabase.auth.signInWithPassword({ email, password });
-  } else {
-    result = await supabase.auth.signUp({ email, password });
+  const btn = document.getElementById(mode + 'Btn');
+  const spinner = document.getElementById(mode + 'Spinner');
+  const span = btn ? btn.querySelector('span') : null;
+
+  // Show loading state
+  if (span) span.style.display = 'none';
+  if (spinner) spinner.style.display = 'inline-block';
+  if (btn) btn.disabled = true;
+
+  const email = document.getElementById(mode + 'Email')?.value?.trim() || '';
+  const password = document.getElementById(mode + 'Password')?.value || '';
+
+  try {
+    let result;
+
+    if (mode === 'login') {
+      result = await sb.auth.signInWithPassword({ email, password });
+    } else {
+      result = await sb.auth.signUp({ email, password });
+    }
+
+    if (result.error) {
+      // Friendly error messages
+      let msg = result.error.message;
+
+      if (msg.includes('Invalid login credentials')) {
+        msg = 'Incorrect email or password.';
+      } else if (msg.includes('User already registered')) {
+        msg = 'This email is already registered. Please sign in instead.';
+      } else if (msg.includes('Password should be') || msg.includes('password')) {
+        msg = 'Password is too weak. Please use a stronger password.';
+      } else if (msg.includes('Email not confirmed')) {
+        msg = 'Please check your email and confirm your account first.';
+      }
+
+      showToast(msg, 'error');
+
+      // Reset button
+      if (span) span.style.display = 'inline';
+      if (spinner) spinner.style.display = 'none';
+      if (btn) btn.disabled = false;
+      return;
+    }
+
+    // Success
+    localStorage.setItem('equinox_logged_in', 'true');
+    if (password) localStorage.setItem('account_pw_check', btoa(password));
+    if (email) localStorage.setItem('user_email', email);
+    enterMainSite();
+
+  } catch (err) {
+    console.error(err);
+    showToast('An unexpected error occurred. Please try again later.', 'error');
+    if (span) span.style.display = 'inline';
+    if (spinner) spinner.style.display = 'none';
+    if (btn) btn.disabled = false;
   }
-  if (result.error) {
-    alert(result.error.message);
-    span.style.display = 'inline'; sp.style.display = 'none'; btn.disabled = false;
-    return;
-  }
-  localStorage.setItem('equinox_logged_in', 'true');
-  enterMainSite();
 }
+
 async function signInWithProvider(provider) {
-  const { error } = await supabase.auth.signInWithOAuth({ provider });
-  if (error) alert(error.message);
+  try {
+    const { error } = await sb.auth.signInWithOAuth({
+      provider: provider,
+      options: {
+        redirectTo: window.location.href
+      }
+    });
+    if (error) {
+      showToast(error.message, 'error');
+    }
+  } catch (err) {
+    showToast('An unexpected error occurred. Please try again later.', 'error');
+  }
 }
+
 function enterMainSite() {
-  document.getElementById('authScreen').classList.add('hidden');
-  document.getElementById('mainSite').classList.add('visible');
+  const auth = document.getElementById('authScreen');
+  const main = document.getElementById('mainSite');
+  if (auth) auth.classList.add('hidden');
+  if (main) main.classList.add('visible');
   initSite();
 }
+
 function logout() {
-  supabase.auth.signOut();
+  try { if (typeof sb !== 'undefined' && sb?.auth) sb.auth.signOut(); } catch(e) {}
   localStorage.removeItem('equinox_logged_in');
-  location.reload();
+  // Keep profile data for welcome-back
+  const main = document.getElementById('mainSite');
+  if (main) main.classList.remove('visible');
+  showWelcomeBack();
+}
+
+function showWelcomeBack() {
+  const name = localStorage.getItem('user_display_name') || (localStorage.getItem('user_email') || 'Player').split('@')[0];
+  document.getElementById('wbUsername').textContent = name;
+  const method = localStorage.getItem('passkeyType') || 'password';
+  const methodLabels = { pin: 'PIN', pattern: 'Pattern', drawing: 'Drawing', security: 'Security Key', password: 'Password' };
+  document.getElementById('wbMethod').textContent = 'Sign-in: ' + (methodLabels[method] || method);
+  const av = document.getElementById('wbAvatar');
+  const media = localStorage.getItem('user_avatar');
+  if (media) {
+    if (media.startsWith('data:video')) {
+      av.innerHTML = `<video src="${media}" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video>`;
+    } else if (media.startsWith('data:text/html') || media.includes('<html')) {
+      av.innerHTML = `<iframe srcdoc="${media.replace(/"/g, '&quot;')}" style="width:100%;height:100%;border:none;pointer-events:none"></iframe>`;
+    } else {
+      av.innerHTML = `<img src="${media}" alt="avatar">`;
+    }
+  } else {
+    av.innerHTML = '<i class="fas fa-user"></i>';
+  }
+  // Unlock button adapts to method
+  const btn = document.getElementById('wbUnlockBtn');
+  btn.textContent = method === 'password' ? 'Enter Password' : method === 'pin' ? 'Enter PIN' : method === 'pattern' ? 'Draw Pattern' : method === 'drawing' ? 'Draw Signature' : 'Unlock';
+  const wb = document.getElementById('welcomeBack');
+  wb.style.display = 'flex';
+  void wb.offsetWidth;
+  wb.classList.add('show');
+  const auth = document.getElementById('authScreen');
+  if (auth) { auth.classList.add('hidden'); auth.style.display = 'none'; }
+}
+
+function welcomeUnlock() {
+  const method = localStorage.getItem('passkeyType') || 'password';
+  if (method === 'password' || method === 'pin') {
+    const label = method === 'pin' ? 'PIN' : 'Password';
+    const val = prompt('Enter your ' + label + ' to unlock');
+    if (val == null) return;
+    const stored = method === 'pin' ? localStorage.getItem('passkeyPin') : (localStorage.getItem('account_pw_check') || localStorage.getItem('passkeyPw'));
+    if (stored && stored !== btoa(val)) return showToast('Incorrect ' + label, 'error');
+  } else if (method === 'pattern' || method === 'drawing' || method === 'security') {
+    // open passkey panel as unlock gate
+    openPasskeyPanel(method);
+    showToast('Confirm your ' + method + ' to unlock', 'info');
+    // After confirmPasskeySetup we'll also need to enter - for simplicity unlock on confirm if coming from welcome
+    window._unlockAfterPasskey = true;
+    return;
+  }
+  finishWelcomeUnlock();
+}
+
+function finishWelcomeUnlock() {
+  localStorage.setItem('equinox_logged_in', 'true');
+  const wb = document.getElementById('welcomeBack');
+  wb.classList.remove('show');
+  setTimeout(() => { wb.style.display = 'none'; }, 400);
+  enterMainSite();
+}
+
+function welcomeSwitchAccount() {
+  const wb = document.getElementById('welcomeBack');
+  wb.classList.remove('show');
+  setTimeout(() => {
+    wb.style.display = 'none';
+    // Clear session identity but keep optional data
+    localStorage.removeItem('equinox_logged_in');
+    const auth = document.getElementById('authScreen');
+    if (auth) {
+      auth.classList.remove('hidden');
+      auth.style.display = 'flex';
+    }
+  }, 350);
 }
 
 /* ==================== SITE CORE ==================== */
@@ -761,24 +1764,89 @@ async function initSite() {
   checkNotifications();
 }
 
+
+/** Fetch JSON that may contain trailing commas (common in hand-edited files) */
+async function loadJsonArray(urls) {
+  let lastErr = null;
+  for (const url of urls) {
+    try {
+      const res = await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now());
+      if (!res.ok) throw new Error(res.status + ' ' + res.statusText);
+      let text = await res.text();
+      // Strip // comments and trailing commas before ] or }
+      text = text.replace(/\/\/.*$/gm, '');
+      text = text.replace(/,(\s*[}\]])/g, '$1');
+      const data = JSON.parse(text);
+      if (Array.isArray(data)) return data;
+      if (data && Array.isArray(data.backgrounds)) return data.backgrounds;
+      return [];
+    } catch (e) {
+      lastErr = e;
+      console.warn('JSON load failed for', url, e);
+    }
+  }
+  if (lastErr) throw lastErr;
+  return [];
+}
+
 async function loadData() {
   try {
-    document.getElementById('mainLogoImg').src = cdnBase + 'logo.png';
-    document.getElementById('penguinHeadImg').src = cdnBase + 'penguinhead.png';
-    const shaRes = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/commits?t=${Date.now()}`);
-    const commits = await shaRes.json();
-    const sha = commits[0].sha;
-    games = await (await fetch(`https://cdn.jsdelivr.net/gh/${repoOwner}/${repoName}@${sha}/games.json`)).json();
-    try { backups = await (await fetch(`https://cdn.jsdelivr.net/gh/${repoOwner}/${repoName}@${sha}/links.json`)).json(); } catch(e){}
-    try { backgrounds = await (await fetch(`https://cdn.jsdelivr.net/gh/${repoOwner}/${repoName}@${sha}/backgrounds.json`)).json(); } catch(e){}
+    const logo = document.getElementById('mainLogoImg');
+    const penguin = document.getElementById('penguinHeadImg');
+    if (logo) logo.src = cdnBase + 'logo.png';
+    if (penguin) penguin.src = cdnBase + 'penguinhead.png';
+
+    // Try to get latest commit SHA for cache-busting, fall back to @main
+    let ref = 'main';
+    try {
+      const shaRes = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/commits?per_page=1&t=${Date.now()}`);
+      if (shaRes.ok) {
+        const commits = await shaRes.json();
+        if (Array.isArray(commits) && commits[0]?.sha) {
+          ref = commits[0].sha;
+        }
+      }
+    } catch (e) {
+      console.warn('GitHub SHA fetch failed, using @main', e);
+    }
+
+    const gamesUrl = `https://cdn.jsdelivr.net/gh/${repoOwner}/${repoName}@${ref}/games.json`;
+    const res = await fetch(gamesUrl);
+    if (!res.ok) throw new Error('Failed to load games.json: ' + res.status);
+    games = await res.json();
+    if (!Array.isArray(games)) games = [];
+
+    try {
+      backups = await (await fetch(`https://cdn.jsdelivr.net/gh/${repoOwner}/${repoName}@${ref}/links.json`)).json();
+    } catch (e) { backups = []; }
+    try {
+      backgrounds = await loadJsonArray([
+        `https://cdn.jsdelivr.net/gh/${repoOwner}/${repoName}@${ref}/backgrounds.json`,
+        `https://cdn.jsdelivr.net/gh/${repoOwner}/${repoName}@main/backgrounds.json`,
+        `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/backgrounds.json`
+      ]);
+    } catch (e) { console.warn('backgrounds load failed', e); backgrounds = []; }
+
+    ensureDefaultBackdrop();
     renderCategoryTabs();
     renderGames('games');
     renderFavorites();
+    renderPinnedFavs();
     renderRecentlyPlayed();
-  } catch (e) { console.error(e); }
+  } catch (e) {
+    console.error('loadData error:', e);
+    // Show a visible error so the user knows something failed
+    const grid = document.getElementById('gameGrid');
+    if (grid) {
+      grid.innerHTML = `<p class="col-span-full text-center text-red-400 py-12">Failed to load games. Check console or try refreshing.<br><span class="text-sm opacity-60">${e.message || e}</span></p>`;
+    }
+  }
 }
 
 function loadSavedData() {
+  const mat = localStorage.getItem('windowMaterial');
+  if (mat && mat !== 'solid') setWindowMaterial(mat);
+
   recentlyPlayed = JSON.parse(localStorage.getItem('recentlyPlayed') || '[]');
   favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
   const bg = localStorage.getItem('user_bg');
@@ -788,19 +1856,64 @@ function loadSavedData() {
 /* ==================== GAMES ==================== */
 function renderCategoryTabs() {
   const c = document.getElementById('categoryTabs');
+  if (!c) return;
+  const cats = ['All', ...new Set((games || []).map(g => g.category).filter(Boolean))];
   c.innerHTML = '';
-  const cats = ['All', ...new Set(games.map(g => g.category || 'Uncategorized'))];
   cats.forEach(cat => {
-    const t = document.createElement('div');
-    t.className = 'cat-tab' + (cat === currentCategory ? ' active' : '');
-    t.textContent = cat;
-    t.onclick = () => {
-      currentCategory = cat;
-      renderCategoryTabs();
-      renderGames(currentFilter);
-    };
-    c.appendChild(t);
+    const btn = document.createElement('button');
+    btn.className = 'cat-tab' + (cat === currentCategory ? ' active' : '');
+    btn.textContent = cat;
+    btn.onclick = () => switchGameCategory(cat, btn);
+    c.appendChild(btn);
   });
+}
+
+function switchGameCategory(cat, btn) {
+  if (cat === currentCategory) return;
+  currentCategory = cat;
+  document.querySelectorAll('#categoryTabs .cat-tab').forEach(x => x.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const tabs = document.getElementById('categoryTabs');
+  const grid = document.getElementById('gameGrid');
+  // loading spinner
+  let spin = document.getElementById('tabLoadSpin');
+  if (!spin) {
+    spin = document.createElement('div');
+    spin.id = 'tabLoadSpin';
+    spin.className = 'tab-loading-spin show';
+    if (tabs && tabs.parentNode) tabs.parentNode.insertBefore(spin, tabs.nextSibling);
+  }
+  spin.classList.add('show');
+  spin.style.display = 'block';
+  if (tabs) tabs.classList.add('loading');
+  if (grid) {
+    grid.classList.add('game-grid-fade', 'switching');
+  }
+  setTimeout(() => {
+    renderGames(currentFilter, document.getElementById('searchInput')?.value || '');
+    // wait a tick for images to start loading
+    requestAnimationFrame(() => {
+      const imgs = grid ? [...grid.querySelectorAll('img')] : [];
+      let pending = imgs.length;
+      const done = () => {
+        if (grid) grid.classList.remove('switching');
+        if (tabs) tabs.classList.remove('loading');
+        if (spin) spin.style.display = 'none';
+      };
+      if (!pending) { setTimeout(done, 180); return; }
+      let left = pending;
+      const tick = () => { left--; if (left <= 0) done(); };
+      imgs.forEach(img => {
+        if (img.complete) tick();
+        else {
+          img.addEventListener('load', tick, { once: true });
+          img.addEventListener('error', tick, { once: true });
+        }
+      });
+      // safety timeout
+      setTimeout(done, 1200);
+    });
+  }, 220);
 }
 
 function renderGames(filter = 'games', search = '') {
@@ -856,12 +1969,37 @@ function createGameCard(item, grid) {
 }
 
 function toggleFavorite(id) {
-  if (favorites.includes(id)) favorites = favorites.filter(f => f !== id);
+  const idx = favorites.indexOf(id);
+  if (idx >= 0) favorites.splice(idx, 1);
   else favorites.unshift(id);
+  // Keep max 8 pinned
+  if (favorites.length > 8) favorites = favorites.slice(0, 8);
   localStorage.setItem('favorites', JSON.stringify(favorites));
   renderFavorites();
-  renderRecentlyPlayed();
-  renderGames(currentFilter);
+  renderPinnedFavs();
+  renderGames(currentFilter, document.getElementById('searchInput')?.value || '');
+}
+
+function renderPinnedFavs() {
+  const container = document.getElementById('pinnedFavs');
+  const divider = document.getElementById('pinnedDivider');
+  if (!container) return;
+  container.innerHTML = '';
+  if (!favorites.length) {
+    if (divider) divider.style.display = 'none';
+    return;
+  }
+  if (divider) divider.style.display = 'block';
+  favorites.slice(0, 6).forEach(id => {
+    const g = games.find(x => x.id === id);
+    if (!g) return;
+    const el = document.createElement('div');
+    el.className = 'pinned-fav';
+    el.title = g.title;
+    el.innerHTML = `<img src="${cdnBase}${g.thumb}" alt="${g.title}">`;
+    el.onclick = () => openGame(id);
+    container.appendChild(el);
+  });
 }
 
 function renderFavorites() {
@@ -884,8 +2022,9 @@ function renderFavorites() {
 
 function renderRecentlyPlayed() {
   const c = document.getElementById('recentGrid');
+  if (!c) return;
   c.innerHTML = '';
-  const list = games.filter(g => recentlyPlayed.includes(g.id));
+  const list = recentlyPlayed.map(id => games.find(g => g.id === id)).filter(Boolean);
   if (!list.length) {
     document.getElementById('recentlyPlayed').classList.add('hidden');
     return;
@@ -894,10 +2033,34 @@ function renderRecentlyPlayed() {
   list.forEach(g => {
     const d = document.createElement('div');
     d.className = 'game-card';
-    d.innerHTML = `<img src="${cdnBase}${g.thumb}"><div class="card-title"><span>${g.title}</span></div>`;
+    d.innerHTML = `<img src="${cdnBase}${g.thumb}" loading="lazy"><div class="card-title"><span>${g.title}</span></div>`;
     d.onclick = () => openGame(g.id);
     c.appendChild(d);
   });
+}
+
+
+function openScalePanel(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (id === 'passkeyPanel' || id === 'profilePanel' || id === 'avatarCropPanel') {
+    el.style.zIndex = '50000';
+  }
+  el.style.display = 'flex';
+  el.classList.remove('closing', 'hidden');
+  void el.offsetWidth;
+  el.classList.add('open');
+}
+function closeScalePanel(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.add('closing');
+  el.classList.remove('open');
+  setTimeout(() => {
+    el.classList.remove('closing');
+    el.style.display = 'none';
+    el.classList.add('hidden');
+  }, 380);
 }
 
 function openGame(id) {
@@ -909,14 +2072,11 @@ function openGame(id) {
   document.getElementById('modalIcon').src = cdnBase + g.thumb;
   document.getElementById('iframeContainer').innerHTML = `<iframe id="gameIframe" src="${g.url}" class="w-full h-full border-none" allowfullscreen></iframe>`;
 
+  // Smooth scale open (no bounce)
   modal.style.display = 'flex';
-  modal.style.opacity = '0';
-  modal.style.transform = 'scale(0.3)';
-  requestAnimationFrame(() => {
-    modal.style.transition = 'all 0.55s cubic-bezier(0.34,1.56,0.64,1)';
-    modal.style.opacity = '1';
-    modal.style.transform = 'scale(1)';
-  });
+  modal.classList.remove('closing');
+  // Force reflow then open
+  void modal.offsetWidth;
   modal.classList.add('open');
 
   recentlyPlayed = recentlyPlayed.filter(r => r !== id);
@@ -929,12 +2089,12 @@ function openGame(id) {
 function closeGame() {
   const modal = document.getElementById('gameModal');
   modal.classList.add('closing');
+  modal.classList.remove('open');
   setTimeout(() => {
-    modal.classList.remove('open', 'closing');
+    modal.classList.remove('closing');
     modal.style.display = 'none';
-    modal.style.clipPath = '';
     document.getElementById('iframeContainer').innerHTML = '';
-  }, 550);
+  }, 380);
 }
 
 function openRandomGame() {
@@ -950,14 +2110,15 @@ function showGameDetails(id) {
   document.getElementById('detailsThumb').src = cdnBase + g.thumb;
   document.getElementById('detailsGenre').textContent = g.genre || 'Unknown';
   document.getElementById('detailsDesc').textContent = g.description || 'No description.';
-  document.getElementById('gameDetailsModal').classList.remove('hidden');
+  openScalePanel('gameDetailsModal');
   switchDetailsTab(0);
   loadReviews(id);
   loadAnalytics(id);
 }
 function closeDetailsModal() {
-  document.getElementById('gameDetailsModal').classList.add('hidden');
+  closeScalePanel('gameDetailsModal');
 }
+
 function switchDetailsTab(n) {
   for (let i = 0; i < 3; i++) {
     const tab = document.getElementById('dtab' + i);
@@ -974,30 +2135,100 @@ function switchDetailsTab(n) {
   }
 }
 async function loadReviews(gameId) {
-  const { data } = await supabase.from('reviews').select('*').eq('game_id', gameId).order('created_at', { ascending: false });
+  const { data } = await sb.from('reviews').select('*').eq('game_id', gameId).order('created_at', { ascending: false });
   const list = document.getElementById('reviewsList');
+  if (!list) return;
   list.innerHTML = '';
+  const { data: { user } } = await sb.auth.getUser();
+  const myEmail = user?.email || '';
   (data || []).forEach(r => {
-    list.innerHTML += `
-      <div class="bg-white/5 p-4 rounded-xl">
-        <div class="flex justify-between text-sm opacity-60 mb-1">
-          <span>${r.user_email || 'Anonymous'}</span>
-          <span>${new Date(r.created_at).toLocaleDateString()}</span>
-        </div>
-        <p>${r.content}</p>
-      </div>`;
+    const isMine = myEmail && r.user_email === myEmail;
+    const card = document.createElement('div');
+    card.className = 'review-card';
+    card.innerHTML = `
+      <div class="flex justify-between text-sm opacity-60 mb-1">
+        <span>${r.user_email || 'Anonymous'}</span>
+        <span>${new Date(r.created_at).toLocaleDateString()}</span>
+      </div>
+      <p class="review-text">${r.content}</p>
+      ${isMine ? `<div class="review-actions">
+        <button class="review-action edit" onclick="editReview('${r.id}', this)">Edit</button>
+        <button class="review-action delete" onclick="deleteReview('${r.id}')">Delete</button>
+      </div>` : ''}
+    `;
+    list.appendChild(card);
   });
+  if (!(data || []).length) {
+    list.innerHTML = '<p class="text-center opacity-40 py-4 text-sm">No reviews yet. Be the first!</p>';
+  }
 }
+
+async function editReview(id, btn) {
+  _editingReviewId = id;
+  let text = '';
+  let stars = 5;
+  try {
+    const row = btn?.closest('[data-review-id], .review-item, div');
+    const body = row?.querySelector('.review-body, p');
+    if (body) text = body.textContent.trim();
+  } catch(e) {}
+  // try from local cache
+  const local = JSON.parse(localStorage.getItem('reviews_' + currentGameId) || '[]');
+  const found = local.find(r => r.id === id);
+  if (found) { text = found.text || text; stars = found.stars || 5; }
+  document.getElementById('reviewEditText').value = text;
+  _editStars = stars;
+  renderReviewStarEdit();
+  openScalePanel('reviewEditModal');
+}
+let _editingReviewId = null;
+let _editStars = 5;
+function renderReviewStarEdit() {
+  const el = document.getElementById('reviewStarEdit');
+  if (!el) return;
+  el.innerHTML = [1,2,3,4,5].map(n => `<span onclick="_editStars=${n};renderReviewStarEdit()" style="cursor:pointer;font-size:1.4rem;color:${n <= _editStars ? '#fbbf24' : '#475569'}">★</span>`).join('');
+}
+function closeReviewEdit() { closeScalePanel('reviewEditModal'); _editingReviewId = null; }
+async function saveReviewEdit() {
+  const text = document.getElementById('reviewEditText').value.trim();
+  if (!text) return showToast('Review cannot be empty', 'error');
+  const key = 'reviews_' + currentGameId;
+  let local = JSON.parse(localStorage.getItem(key) || '[]');
+  const idx = local.findIndex(r => r.id === _editingReviewId);
+  if (idx >= 0) {
+    local[idx].text = text;
+    local[idx].stars = _editStars;
+  }
+  localStorage.setItem(key, JSON.stringify(local));
+  try {
+    if (typeof sb !== 'undefined' && sb) await sb.from('reviews').update({ content: text, rating: _editStars }).eq('id', _editingReviewId);
+  } catch (e) {}
+  showToast('Review updated', 'success');
+  closeReviewEdit();
+  loadReviews(currentGameId);
+}
+
+
+async function deleteReview(id) {
+  if (!confirm('Delete this review?')) return;
+  const { error } = await sb.from('reviews').delete().eq('id', id);
+  if (error) return showToast(error.message, 'error');
+  showToast('Review deleted', 'success');
+  loadReviews(currentGameId);
+}
+
 async function submitReview() {
   const content = document.getElementById('reviewInput').value.trim();
-  if (!content) return;
-  const { data: { user } } = await supabase.auth.getUser();
-  await supabase.from('reviews').insert({
+  if (!content) return showToast('Write something first', 'info');
+  const { data: { user } } = await sb.auth.getUser();
+  const { error } = await sb.from('reviews').insert({
     game_id: currentGameId,
     content,
     user_email: user?.email || 'Anonymous'
   });
+  if (error) return showToast(error.message, 'error');
   document.getElementById('reviewInput').value = '';
+  showToast('Review submitted!', 'success');
   loadReviews(currentGameId);
 }
 async function loadAnalytics(gameId) {
@@ -1073,13 +2304,16 @@ function buildCalendar() {
     grid.appendChild(el);
   }
 }
-document.getElementById('currentTime').addEventListener('contextmenu', e => {
-  e.preventDefault();
-  use24Hour = !use24Hour;
-  localStorage.setItem('use24Hour', use24Hour);
-  updateTopBarTime();
-});
-document.getElementById('currentTime').addEventListener('click', openClockModal);
+const _timeEl = document.getElementById('currentTime');
+if (_timeEl) {
+  _timeEl.addEventListener('contextmenu', e => {
+    e.preventDefault();
+    use24Hour = !use24Hour;
+    localStorage.setItem('use24Hour', use24Hour);
+    updateTopBarTime();
+  });
+  _timeEl.addEventListener('click', openClockModal);
+}
 
 /* ==================== WEATHER ==================== */
 const mockWeather = [
@@ -1178,7 +2412,8 @@ document.getElementById('chartTabs')?.addEventListener('click', e => {
   e.target.classList.remove('bg-white/10');
   showDayChart(todayIndex);
 });
-document.getElementById('currentTemp').addEventListener('click', openWeatherModal);
+const _tempEl = document.getElementById('currentTemp');
+if (_tempEl) _tempEl.addEventListener('click', openWeatherModal);
 
 /* ==================== TOP BAR ==================== */
 function updateTopBarTime() {
@@ -1196,31 +2431,117 @@ function updateTopBarTime() {
 function updateTopBar() {
   updateTopBarTime();
   setInterval(updateTopBarTime, 30000);
-  document.getElementById('tempDisplay').textContent = '21°';
+
+  // Battery
   if (navigator.getBattery) {
     navigator.getBattery().then(b => {
       const update = () => {
         const p = Math.floor(b.level * 100);
-        document.getElementById('batteryDisplay').textContent = p;
-        const hue = Math.max(0, 120 - ((100 - p) * 2.4));
-        document.getElementById('batteryIcon').style.color = `hsl(${hue},90%,60%)`;
+        const batDisp = document.getElementById('batteryDisplay');
+        const batIcon = document.getElementById('batteryIcon');
+        if (batDisp) batDisp.textContent = p;
+        if (batIcon) {
+          const hue = Math.max(0, 120 - ((100 - p) * 2.4));
+          batIcon.style.color = `hsl(${hue},90%,60%)`;
+        }
       };
       update();
       b.addEventListener('levelchange', update);
     });
   }
+
+  // Ping simulation
   setInterval(() => {
-    document.getElementById('msDisplay').textContent = 40 + Math.floor(Math.random() * 50);
+    const ms = document.getElementById('msDisplay');
+    if (ms) ms.textContent = 40 + Math.floor(Math.random() * 50);
   }, 3000);
+
+  // Real weather via geolocation
+  fetchWeather();
 }
+
+async function fetchWeather() {
+  const tempEl = document.getElementById('tempDisplay');
+  try {
+    const pos = await new Promise((resolve, reject) => {
+      if (!navigator.geolocation) return reject(new Error('no geo'));
+      navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 8000, maximumAge: 600000 });
+    });
+    const { latitude: lat, longitude: lon } = pos.coords;
+    // Detect metric vs imperial roughly via timezone/locale
+    const useMetric = !navigator.language?.toLowerCase().includes('en-us');
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m&temperature_unit=${useMetric ? 'celsius' : 'fahrenheit'}`;
+    const data = await (await fetch(url)).json();
+    const t = Math.round(data.current.temperature_2m);
+    const unit = useMetric ? '°' : '°F';
+    if (tempEl) tempEl.textContent = t + (useMetric ? '°' : '°F');
+    // Store for weather modal
+    window._weatherCoords = { lat, lon, useMetric };
+  } catch (e) {
+    // Fallback: IP-based approx via open-meteo without coords defaults, or static
+    if (tempEl) tempEl.textContent = '--°';
+    console.warn('Weather location denied or failed', e);
+  }
+}
+
+
+/* ==================== WIKI FORMAT HELPERS ==================== */
+function format(cmd, val) {
+  document.execCommand(cmd, false, val || null);
+}
+function toggleFormat(btn, cmd) {
+  document.execCommand(cmd, false, null);
+  btn.classList.toggle('active', document.queryCommandState(cmd));
+}
+function syncFormatButtons(toolbarId) {
+  const bar = document.getElementById(toolbarId);
+  if (!bar) return;
+  bar.querySelectorAll('button[data-cmd]').forEach(btn => {
+    try { btn.classList.toggle('active', document.queryCommandState(btn.dataset.cmd)); } catch(e) {}
+  });
+}
+function toggleStyleGroup(id) {
+  document.querySelectorAll('.style-group').forEach(g => { if (g.id !== id) g.classList.remove('open'); });
+  document.getElementById(id)?.classList.toggle('open');
+}
+function applyBlockStyle(tag, btn) {
+  document.execCommand('formatBlock', false, tag);
+  const menu = btn?.closest('.style-group-menu');
+  if (menu) menu.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  btn?.closest('.style-group')?.classList.remove('open');
+}
+function formatFont(font) {
+  if (!font) return;
+  document.execCommand('fontName', false, font);
+}
+function insertWikiLink() {
+  const url = prompt('Link URL (wiki page id, relative path, or https://...)');
+  if (!url) return;
+  const text = prompt('Link text', url) || url;
+  document.execCommand('insertHTML', false, `<a href="${url}" target="_blank" rel="noopener" style="color:var(--primary);text-decoration:underline">${text}</a>`);
+}
+function insertWikiImage(input) {
+  const file = input.files?.[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.execCommand('insertHTML', false, `<img src="${e.target.result}" style="max-width:100%;border-radius:12px;margin:8px 0">`);
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.style-group')) document.querySelectorAll('.style-group').forEach(g => g.classList.remove('open'));
+});
 
 /* ==================== INFO + WIKI ==================== */
 function openInfoModal() {
-  document.getElementById('infoModal').classList.remove('hidden');
-  loadWikiPages();
+  openScalePanel('infoModal');
+  if (typeof loadWikiPages === 'function') loadWikiPages();
 }
 function closeInfoModal() {
-  document.getElementById('infoModal').classList.add('hidden');
+  closeScalePanel('infoModal');
 }
 function showInfoTab(tab) {
   document.getElementById('aboutTab').classList.toggle('hidden', tab !== 'about');
@@ -1230,42 +2551,162 @@ function showInfoTab(tab) {
   document.getElementById('aboutBtn').classList.toggle('bg-white/10', tab !== 'about');
   document.getElementById('wikiBtn').classList.toggle('bg-white/10', tab !== 'wiki');
 }
-function format(cmd, val = null) {
-  document.execCommand(cmd, false, val);
-  document.getElementById('wikiEditor').focus();
-}
 async function saveWikiPage() {
   const title = document.getElementById('wikiTitle').value.trim();
   const content = document.getElementById('wikiEditor').innerHTML;
-  if (!title || !content) return alert('Title and content required');
-  const { data: { user } } = await supabase.auth.getUser();
-  await supabase.from('wiki_pages').insert({
-    title, content, author: user?.email || 'Anonymous'
-  });
+  if (!title) return showToast('Enter a page title', 'error');
+  const pages = JSON.parse(localStorage.getItem('wiki_global') || '[]');
+  const existing = pages.findIndex(p => p.title === title);
+  const page = { id: existing >= 0 ? pages[existing].id : 'g_' + Date.now(), title, content, author: localStorage.getItem('user_email') || 'anon', date: new Date().toLocaleDateString(), gameId: null };
+  if (existing >= 0) pages[existing] = page; else pages.unshift(page);
+  localStorage.setItem('wiki_global', JSON.stringify(pages));
+  try {
+    if (typeof sb !== 'undefined' && sb) {
+      await sb.from('wiki_pages').upsert({ id: page.id, title, content, author: page.author, game_id: null });
+    }
+  } catch (e) { console.warn(e); }
+  showToast('Page saved', 'success');
   document.getElementById('wikiTitle').value = '';
   document.getElementById('wikiEditor').innerHTML = '';
   loadWikiPages();
-  alert('Page saved!');
 }
 async function loadWikiPages() {
-  const { data } = await supabase.from('wiki_pages').select('*').order('updated_at', { ascending: false });
+  let pages = JSON.parse(localStorage.getItem('wiki_global') || '[]');
+  try {
+    if (typeof sb !== 'undefined' && sb) {
+      const { data } = await sb.from('wiki_pages').select('*').is('game_id', null).order('created_at', { ascending: false });
+      if (data && data.length) pages = data.map(p => ({ id: p.id, title: p.title, content: p.content, author: p.author, date: p.created_at ? new Date(p.created_at).toLocaleDateString() : '' }));
+    }
+  } catch (e) {}
   const list = document.getElementById('wikiPagesList');
-  list.innerHTML = '<h3 class="text-xl mb-3">All Pages</h3>';
-  (data || []).forEach(p => {
-    list.innerHTML += `
-      <div class="bg-white/5 p-4 rounded-xl cursor-pointer hover:bg-white/10" onclick="loadWikiContent('${p.id}')">
+  if (!list) return;
+  if (!pages.length) { list.innerHTML = '<p class="opacity-50 text-sm">No pages yet</p>'; return; }
+  list.innerHTML = pages.map(p => `
+    <div class="bg-white/5 p-4 rounded-xl flex justify-between items-center gap-3 hover:bg-white/10">
+      <div class="cursor-pointer flex-1" onclick="loadWikiContent('${p.id}')">
         <div class="font-bold">${p.title}</div>
-        <div class="text-sm opacity-50">${p.author} • ${new Date(p.updated_at).toLocaleDateString()}</div>
-      </div>`;
-  });
+        <div class="text-xs opacity-50">${p.author || ''} · ${p.date || ''}</div>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="event.stopPropagation();loadWikiContent('${p.id}')" class="px-3 py-1 rounded-lg bg-white/10 text-xs">Edit</button>
+        <button onclick="event.stopPropagation();deleteWikiPage('${p.id}')" class="px-3 py-1 rounded-lg text-xs" style="background:rgba(239,68,68,0.2);color:#f87171">Delete</button>
+      </div>
+    </div>`).join('');
 }
 async function loadWikiContent(id) {
-  const { data } = await supabase.from('wiki_pages').select('*').eq('id', id).single();
-  if (data) {
-    document.getElementById('wikiTitle').value = data.title;
-    document.getElementById('wikiEditor').innerHTML = data.content;
-  }
+  let pages = JSON.parse(localStorage.getItem('wiki_global') || '[]');
+  let p = pages.find(x => x.id === id);
+  try {
+    if (!p && typeof sb !== 'undefined' && sb) {
+      const { data } = await sb.from('wiki_pages').select('*').eq('id', id).single();
+      p = data;
+    }
+  } catch (e) {}
+  if (!p) return;
+  document.getElementById('wikiTitle').value = p.title || '';
+  document.getElementById('wikiEditor').innerHTML = p.content || '';
 }
+async function deleteWikiPage(id) {
+  if (!confirm('Delete this wiki page?')) return;
+  let pages = JSON.parse(localStorage.getItem('wiki_global') || '[]').filter(p => p.id !== id);
+  localStorage.setItem('wiki_global', JSON.stringify(pages));
+  try { if (typeof sb !== 'undefined' && sb) await sb.from('wiki_pages').delete().eq('id', id); } catch (e) {}
+  showToast('Page deleted', 'success');
+  loadWikiPages();
+}
+
+/* Per-game wiki */
+let _gameWikiId = null;
+function openWikiFromDetails() {
+  if (!currentGameId) return;
+  _gameWikiId = currentGameId;
+  const g = games.find(x => x.id === currentGameId);
+  document.getElementById('gameWikiGameTitle').textContent = g ? g.title : 'Game';
+  document.getElementById('gameWikiTitle').value = '';
+  document.getElementById('gameWikiEditor').innerHTML = '';
+  buildGameWikiToolbar();
+  loadGameWikiPages();
+  openScalePanel('gameWikiModal');
+}
+function closeGameWiki() { closeScalePanel('gameWikiModal'); }
+function buildGameWikiToolbar() {
+  const bar = document.getElementById('gameWikiToolbar');
+  if (!bar) return;
+  bar.innerHTML = `
+    <button type="button" data-cmd="bold" onclick="toggleFormat(this,'bold')"><b>B</b></button>
+    <button type="button" data-cmd="italic" onclick="toggleFormat(this,'italic')"><i>I</i></button>
+    <button type="button" data-cmd="underline" onclick="toggleFormat(this,'underline')"><u>U</u></button>
+    <button type="button" data-cmd="strikeThrough" onclick="toggleFormat(this,'strikeThrough')"><s>S</s></button>
+    <div class="style-group" id="styleGroupGame">
+      <button type="button" class="style-group-btn" onclick="toggleStyleGroup('styleGroupGame')">Styles ▾</button>
+      <div class="style-group-menu">
+        <button type="button" onclick="applyBlockStyle('h1', this)">Title</button>
+        <button type="button" onclick="applyBlockStyle('h2', this)">Subtitle</button>
+        <button type="button" onclick="applyBlockStyle('p', this)">Paragraph</button>
+      </div>
+    </div>
+    <select onchange="formatFont(this.value)" style="background:#1e293b;color:#fff;border:1px solid #334155;border-radius:10px;padding:6px 8px">
+      <option value="">Font</option>
+      <option value="Chewy, cursive">Chewy</option>
+      <option value="Inter, sans-serif">Inter</option>
+      <option value="Georgia, serif">Georgia</option>
+      <option value="Courier New, monospace">Mono</option>
+    </select>
+    <input type="color" onchange="format('foreColor',this.value)" value="#ffffff">
+    <input type="color" onchange="format('hiliteColor',this.value)" value="#a855f7">
+    <button type="button" onclick="insertWikiLink()">🔗 Link</button>
+    <label class="tool-btn">🖼<input type="file" accept="image/*" hidden onchange="insertWikiImage(this)"></label>
+    <button type="button" onclick="format('insertUnorderedList')">• List</button>
+    <button type="button" onclick="format('insertOrderedList')">1. List</button>`;
+  document.getElementById('gameWikiEditor').onmouseup = () => syncFormatButtons('gameWikiToolbar');
+  document.getElementById('gameWikiEditor').onkeyup = () => syncFormatButtons('gameWikiToolbar');
+}
+function gameWikiKey() { return 'wiki_game_' + (_gameWikiId || 'unknown'); }
+async function saveGameWikiPage() {
+  const title = document.getElementById('gameWikiTitle').value.trim();
+  const content = document.getElementById('gameWikiEditor').innerHTML;
+  if (!title) return showToast('Enter a page title', 'error');
+  const pages = JSON.parse(localStorage.getItem(gameWikiKey()) || '[]');
+  const existing = pages.findIndex(p => p.title === title);
+  const page = { id: existing >= 0 ? pages[existing].id : 'gw_' + Date.now(), title, content, author: localStorage.getItem('user_email') || 'anon', date: new Date().toLocaleDateString(), gameId: _gameWikiId };
+  if (existing >= 0) pages[existing] = page; else pages.unshift(page);
+  localStorage.setItem(gameWikiKey(), JSON.stringify(pages));
+  try {
+    if (typeof sb !== 'undefined' && sb) await sb.from('wiki_pages').upsert({ id: page.id, title, content, author: page.author, game_id: _gameWikiId });
+  } catch (e) {}
+  showToast('Game wiki page saved', 'success');
+  loadGameWikiPages();
+}
+function loadGameWikiPages() {
+  const pages = JSON.parse(localStorage.getItem(gameWikiKey()) || '[]');
+  const list = document.getElementById('gameWikiPagesList');
+  if (!list) return;
+  if (!pages.length) { list.innerHTML = '<p class="opacity-50 text-sm">No pages for this game yet</p>'; return; }
+  list.innerHTML = pages.map(p => `
+    <div class="bg-white/5 p-3 rounded-xl flex justify-between items-center gap-2">
+      <div class="cursor-pointer flex-1" onclick="loadGameWikiContent('${p.id}')">
+        <div class="font-bold text-sm">${p.title}</div>
+        <div class="text-xs opacity-50">${p.author || ''} · ${p.date || ''}</div>
+      </div>
+      <button onclick="loadGameWikiContent('${p.id}')" class="px-2 py-1 rounded-lg bg-white/10 text-xs">Edit</button>
+      <button onclick="deleteGameWikiPage('${p.id}')" class="px-2 py-1 rounded-lg text-xs" style="background:rgba(239,68,68,0.2);color:#f87171">Delete</button>
+    </div>`).join('');
+}
+function loadGameWikiContent(id) {
+  const pages = JSON.parse(localStorage.getItem(gameWikiKey()) || '[]');
+  const p = pages.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('gameWikiTitle').value = p.title;
+  document.getElementById('gameWikiEditor').innerHTML = p.content || '';
+}
+function deleteGameWikiPage(id) {
+  if (!confirm('Delete this page?')) return;
+  const pages = JSON.parse(localStorage.getItem(gameWikiKey()) || '[]').filter(p => p.id !== id);
+  localStorage.setItem(gameWikiKey(), JSON.stringify(pages));
+  showToast('Deleted', 'success');
+  loadGameWikiPages();
+}
+
 
 /* ==================== SETTINGS + COLOR + BG ==================== */
 function updatePrimary(c) {
@@ -1276,43 +2717,587 @@ function updatePrimary(c) {
 }
 function openColorPicker(e) {
   const p = document.getElementById('cosmicPicker');
-  const r = e.currentTarget.getBoundingClientRect();
+  if (!p) return;
+  const target = (e && e.currentTarget && e.currentTarget.getBoundingClientRect) ? e.currentTarget : document.getElementById('themeCircle');
+  const r = target ? target.getBoundingClientRect() : { left: window.innerWidth - 420, right: window.innerWidth - 100, top: 120 };
   let left = r.left - 340;
-  if (left < 20) left = r.right + 20;
+  if (left < 20) left = (r.right || r.left) + 20;
+  let top = (r.top || 120) - 30;
+  if (top < 10) top = 10;
+  if (top + 380 > window.innerHeight) top = Math.max(10, window.innerHeight - 400);
   p.style.left = left + 'px';
-  p.style.top = (r.top - 30) + 'px';
+  p.style.top = top + 'px';
   p.style.display = 'block';
+  p.style.opacity = '0';
+  p.style.transform = 'scale(0.88)';
+  p.style.transition = 'opacity 0.35s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1)';
+  void p.offsetWidth;
+  p.style.opacity = '1';
+  p.style.transform = 'scale(1)';
   updateColorEngine();
 }
 function closeColorPicker() {
-  document.getElementById('cosmicPicker').style.display = 'none';
+  const p = document.getElementById('cosmicPicker');
+  if (!p) return;
+  p.style.transition = 'opacity 0.35s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1)';
+  p.style.opacity = '0';
+  p.style.transform = 'scale(0.88)';
+  setTimeout(() => { p.style.display = 'none'; }, 360);
 }
 function updateColorEngine() {
-  const h = +document.getElementById('hueSlider').value;
-  const s = +document.getElementById('satSlider').value;
-  const b = +document.getElementById('brightSlider').value;
-  document.getElementById('hueVal').textContent = h;
-  document.getElementById('satVal').textContent = s;
-  document.getElementById('brightVal').textContent = b;
+  const hueEl = document.getElementById('hueSlider');
+  const satEl = document.getElementById('satSlider');
+  const brightEl = document.getElementById('brightSlider');
+  if (!hueEl || !satEl || !brightEl) return;
+
+  const h = +hueEl.value;
+  const s = +satEl.value;
+  const b = +brightEl.value;
+
+  const hueVal = document.getElementById('hueVal');
+  const satVal = document.getElementById('satVal');
+  const brightVal = document.getElementById('brightVal');
+  if (hueVal) hueVal.textContent = h;
+  if (satVal) satVal.textContent = s;
+  if (brightVal) brightVal.textContent = b;
+
+  // Convert brightness slider to HSL lightness
   const l = (b / 100) * (100 - (s / 2));
   const hsl = `hsl(${h}, ${s}%, ${l}%)`;
-  document.getElementById('colorCircle').style.backgroundColor = hsl;
+
+  // Live preview circle inside the picker
+  const circle = document.getElementById('colorCircle');
+  if (circle) {
+    circle.style.backgroundColor = hsl;
+    circle.style.boxShadow = `0 0 14px ${hsl}, 0 0 4px ${hsl}`;
+  }
+
+  // Rainbow hue track + dynamic sat/bright tracks
+  hueEl.style.background = 'linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000)';
+  satEl.style.background = `linear-gradient(to right, #ffffff, hsl(${h}, 100%, 50%))`;
+  brightEl.style.background = `linear-gradient(to right, #000000, hsl(${h}, 100%, 50%))`;
 }
+
 function applySelectedColor() {
-  const h = +document.getElementById('hueSlider').value;
-  const s = +document.getElementById('satSlider').value;
-  const b = +document.getElementById('brightSlider').value;
+  const hueEl = document.getElementById('hueSlider');
+  const satEl = document.getElementById('satSlider');
+  const brightEl = document.getElementById('brightSlider');
+  if (!hueEl || !satEl || !brightEl) return;
+
+  const h = +hueEl.value;
+  const s = +satEl.value;
+  const b = +brightEl.value;
   const l = (b / 100) * (100 - (s / 2));
   updatePrimary(`hsl(${h}, ${s}%, ${l}%)`);
   closeColorPicker();
 }
 function toggleSettings() {
-  const p = document.getElementById('settingsPanel');
-  p.style.transform = p.style.transform === 'translateX(0px)' ? 'translateX(100%)' : 'translateX(0px)';
+  document.getElementById('settingsPanel').classList.toggle('open');
 }
+
+/* switchSettingsTab defined with collapse helpers */
+
+function toggleSettingToggle(btn, key) {
+  btn.classList.toggle('on');
+  const on = btn.classList.contains('on');
+  if (key === 'hideDownloadPopup') {
+    localStorage.setItem('hideDownloadPopup', on ? 'true' : 'false');
+  } else if (key === 'sessionLock') {
+    localStorage.setItem('sessionLock', on ? 'true' : 'false');
+  }
+}
+
+function toggleParticlesBtn(btn) {
+  particlesEnabled = !particlesEnabled;
+  btn.classList.toggle('on', particlesEnabled);
+}
+
+let _passkeyType = null;
+let _patternSeq = [];
+let _drawingStrokes = [];
+
+
+let _pinBuffer = '';
+let _pinConfirmMode = false;
+let _pinFirst = '';
+
+function pinKey(key) {
+  const flashBtn = (n) => {
+    const btn = document.querySelector('.pin-key[data-n="'+n+'"]');
+    if (!btn) return;
+    btn.classList.add('flash');
+    setTimeout(() => btn.classList.remove('flash'), 180);
+  };
+  if (key === 'back') {
+    _pinBuffer = _pinBuffer.slice(0, -1);
+    updatePinDots();
+    return;
+  }
+  if (key === 'ok') {
+    if (_pinBuffer.length < 4) return showToast('PIN must be at least 4 digits', 'error');
+    if (!_pinConfirmMode) {
+      _pinFirst = _pinBuffer;
+      _pinBuffer = '';
+      _pinConfirmMode = true;
+      updatePinDots();
+      const hint = document.getElementById('pinHint');
+      const stage = document.getElementById('pinStage');
+      if (hint) hint.textContent = 'Confirm your PIN';
+      if (stage) stage.textContent = 'Step 2 of 2 — confirm PIN';
+      return;
+    }
+    if (_pinBuffer !== _pinFirst) {
+      showToast('PINs do not match — try again', 'error');
+      _pinBuffer = '';
+      updatePinDots();
+      return;
+    }
+    localStorage.setItem('passkeyType', 'pin');
+    localStorage.setItem('passkeyPin', btoa(_pinFirst));
+    showToast('PIN saved', 'success');
+    closePasskeyPanel();
+    if (window._unlockAfterPasskey) {
+      window._unlockAfterPasskey = false;
+      finishWelcomeUnlock();
+    }
+    return;
+  }
+  // digit
+  if (_pinBuffer.length >= 8) return;
+  flashBtn(key);
+  _pinBuffer += String(key);
+  updatePinDots();
+}
+
+function updatePinDots() {
+  const dots = document.querySelectorAll('#pinDots .pin-dot');
+  dots.forEach((d, i) => d.classList.toggle('filled', i < _pinBuffer.length));
+}
+
+function toggleSettingsCollapse(head) {
+  const box = head.closest('.settings-collapse');
+  if (!box) return;
+  box.classList.toggle('open');
+}
+
+function switchSettingsTab(tab, btn) {
+  document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  ['system', 'appearance', 'misc'].forEach(id => {
+    const el = document.getElementById('stab-' + id);
+    if (!el) return;
+    if (id === tab) {
+      el.style.display = 'block';
+      el.classList.remove('hiding');
+      void el.offsetWidth;
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    } else {
+      el.classList.add('hiding');
+      setTimeout(() => {
+        if (el.classList.contains('hiding')) el.style.display = 'none';
+      }, 280);
+    }
+  });
+}
+
+function setPasskey(type, el) {
+  document.querySelectorAll('.passkey-btn').forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+  _passkeyType = type;
+  openPasskeyPanel(type);
+}
+
+function openPasskeyFromProfile() {
+  openPasskeyPanel(localStorage.getItem('passkeyType') || 'pin');
+}
+
+function openPasskeyPanel(type) {
+  _passkeyType = type;
+  _patternSeq = [];
+  const titles = { pin: 'Set PIN', pattern: 'Draw Pattern', drawing: 'Draw Signature', security: 'Security Key', password: 'Set Password' };
+  document.getElementById('passkeyPanelTitle').textContent = titles[type] || 'Set Up Auth';
+  const body = document.getElementById('passkeyBody');
+  if (type === 'pin') {
+    _pinBuffer = '';
+    _pinConfirmMode = false;
+    _pinFirst = '';
+    body.innerHTML = `
+      <p class="text-sm opacity-60 mb-2 text-center" id="pinHint">Enter a 4–8 digit PIN</p>
+      <div class="pin-dots" id="pinDots">
+        <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+        <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+      </div>
+      <div class="pin-pad">
+        <button type="button" class="pin-key" data-n="1" onmousedown="pinKey('1')">1</button>
+        <button type="button" class="pin-key" data-n="2" onmousedown="pinKey('2')">2</button>
+        <button type="button" class="pin-key" data-n="3" onmousedown="pinKey('3')">3</button>
+        <button type="button" class="pin-key" data-n="4" onmousedown="pinKey('4')">4</button>
+        <button type="button" class="pin-key" data-n="5" onmousedown="pinKey('5')">5</button>
+        <button type="button" class="pin-key" data-n="6" onmousedown="pinKey('6')">6</button>
+        <button type="button" class="pin-key" data-n="7" onmousedown="pinKey('7')">7</button>
+        <button type="button" class="pin-key" data-n="8" onmousedown="pinKey('8')">8</button>
+        <button type="button" class="pin-key" data-n="9" onmousedown="pinKey('9')">9</button>
+        <button type="button" class="pin-key action" onmousedown="pinKey('back')">⌫</button>
+        <button type="button" class="pin-key" data-n="0" onmousedown="pinKey('0')">0</button>
+        <button type="button" class="pin-key action" onmousedown="pinKey('ok')">✓</button>
+      </div>
+      <p class="text-xs opacity-40 text-center mt-3" id="pinStage">Step 1 of 2 — create PIN</p>`;
+  } else if (type === 'password') {
+    body.innerHTML = `
+      <p class="text-sm opacity-60 mb-4">Set a secondary unlock password.</p>
+      <label class="text-xs opacity-50 uppercase tracking-widest">Password</label>
+      <input type="password" id="pkPw" class="w-full mt-1 mb-3 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 outline-none focus:border-purple-500" placeholder="••••••••">
+      <label class="text-xs opacity-50 uppercase tracking-widest">Confirm Password</label>
+      <input type="password" id="pkPwConfirm" class="w-full mt-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 outline-none focus:border-purple-500" placeholder="••••••••">`;
+  } else if (type === 'pattern') {
+    body.innerHTML = `
+      <p class="text-sm opacity-60 mb-2 text-center">Connect at least 4 dots</p>
+      <div class="pattern-grid" id="patternGrid">
+        ${[0,1,2,3,4,5,6,7,8].map(i => `<div class="pattern-dot" data-i="${i}" onmousedown="patternDot(${i})" ontouchstart="event.preventDefault();patternDot(${i})"></div>`).join('')}
+      </div>
+      <p id="patternStatus" class="text-center text-sm opacity-50 mt-2">Pattern: none</p>
+      <button onclick="clearPattern()" class="w-full mt-3 py-2 rounded-xl bg-white/10 text-sm">Clear</button>`;
+  } else if (type === 'drawing') {
+    body.innerHTML = `
+      <p class="text-sm opacity-60 mb-3 text-center">Draw your unlock signature below</p>
+      <canvas id="drawCanvas" width="400" height="220"></canvas>
+      <button onclick="clearDrawing()" class="w-full mt-3 py-2 rounded-xl bg-white/10 text-sm">Clear Drawing</button>`;
+    setTimeout(initDrawCanvas, 50);
+  } else if (type === 'security') {
+    body.innerHTML = `
+      <p class="text-sm opacity-60 mb-4">Register a hardware security key (WebAuthn). This stores a credential on your device.</p>
+      <button onclick="registerSecurityKey()" class="w-full py-3 rounded-xl font-bold" style="background:var(--primary);color:#000">Register Security Key</button>
+      <p id="securityKeyStatus" class="text-sm opacity-50 mt-3 text-center"></p>`;
+  }
+  openScalePanel('passkeyPanel');
+}
+
+function closePasskeyPanel() {
+  closeScalePanel('passkeyPanel');
+}
+
+function patternDot(i) {
+  if (_patternSeq.includes(i)) return;
+  _patternSeq.push(i);
+  const dots = document.querySelectorAll('.pattern-dot');
+  if (dots[i]) dots[i].classList.add('selected');
+  const st = document.getElementById('patternStatus');
+  if (st) st.textContent = 'Pattern: ' + _patternSeq.join(' → ');
+}
+function clearPattern() {
+  _patternSeq = [];
+  document.querySelectorAll('.pattern-dot').forEach(d => d.classList.remove('selected', 'active'));
+  const st = document.getElementById('patternStatus');
+  if (st) st.textContent = 'Pattern: none';
+}
+
+function initDrawCanvas() {
+  const canvas = document.getElementById('drawCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || '#a855f7';
+  ctx.lineWidth = 3;
+  ctx.lineCap = 'round';
+  let drawing = false;
+  _drawingStrokes = [];
+  const pos = (e) => {
+    const r = canvas.getBoundingClientRect();
+    const src = e.touches ? e.touches[0] : e;
+    return { x: (src.clientX - r.left) * (canvas.width / r.width), y: (src.clientY - r.top) * (canvas.height / r.height) };
+  };
+  const start = (e) => { e.preventDefault(); drawing = true; const p = pos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); _drawingStrokes.push([p]); };
+  const move = (e) => { if (!drawing) return; e.preventDefault(); const p = pos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); _drawingStrokes[_drawingStrokes.length-1].push(p); };
+  const end = () => { drawing = false; };
+  canvas.onmousedown = start; canvas.onmousemove = move; canvas.onmouseup = end; canvas.onmouseleave = end;
+  canvas.ontouchstart = start; canvas.ontouchmove = move; canvas.ontouchend = end;
+}
+function clearDrawing() {
+  const canvas = document.getElementById('drawCanvas');
+  if (!canvas) return;
+  canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+  _drawingStrokes = [];
+}
+
+async function registerSecurityKey() {
+  const st = document.getElementById('securityKeyStatus');
+  try {
+    if (!window.PublicKeyCredential) throw new Error('WebAuthn not supported in this browser');
+    const cred = await navigator.credentials.create({
+      publicKey: {
+        challenge: crypto.getRandomValues(new Uint8Array(32)),
+        rp: { name: 'Project Subterranean' },
+        user: { id: crypto.getRandomValues(new Uint8Array(16)), name: localStorage.getItem('user_email') || 'user@equinox', displayName: 'Equinox User' },
+        pubKeyCredParams: [{ type: 'public-key', alg: -7 }],
+        authenticatorSelection: { userVerification: 'preferred' },
+        timeout: 60000
+      }
+    });
+    if (cred) {
+      localStorage.setItem('passkeyType', 'security');
+      localStorage.setItem('securityKeyRegistered', 'true');
+      if (st) st.textContent = 'Security key registered successfully.';
+      showToast('Security key registered', 'success');
+    }
+  } catch (e) {
+    if (st) st.textContent = e.message || 'Registration failed';
+    showToast(e.message || 'Security key failed', 'error');
+  }
+}
+
+function confirmPasskeySetup() {
+  const type = _passkeyType;
+  if (type === 'pin') {
+    // PIN is saved via pinKey('ok') flow; if still open, finalize
+    if (!_pinFirst || _pinFirst.length < 4) return showToast('Use the number pad to set a PIN', 'error');
+    if (_pinConfirmMode && _pinBuffer !== _pinFirst) return showToast('PINs do not match', 'error');
+    localStorage.setItem('passkeyType', 'pin');
+    localStorage.setItem('passkeyPin', btoa(_pinFirst));
+    showToast('PIN saved', 'success');
+  } else if (type === 'password') {
+    const a = document.getElementById('pkPw')?.value || '';
+    const b = document.getElementById('pkPwConfirm')?.value || '';
+    if (a.length < 6) return showToast('Password too short', 'error');
+    if (a !== b) return showToast('Passwords do not match', 'error');
+    localStorage.setItem('passkeyType', 'password');
+    localStorage.setItem('passkeyPw', btoa(a));
+    showToast('Password saved', 'success');
+  } else if (type === 'pattern') {
+    if (_patternSeq.length < 4) return showToast('Connect at least 4 dots', 'error');
+    localStorage.setItem('passkeyType', 'pattern');
+    localStorage.setItem('passkeyPattern', JSON.stringify(_patternSeq));
+    showToast('Pattern saved', 'success');
+  } else if (type === 'drawing') {
+    if (!_drawingStrokes.length) return showToast('Please draw something first', 'error');
+    localStorage.setItem('passkeyType', 'drawing');
+    localStorage.setItem('passkeyDrawing', JSON.stringify(_drawingStrokes.slice(0, 20)));
+    showToast('Drawing signature saved', 'success');
+  } else if (type === 'security') {
+    if (localStorage.getItem('securityKeyRegistered') !== 'true') return showToast('Register a key first', 'error');
+    showToast('Security key active', 'success');
+  }
+  closePasskeyPanel();
+  if (window._unlockAfterPasskey) {
+    window._unlockAfterPasskey = false;
+    finishWelcomeUnlock();
+  }
+}
+
+
+/* ==================== AVATAR ==================== */
+let _avatarImg = null;
+let _avatarType = 'image';
+function openAvatarCrop() {
+  openScalePanel('avatarCropPanel');
+  const input = document.getElementById('avatarFileInput');
+  input.onchange = onAvatarFile;
+  const existing = localStorage.getItem('user_avatar');
+  if (existing && existing.startsWith('data:image')) {
+    const img = new Image();
+    img.onload = () => { _avatarImg = img; _avatarType = 'image'; redrawAvatarCrop(); };
+    img.src = existing;
+  }
+}
+function closeAvatarCrop() { closeScalePanel('avatarCropPanel'); }
+function onAvatarFile(e) {
+  const file = e.target.files?.[0];
+  if (!file) return;
+  if (file.type.startsWith('video/')) {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      localStorage.setItem('user_avatar', ev.target.result);
+      _avatarType = 'video';
+      showToast('Video avatar set', 'success');
+      refreshProfileAvatar();
+      closeAvatarCrop();
+    };
+    reader.readAsDataURL(file);
+    return;
+  }
+  if (file.name.endsWith('.html') || file.name.endsWith('.htm') || file.type === 'text/html') {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      localStorage.setItem('user_avatar', ev.target.result);
+      _avatarType = 'html';
+      showToast('HTML avatar set', 'success');
+      refreshProfileAvatar();
+      closeAvatarCrop();
+    };
+    reader.readAsText(file);
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = new Image();
+    img.onload = () => { _avatarImg = img; _avatarType = 'image'; redrawAvatarCrop(); };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+function redrawAvatarCrop() {
+  const canvas = document.getElementById('avatarCropCanvas');
+  if (!canvas || !_avatarImg) return;
+  const ctx = canvas.getContext('2d');
+  const zoom = parseFloat(document.getElementById('avatarZoom').value) || 1;
+  ctx.clearRect(0, 0, 280, 280);
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(140, 140, 130, 0, Math.PI * 2);
+  ctx.closePath();
+  ctx.clip();
+  const size = Math.min(_avatarImg.width, _avatarImg.height) / zoom;
+  const sx = (_avatarImg.width - size) / 2;
+  const sy = (_avatarImg.height - size) / 2;
+  ctx.drawImage(_avatarImg, sx, sy, size, size, 10, 10, 260, 260);
+  ctx.restore();
+  // ring
+  ctx.beginPath();
+  ctx.arc(140, 140, 130, 0, Math.PI * 2);
+  ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+  ctx.lineWidth = 3;
+  ctx.stroke();
+}
+function applyAvatarCrop() {
+  const canvas = document.getElementById('avatarCropCanvas');
+  if (_avatarImg && canvas) {
+    localStorage.setItem('user_avatar', canvas.toDataURL('image/png'));
+    showToast('Avatar updated', 'success');
+  }
+  refreshProfileAvatar();
+  closeAvatarCrop();
+}
+function refreshProfileAvatar() {
+  const media = localStorage.getItem('user_avatar');
+  const inner = document.getElementById('profileAvatarInner');
+  if (!inner) return;
+  if (!media) {
+    inner.innerHTML = '<i class="fas fa-user" style="font-size:1.6rem;color:#94a3b8;display:flex;align-items:center;justify-content:center;height:100%"></i>';
+    return;
+  }
+  if (media.startsWith('data:video')) {
+    inner.innerHTML = `<video src="${media}" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video>`;
+  } else if (!media.startsWith('data:image') && (media.includes('<') || media.includes('html'))) {
+    inner.innerHTML = `<iframe srcdoc="${String(media).replace(/"/g, '&quot;')}" style="width:100%;height:100%;border:none;pointer-events:none"></iframe>`;
+  } else {
+    inner.innerHTML = `<img src="${media}" alt="avatar" style="width:100%;height:100%;object-fit:cover">`;
+  }
+}
+
+function openProfilePanel() {
+  document.getElementById('profileDisplayName').textContent = localStorage.getItem('user_display_name') || 'Player';
+  document.getElementById('profileDisplayEmail').textContent = localStorage.getItem('user_email') || 'Signed in locally';
+  document.getElementById('profileView').style.display = 'block';
+  document.getElementById('profileEditForm').style.display = 'none';
+  refreshProfileAvatar();
+  openScalePanel('profilePanel');
+  if (typeof sb !== 'undefined' && sb && sb.auth) {
+    sb.auth.getUser().then(({ data }) => {
+      if (data && data.user) {
+        document.getElementById('profileDisplayEmail').textContent = data.user.email || '';
+        document.getElementById('profileDisplayName').textContent = (data.user.user_metadata && data.user.user_metadata.display_name) || (data.user.email && data.user.email.split('@')[0]) || 'Player';
+      }
+    }).catch(function(){});
+  }
+}
+function closeProfilePanel() { closeScalePanel('profilePanel'); }
+function showProfileEditForm() {
+  document.getElementById('profileView').style.display = 'none';
+  document.getElementById('profileEditForm').style.display = 'block';
+  document.getElementById('profileNewName').value = localStorage.getItem('user_display_name') || '';
+  document.getElementById('profileNewEmail').value = localStorage.getItem('user_email') || '';
+}
+function cancelProfileEdit() {
+  document.getElementById('profileView').style.display = 'block';
+  document.getElementById('profileEditForm').style.display = 'none';
+}
+async function saveProfileDetails() {
+  const currentPw = (document.getElementById('profileCurrentPw') && document.getElementById('profileCurrentPw').value) || '';
+  if (!currentPw) return showToast('Enter your current password to continue', 'error');
+  const stored = localStorage.getItem('account_pw_check');
+  if (stored && stored !== btoa(currentPw)) {
+    return showToast('Incorrect password', 'error');
+  }
+  const nameEl = document.getElementById('profileNewName');
+  const emailEl = document.getElementById('profileNewEmail');
+  const newPwEl = document.getElementById('profileNewPw');
+  const name = nameEl && nameEl.value ? nameEl.value.trim() : '';
+  const email = emailEl && emailEl.value ? emailEl.value.trim() : '';
+  const newPw = (newPwEl && newPwEl.value) || '';
+  if (name) localStorage.setItem('user_display_name', name);
+  if (email) localStorage.setItem('user_email', email);
+  if (newPw) localStorage.setItem('account_pw_check', btoa(newPw));
+  else if (!stored) localStorage.setItem('account_pw_check', btoa(currentPw));
+  showToast('Profile updated', 'success');
+  cancelProfileEdit();
+  openProfilePanel();
+}
+function openProfileEdit() {
+  openProfilePanel();
+  setTimeout(showProfileEditForm, 200);
+}
+
+function onWallpaperModeChange(val) {
+  if (val === 'disable') {
+    document.body.style.backgroundImage = 'none';
+    localStorage.removeItem('user_bg');
+    showToast('Wallpaper disabled', 'info');
+  } else if (val === 'custom') {
+    document.getElementById('customWallpaperInput').click();
+  } else {
+    openBackgroundTypeMenu();
+  }
+}
+
+function onCustomWallpaper(input) {
+  const file = input.files?.[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    document.body.style.backgroundImage = `url('${e.target.result}')`;
+    document.body.style.backgroundSize = 'cover';
+    localStorage.setItem('user_bg', e.target.result);
+    showToast('Custom wallpaper applied', 'success');
+  };
+  reader.readAsDataURL(file);
+}
+
+function setColorMode(mode) {
+  if (mode === 'light') {
+    document.documentElement.style.setProperty('--bg', '#f1f5f9');
+    document.documentElement.style.setProperty('--text', '#0f172a');
+    document.body.style.backgroundColor = '#f1f5f9';
+    document.body.style.color = '#0f172a';
+  } else {
+    document.documentElement.style.setProperty('--bg', '#020617');
+    document.documentElement.style.setProperty('--text', '#ffffff');
+    document.body.style.backgroundColor = '#020617';
+    document.body.style.color = '#ffffff';
+  }
+  localStorage.setItem('colorMode', mode);
+}
+
+function setWindowMaterial(mat) {
+  document.body.classList.remove('mat-mica', 'mat-mica-alt', 'mat-translucent');
+  if (mat === 'mica') document.body.classList.add('mat-mica');
+  else if (mat === 'mica-alt') document.body.classList.add('mat-mica-alt');
+  else if (mat === 'translucent') document.body.classList.add('mat-translucent');
+  localStorage.setItem('windowMaterial', mat);
+  const sel = document.getElementById('windowMaterial');
+  if (sel) sel.value = mat;
+  showToast('Material: ' + mat, 'info');
+}
+
+function toggleDevMode(btn) {
+  btn.classList.toggle('on');
+  const on = btn.classList.contains('on');
+  document.getElementById('devOptions').style.display = on ? 'block' : 'none';
+  localStorage.setItem('devMode', on ? 'true' : 'false');
+}
+
 function toggleParticles() {
   particlesEnabled = !particlesEnabled;
-  document.getElementById('partToggle').textContent = particlesEnabled ? 'ON' : 'OFF';
+  const btn = document.getElementById('partToggleBtn');
+  if (btn) btn.classList.toggle('on', particlesEnabled);
 }
 function setBg() {
   const u = prompt('Image URL');
@@ -1327,58 +3312,159 @@ function resetBg() {
   localStorage.removeItem('user_bg');
 }
 function openBackgroundTypeMenu() {
-  document.getElementById('backgroundTypeMenu').classList.remove('hidden');
+  openScalePanel('backgroundTypeMenu');
   renderBgCategoryTabs();
   renderBgGrid(backgrounds, 'All');
 }
 function closeBackgroundTypeMenu() {
-  document.getElementById('backgroundTypeMenu').classList.add('hidden');
+  closeScalePanel('backgroundTypeMenu');
 }
 function renderBgCategoryTabs() {
   const c = document.getElementById('bgCategoryTabs');
+  if (!c) return;
   c.innerHTML = '';
-  const cats = ['All', ...new Set(backgrounds.map(b => b.category || 'Default'))];
-  cats.forEach(cat => {
-    const t = document.createElement('div');
-    t.className = 'cat-tab' + (cat === 'All' ? ' active' : '');
-    t.textContent = cat;
-    t.onclick = () => {
+  const cats = ['All', ...new Set((backgrounds || []).map(b => b.category || 'Default').filter(Boolean))];
+  cats.forEach((cat, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'cat-tab' + (i === 0 ? ' active' : '');
+    btn.textContent = cat;
+    btn.onclick = () => {
       document.querySelectorAll('#bgCategoryTabs .cat-tab').forEach(x => x.classList.remove('active'));
-      t.classList.add('active');
+      btn.classList.add('active');
       renderBgGrid(backgrounds, cat);
     };
-    c.appendChild(t);
+    c.appendChild(btn);
   });
 }
 function renderBgGrid(list, category) {
   const container = document.getElementById('bgGrid');
+  if (!container) return;
   container.innerHTML = '';
-  let filtered = list;
-  if (category !== 'All') filtered = list.filter(b => (b.category || 'Default') === category);
-  if (filtered.length === 0) {
-    container.innerHTML = `<p class="text-gray-400 text-center py-12 col-span-full">No backdrops identified for ${category}</p>`;
+  const filtered = (!category || category === 'All')
+    ? (list || [])
+    : (list || []).filter(b => String(b.category || 'Default').toLowerCase() === String(category).toLowerCase());
+  if (!filtered.length) {
+    container.innerHTML = `<p class="text-center opacity-50 col-span-full py-12">No backdrops identified for ${category || 'All'}${!(list||[]).length ? ' — backgrounds.json failed to load or is empty' : ''}</p>`;
     return;
   }
+  const equippedId = localStorage.getItem('user_bg_id') || 'spatialnetworking';
   filtered.forEach(bg => {
     const card = document.createElement('div');
-    card.className = 'game-card';
-    card.innerHTML = `<img src="${cdnBase}${bg.thumb || bg.file}" loading="lazy"><div class="card-title"><span>${bg.title}</span></div>`;
-    card.onclick = () => {
-      document.body.style.backgroundImage = `url('${cdnBase}${bg.file}')`;
-      document.body.style.backgroundSize = 'cover';
-      localStorage.setItem('user_bg', cdnBase + bg.file);
-      closeBackgroundTypeMenu();
+    const id = bg.id || bg.title || '';
+    const isEquipped = String(id).toLowerCase() === String(equippedId).toLowerCase()
+      || String(bg.title || '').toLowerCase() === String(equippedId).toLowerCase();
+    card.className = 'bg-card' + (isEquipped ? ' equipped' : '');
+    card.dataset.bgId = id;
+    const thumb = bg.thumb || bg.file || '';
+    const isHtml = /\.html?$/i.test(thumb);
+    const media = isHtml
+      ? `<div class="bg-placeholder">🌌</div>`
+      : `<img src="${cdnBase}${thumb}" loading="lazy" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('afterbegin','<div class=\\'bg-placeholder\\'>🌌</div>')">`;
+    card.innerHTML = `
+      ${media}
+      <div class="card-title">
+        <span>${bg.title || bg.id || 'Backdrop'}</span>
+        <div class="more-btn" title="More options">⋯</div>
+      </div>`;
+    card.querySelector('.more-btn').onclick = (e) => {
+      e.stopPropagation();
+      showBgDetails(bg);
+    };
+    card.onclick = (e) => {
+      if (e.target.closest('.more-btn')) return;
+      equipBackdrop(bg);
     };
     container.appendChild(card);
   });
 }
+
+
+let _bgDetailsCurrent = null;
+
+function getDefaultBackdrop() {
+  return (backgrounds || []).find(b =>
+    String(b.id || '').toLowerCase() === 'spatialnetworking' ||
+    String(b.id || '').toLowerCase() === 'spatialneworking' ||
+    String(b.title || '').toLowerCase() === 'spatial networking'
+  ) || (backgrounds && backgrounds[0]) || null;
+}
+
+function applyBackdropVisual(bg) {
+  if (!bg) return;
+  const file = bg.file || bg.thumb || '';
+  if (/\.html?$/i.test(file)) {
+    // HTML particle backdrop — keep solid theme, mark equipped
+    document.body.style.backgroundImage = 'none';
+  } else if (file) {
+    document.body.style.backgroundImage = `url('${cdnBase}${file}')`;
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+    localStorage.setItem('user_bg', cdnBase + file);
+  }
+}
+
+function equipBackdrop(bg) {
+  if (!bg) return;
+  const id = bg.id || bg.title || '';
+  localStorage.setItem('user_bg_id', id);
+  applyBackdropVisual(bg);
+  showToast('Equipped: ' + (bg.title || id), 'success');
+  // Refresh grid highlight if menu is open
+  const activeTab = document.querySelector('#bgCategoryTabs .cat-tab.active');
+  const cat = activeTab ? activeTab.textContent : 'All';
+  if (document.getElementById('backgroundTypeMenu') && !document.getElementById('backgroundTypeMenu').classList.contains('hidden')) {
+    renderBgGrid(backgrounds, cat);
+  }
+}
+
+function showBgDetails(bg) {
+  _bgDetailsCurrent = bg;
+  document.getElementById('bgDetailsTitle').textContent = bg.title || bg.id || 'Backdrop';
+  document.getElementById('bgDetailsGenre').textContent = [bg.category, bg.genre].filter(Boolean).join(' · ');
+  document.getElementById('bgDetailsDesc').textContent = bg.description || 'No description available.';
+  const equippedId = localStorage.getItem('user_bg_id') || 'spatialnetworking';
+  const isEq = String(bg.id || '').toLowerCase() === String(equippedId).toLowerCase()
+    || String(bg.title || '').toLowerCase() === String(equippedId).toLowerCase();
+  const btn = document.getElementById('bgDetailsEquipBtn');
+  btn.textContent = isEq ? 'Equipped' : 'Equip Backdrop';
+  btn.style.background = isEq ? '#16a34a' : '#22c55e';
+  btn.disabled = isEq;
+  openScalePanel('bgDetailsModal');
+}
+
+function closeBgDetails() {
+  closeScalePanel('bgDetailsModal');
+  _bgDetailsCurrent = null;
+}
+
+function equipBackdropFromDetails() {
+  if (_bgDetailsCurrent) {
+    equipBackdrop(_bgDetailsCurrent);
+    closeBgDetails();
+  }
+}
+
+function ensureDefaultBackdrop() {
+  // If user never chose a backdrop, equip Spatial Networking
+  if (!localStorage.getItem('user_bg_id')) {
+    const def = getDefaultBackdrop();
+    if (def) {
+      localStorage.setItem('user_bg_id', def.id || def.title || 'spatialnetworking');
+      // Only apply visual if no custom image bg already set
+      if (!localStorage.getItem('user_bg')) {
+        applyBackdropVisual(def);
+      }
+    }
+  }
+}
+
 
 /* ==================== MISC ==================== */
 function openAboutBlank() {
   const iframe = document.getElementById('gameIframe');
   const targetUrl = iframe ? iframe.src : window.location.href;
   const win = window.open();
-  if (!win) return alert('Please allow popups!');
+  if (!win) return showToast('Please allow popups!', 'error');
   const doc = win.document;
   doc.title = document.title;
   const outerIframe = doc.createElement('iframe');
@@ -1478,9 +3564,147 @@ if (localStorage.getItem('equinox_logged_in') === 'true') {
   document.getElementById('authScreen').style.display = 'none';
   document.getElementById('mainSite').classList.add('visible');
   initSite();
+} else if (localStorage.getItem('user_email') || localStorage.getItem('user_display_name') || localStorage.getItem('account_pw_check')) {
+  document.getElementById('authScreen').style.display = 'none';
+  showWelcomeBack();
 }
 document.getElementById('searchInput')?.addEventListener('input', e => renderGames(currentFilter, e.target.value));
 window.addEventListener('resize', resizeCanvas);
 </script>
+
+<!-- Backdrop Details Modal -->
+<div id="bgDetailsModal" class="scale-overlay" style="z-index:400" onclick="if(event.target===this)closeBgDetails()">
+  <div id="bgDetailsBox" class="scale-panel" style="background:#0f172a;border:1px solid rgba(255,255,255,0.1);border-radius:1.5rem;padding:28px;max-width:420px;width:90%">
+    <div class="flex justify-between items-start mb-4">
+      <h3 id="bgDetailsTitle" class="text-2xl" style="color:var(--primary)">Backdrop</h3>
+      <button onclick="closeBgDetails()" class="text-2xl text-gray-400 hover:text-white" style="background:none;border:none;cursor:pointer">×</button>
+    </div>
+    <p id="bgDetailsGenre" class="text-sm opacity-60 mb-2"></p>
+    <p id="bgDetailsDesc" class="text-sm opacity-80 leading-relaxed mb-6"></p>
+    <div class="flex gap-3">
+      <button id="bgDetailsEquipBtn" onclick="equipBackdropFromDetails()" class="flex-1 py-2.5 rounded-xl font-bold" style="background:#22c55e;color:#000">Equip Backdrop</button>
+      <button onclick="closeBgDetails()" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20">Close</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Passkey Setup Panel -->
+<div id="passkeyPanel" class="scale-overlay" style="z-index:50000" onclick="if(event.target===this)closePasskeyPanel()">
+  <div class="scale-panel bg-slate-900 border border-white/10 rounded-3xl max-w-md w-full mx-4 p-8" onclick="event.stopPropagation()">
+    <div class="flex justify-between items-center mb-6">
+      <h2 id="passkeyPanelTitle" class="text-2xl" style="color:var(--primary)">Set Up Auth</h2>
+      <button onclick="closePasskeyPanel()" class="text-3xl text-gray-400 hover:text-white" style="background:none;border:none;cursor:pointer">×</button>
+    </div>
+    <div id="passkeyBody"></div>
+    <div class="flex gap-3 mt-6">
+      <button onclick="closePasskeyPanel()" class="flex-1 py-2.5 rounded-xl bg-white/10">Cancel</button>
+      <button onclick="confirmPasskeySetup()" class="flex-1 py-2.5 rounded-xl font-bold" style="background:var(--primary);color:#000">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- Profile Panel -->
+<div id="profilePanel" class="scale-overlay" style="z-index:50000" onclick="if(event.target===this)closeProfilePanel()">
+  <div class="scale-panel bg-slate-900 border border-white/10 rounded-3xl max-w-md w-full mx-4 p-8" onclick="event.stopPropagation()">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl" style="color:var(--primary)">Profile</h2>
+      <button onclick="closeProfilePanel()" class="text-3xl text-gray-400 hover:text-white" style="background:none;border:none;cursor:pointer">×</button>
+    </div>
+    <div id="profileView">
+      <div class="flex items-center gap-4 mb-6">
+        <div class="profile-avatar-wrap" onclick="openAvatarCrop()" title="Change avatar">
+          <div id="profileAvatarInner"><i class="fas fa-user" style="font-size:1.6rem;color:#94a3b8;display:flex;align-items:center;justify-content:center;height:100%"></i></div>
+          <div class="edit-overlay"><i class="fas fa-pen"></i></div>
+        </div>
+        <div>
+          <div id="profileDisplayName" class="text-xl font-bold">User</div>
+          <div id="profileDisplayEmail" class="text-sm opacity-60">not signed in</div>
+        </div>
+      </div>
+      <button onclick="showProfileEditForm()" class="w-full py-3 rounded-xl font-bold mb-3" style="background:var(--primary);color:#000">Change Details</button>
+      <button onclick="closeProfilePanel();openPasskeyFromProfile()" class="w-full py-3 rounded-xl bg-white/10 mb-3">Authentication Methods</button>
+      <button onclick="logout()" class="w-full py-3 rounded-xl" style="background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.3)">Log Out</button>
+    </div>
+    <div id="profileEditForm" style="display:none">
+      <p class="text-sm opacity-60 mb-4">Confirm your account password to edit details.</p>
+      <div class="mb-3">
+        <label class="text-xs opacity-50 uppercase tracking-widest">Current Password</label>
+        <input type="password" id="profileCurrentPw" class="w-full mt-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 outline-none focus:border-purple-500" placeholder="••••••••">
+      </div>
+      <div class="mb-3">
+        <label class="text-xs opacity-50 uppercase tracking-widest">Display Name</label>
+        <input type="text" id="profileNewName" class="w-full mt-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 outline-none focus:border-purple-500" placeholder="New display name">
+      </div>
+      <div class="mb-3">
+        <label class="text-xs opacity-50 uppercase tracking-widest">Email</label>
+        <input type="email" id="profileNewEmail" class="w-full mt-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 outline-none focus:border-purple-500" placeholder="new@email.com">
+      </div>
+      <div class="mb-4">
+        <label class="text-xs opacity-50 uppercase tracking-widest">New Password (optional)</label>
+        <input type="password" id="profileNewPw" class="w-full mt-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 outline-none focus:border-purple-500" placeholder="Leave blank to keep">
+      </div>
+      <div class="flex gap-3">
+        <button onclick="cancelProfileEdit()" class="flex-1 py-2.5 rounded-xl bg-white/10">Back</button>
+        <button onclick="saveProfileDetails()" class="flex-1 py-2.5 rounded-xl font-bold" style="background:var(--primary);color:#000">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Review Edit Modal -->
+<div id="reviewEditModal" class="scale-overlay" style="z-index:420" onclick="if(event.target===this)closeReviewEdit()">
+  <div class="scale-panel bg-slate-900 border border-white/10 rounded-3xl max-w-md w-full mx-4 p-8" onclick="event.stopPropagation()">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-2xl" style="color:var(--primary)">Edit Review</h2>
+      <button onclick="closeReviewEdit()" class="text-3xl text-gray-400 hover:text-white" style="background:none;border:none;cursor:pointer">×</button>
+    </div>
+    <div class="flex gap-1 mb-3" id="reviewStarEdit"></div>
+    <textarea id="reviewEditText" rows="5" class="w-full bg-slate-800 border border-white/20 rounded-xl p-4 outline-none focus:border-purple-500" placeholder="Your review..."></textarea>
+    <div class="flex gap-3 mt-5">
+      <button onclick="closeReviewEdit()" class="flex-1 py-2.5 rounded-xl bg-white/10">Cancel</button>
+      <button onclick="saveReviewEdit()" class="flex-1 py-2.5 rounded-xl font-bold" style="background:var(--primary);color:#000">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Per-Game Wiki Modal -->
+<div id="gameWikiModal" class="scale-overlay" style="z-index:160" onclick="if(event.target===this)closeGameWiki()">
+  <div class="scale-panel bg-slate-900 border border-white/10 rounded-3xl max-w-3xl w-full mx-4 p-8" onclick="event.stopPropagation()">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-2xl" style="color:var(--primary)"><span id="gameWikiGameTitle">Game</span> Wiki</h2>
+      <button onclick="closeGameWiki()" class="text-3xl text-gray-400 hover:text-white" style="background:none;border:none;cursor:pointer">×</button>
+    </div>
+    <div class="flex gap-3 mb-4">
+      <input id="gameWikiTitle" placeholder="Page title..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 outline-none">
+      <button onclick="saveGameWikiPage()" class="px-6 py-2 rounded-xl font-bold" style="background:var(--primary);color:#000">Save Page</button>
+    </div>
+    <div class="wiki-toolbar" id="gameWikiToolbar"></div>
+    <div id="gameWikiEditor" contenteditable="true" class="min-h-[200px] bg-black/30 border border-white/10 rounded-xl p-4 outline-none mb-4"></div>
+    <h3 class="text-lg mb-3 opacity-80">Pages</h3>
+    <div id="gameWikiPagesList" class="space-y-2 max-h-48 overflow-y-auto"></div>
+  </div>
+</div>
+
+<!-- Avatar Upload / Crop -->
+<div id="avatarCropPanel" class="scale-overlay" style="z-index:470" onclick="if(event.target===this)closeAvatarCrop()">
+  <div class="scale-panel bg-slate-900 border border-white/10 rounded-3xl max-w-lg w-full mx-4 p-8" onclick="event.stopPropagation()">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-2xl" style="color:var(--primary)">Profile Media</h2>
+      <button onclick="closeAvatarCrop()" class="text-3xl text-gray-400 hover:text-white" style="background:none;border:none;cursor:pointer">×</button>
+    </div>
+    <p class="text-sm opacity-60 mb-3">Upload an image, GIF, video, or HTML snippet. Images can be cropped to a circle.</p>
+    <input type="file" id="avatarFileInput" accept="image/*,video/*,.gif,.html,.htm" class="mb-4 w-full text-sm">
+    <div class="flex justify-center mb-4"><canvas id="avatarCropCanvas" width="280" height="280"></canvas></div>
+    <label class="text-xs opacity-50">Zoom</label>
+    <input type="range" id="avatarZoom" min="1" max="3" step="0.05" value="1" class="w-full mb-4" oninput="redrawAvatarCrop()">
+    <div class="flex gap-3">
+      <button onclick="closeAvatarCrop()" class="flex-1 py-2.5 rounded-xl bg-white/10">Cancel</button>
+      <button onclick="applyAvatarCrop()" class="flex-1 py-2.5 rounded-xl font-bold" style="background:var(--primary);color:#000">Apply</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
