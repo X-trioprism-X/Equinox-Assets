@@ -4,18 +4,459 @@
     "title": "Spatial Networking",
     "category": "Abstract",
     "genre": "Sci-Fi",
-    "description": "Geometric grid with theme-coloured particles and connecting lines.",
+    "description": "Geometric grid with theme-coloured particles and connecting lines. Density controlled from settings.",
     "file": "spatial-networking.html",
     "thumb": "spatial-networking.html"
   },
   {
-    "id": "matrix-rain",
-    "title": "Matrix Rain",
+    "id": "nebula-drift",
+    "title": "Nebula Drift",
+    "category": "Space",
+    "genre": "Cosmic",
+    "description": "Swirling nebula clouds with glowing stardust trails. Particle density is controlled from Wallpaper settings.",
+    "file": "nebula-drift.html",
+    "thumb": "nebula-drift.html"
+  },
+  {
+    "id": "quantum-foam",
+    "title": "Quantum Foam",
+    "category": "Sci-Fi",
+    "genre": "Abstract",
+    "description": "Bubbling quantum foam of linked energy nodes. Particle density is controlled from Wallpaper settings.",
+    "file": "quantum-foam.html",
+    "thumb": "quantum-foam.html"
+  },
+  {
+    "id": "solar-wind",
+    "title": "Solar Wind",
+    "category": "Space",
+    "genre": "Cosmic",
+    "description": "Streams of solar particles sweeping across the void. Particle density is controlled from Wallpaper settings.",
+    "file": "solar-wind.html",
+    "thumb": "solar-wind.html"
+  },
+  {
+    "id": "crystal-lattice",
+    "title": "Crystal Lattice",
+    "category": "Abstract",
+    "genre": "Geometric",
+    "description": "Expanding crystalline lattice with prismatic edges. Particle density is controlled from Wallpaper settings.",
+    "file": "crystal-lattice.html",
+    "thumb": "crystal-lattice.html"
+  },
+  {
+    "id": "deep-ocean",
+    "title": "Deep Ocean",
+    "category": "Nature",
+    "genre": "Aquatic",
+    "description": "Bioluminescent deep-sea particle currents. Particle density is controlled from Wallpaper settings.",
+    "file": "deep-ocean.html",
+    "thumb": "deep-ocean.html"
+  },
+  {
+    "id": "ember-cascade",
+    "title": "Ember Cascade",
+    "category": "Warm",
+    "genre": "Fire",
+    "description": "Cascading embers rising through dark air. Particle density is controlled from Wallpaper settings.",
+    "file": "ember-cascade.html",
+    "thumb": "ember-cascade.html"
+  },
+  {
+    "id": "frost-veil",
+    "title": "Frost Veil",
+    "category": "Weather",
+    "genre": "Ice",
+    "description": "Soft frost crystals drifting in cold light. Particle density is controlled from Wallpaper settings.",
+    "file": "frost-veil.html",
+    "thumb": "frost-veil.html"
+  },
+  {
+    "id": "neon-pulse",
+    "title": "Neon Pulse",
+    "category": "Retro",
+    "genre": "Neon",
+    "description": "Rhythmic neon pulses along a grid horizon. Particle density is controlled from Wallpaper settings.",
+    "file": "neon-pulse.html",
+    "thumb": "neon-pulse.html"
+  },
+  {
+    "id": "orbit-dance",
+    "title": "Orbit Dance",
+    "category": "Space",
+    "genre": "Orbital",
+    "description": "Bodies in nested elliptical orbits. Particle density is controlled from Wallpaper settings.",
+    "file": "orbit-dance.html",
+    "thumb": "orbit-dance.html"
+  },
+  {
+    "id": "plasma-river",
+    "title": "Plasma River",
+    "category": "Sci-Fi",
+    "genre": "Energy",
+    "description": "A flowing river of charged plasma ribbons. Particle density is controlled from Wallpaper settings.",
+    "file": "plasma-river.html",
+    "thumb": "plasma-river.html"
+  },
+  {
+    "id": "silk-threads",
+    "title": "Silk Threads",
+    "category": "Abstract",
+    "genre": "Soft",
+    "description": "Interwoven silk-like luminous threads. Particle density is controlled from Wallpaper settings.",
+    "file": "silk-threads.html",
+    "thumb": "silk-threads.html"
+  },
+  {
+    "id": "meteor-shower",
+    "title": "Meteor Shower",
+    "category": "Space",
+    "genre": "Cosmic",
+    "description": "Fast meteor streaks across a star field. Particle density is controlled from Wallpaper settings.",
+    "file": "meteor-shower.html",
+    "thumb": "meteor-shower.html"
+  },
+  {
+    "id": "coral-reef",
+    "title": "Coral Reef",
+    "category": "Nature",
+    "genre": "Organic",
+    "description": "Floating reef motes in warm aquatic hues. Particle density is controlled from Wallpaper settings.",
+    "file": "coral-reef.html",
+    "thumb": "coral-reef.html"
+  },
+  {
+    "id": "void-whispers",
+    "title": "Void Whispers",
+    "category": "Horror",
+    "genre": "Dark",
+    "description": "Sparse pale motes in an almost empty void. Particle density is controlled from Wallpaper settings.",
+    "file": "void-whispers.html",
+    "thumb": "void-whispers.html"
+  },
+  {
+    "id": "laser-grid",
+    "title": "Laser Grid",
+    "category": "Sci-Fi",
+    "genre": "Tech",
+    "description": "Scanning laser grid with bouncing nodes. Particle density is controlled from Wallpaper settings.",
+    "file": "laser-grid.html",
+    "thumb": "laser-grid.html"
+  },
+  {
+    "id": "aurora-bloom",
+    "title": "Aurora Bloom",
+    "category": "Nature",
+    "genre": "Atmospheric",
+    "description": "Blooming aurora bands with particle spray. Particle density is controlled from Wallpaper settings.",
+    "file": "aurora-bloom.html",
+    "thumb": "aurora-bloom.html"
+  },
+  {
+    "id": "dust-storm",
+    "title": "Dust Storm",
+    "category": "Weather",
+    "genre": "Desert",
+    "description": "Swirling ochre dust in turbulent flow. Particle density is controlled from Wallpaper settings.",
+    "file": "dust-storm.html",
+    "thumb": "dust-storm.html"
+  },
+  {
+    "id": "photon-rain",
+    "title": "Photon Rain",
     "category": "Sci-Fi",
     "genre": "Digital",
-    "description": "Classic cascading code rain.",
-    "file": "matrix-rain.html",
-    "thumb": "matrix-rain.html"
+    "description": "Vertical rain of photonic data droplets. Particle density is controlled from Wallpaper settings.",
+    "file": "photon-rain.html",
+    "thumb": "photon-rain.html"
+  },
+  {
+    "id": "helix-spin",
+    "title": "Helix Spin",
+    "category": "Abstract",
+    "genre": "Bio",
+    "description": "Twin helixes of orbiting particles. Particle density is controlled from Wallpaper settings.",
+    "file": "helix-spin.html",
+    "thumb": "helix-spin.html"
+  },
+  {
+    "id": "horizon-flare",
+    "title": "Horizon Flare",
+    "category": "Warm",
+    "genre": "Light",
+    "description": "Soft flares blooming along the horizon. Particle density is controlled from Wallpaper settings.",
+    "file": "horizon-flare.html",
+    "thumb": "horizon-flare.html"
+  },
+  {
+    "id": "ice-comets",
+    "title": "Ice Comets",
+    "category": "Space",
+    "genre": "Ice",
+    "description": "Icy comet cores with crystalline tails. Particle density is controlled from Wallpaper settings.",
+    "file": "ice-comets.html",
+    "thumb": "ice-comets.html"
+  },
+  {
+    "id": "magnetic-field",
+    "title": "Magnetic Field",
+    "category": "Sci-Fi",
+    "genre": "Physics",
+    "description": "Field lines arcing between polar nodes. Particle density is controlled from Wallpaper settings.",
+    "file": "magnetic-field.html",
+    "thumb": "magnetic-field.html"
+  },
+  {
+    "id": "petal-storm",
+    "title": "Petal Storm",
+    "category": "Nature",
+    "genre": "Organic",
+    "description": "Petal-like particles in a gentle storm. Particle density is controlled from Wallpaper settings.",
+    "file": "petal-storm.html",
+    "thumb": "petal-storm.html"
+  },
+  {
+    "id": "radar-echo",
+    "title": "Radar Echo",
+    "category": "Retro",
+    "genre": "Tech",
+    "description": "Expanding radar rings with echo blips. Particle density is controlled from Wallpaper settings.",
+    "file": "radar-echo.html",
+    "thumb": "radar-echo.html"
+  },
+  {
+    "id": "star-nursery",
+    "title": "Star Nursery",
+    "category": "Space",
+    "genre": "Cosmic",
+    "description": "Dense nursery of forming star sparks. Particle density is controlled from Wallpaper settings.",
+    "file": "star-nursery.html",
+    "thumb": "star-nursery.html"
+  },
+  {
+    "id": "circuit-flow",
+    "title": "Circuit Flow",
+    "category": "Sci-Fi",
+    "genre": "Tech",
+    "description": "Particles flowing along circuit traces. Particle density is controlled from Wallpaper settings.",
+    "file": "circuit-flow.html",
+    "thumb": "circuit-flow.html"
+  },
+  {
+    "id": "mirage-heat",
+    "title": "Mirage Heat",
+    "category": "Warm",
+    "genre": "Desert",
+    "description": "Heat-haze particles warping upward. Particle density is controlled from Wallpaper settings.",
+    "file": "mirage-heat.html",
+    "thumb": "mirage-heat.html"
+  },
+  {
+    "id": "lunar-dust",
+    "title": "Lunar Dust",
+    "category": "Space",
+    "genre": "Moon",
+    "description": "Slow lunar dust under low gravity. Particle density is controlled from Wallpaper settings.",
+    "file": "lunar-dust.html",
+    "thumb": "lunar-dust.html"
+  },
+  {
+    "id": "prism-fall",
+    "title": "Prism Fall",
+    "category": "Abstract",
+    "genre": "Light",
+    "description": "Falling prism shards refracting colour. Particle density is controlled from Wallpaper settings.",
+    "file": "prism-fall.html",
+    "thumb": "prism-fall.html"
+  },
+  {
+    "id": "storm-core",
+    "title": "Storm Core",
+    "category": "Weather",
+    "genre": "Storm",
+    "description": "Rotating storm core with lightning sparks. Particle density is controlled from Wallpaper settings.",
+    "file": "storm-core.html",
+    "thumb": "storm-core.html"
+  },
+  {
+    "id": "glyph-stream",
+    "title": "Glyph Stream",
+    "category": "Retro",
+    "genre": "Mystic",
+    "description": "Floating glyph sparks in a stream. Particle density is controlled from Wallpaper settings.",
+    "file": "glyph-stream.html",
+    "thumb": "glyph-stream.html"
+  },
+  {
+    "id": "echo-chamber",
+    "title": "Echo Chamber",
+    "category": "Abstract",
+    "genre": "Sound",
+    "description": "Ripple echoes expanding from centers. Particle density is controlled from Wallpaper settings.",
+    "file": "echo-chamber.html",
+    "thumb": "echo-chamber.html"
+  },
+  {
+    "id": "binary-orbit",
+    "title": "Binary Orbit",
+    "category": "Space",
+    "genre": "Orbital",
+    "description": "Twin suns with shared particle belt. Particle density is controlled from Wallpaper settings.",
+    "file": "binary-orbit.html",
+    "thumb": "binary-orbit.html"
+  },
+  {
+    "id": "moss-glow",
+    "title": "Moss Glow",
+    "category": "Nature",
+    "genre": "Organic",
+    "description": "Soft green bioluminescent moss motes. Particle density is controlled from Wallpaper settings.",
+    "file": "moss-glow.html",
+    "thumb": "moss-glow.html"
+  },
+  {
+    "id": "warp-tunnel",
+    "title": "Warp Tunnel",
+    "category": "Sci-Fi",
+    "genre": "Speed",
+    "description": "Tunnel of streaks rushing toward center. Particle density is controlled from Wallpaper settings.",
+    "file": "warp-tunnel.html",
+    "thumb": "warp-tunnel.html"
+  },
+  {
+    "id": "amber-resin",
+    "title": "Amber Resin",
+    "category": "Warm",
+    "genre": "Organic",
+    "description": "Suspended amber motes in viscous drift. Particle density is controlled from Wallpaper settings.",
+    "file": "amber-resin.html",
+    "thumb": "amber-resin.html"
+  },
+  {
+    "id": "ion-trail",
+    "title": "Ion Trail",
+    "category": "Sci-Fi",
+    "genre": "Energy",
+    "description": "Bright ion trails curving through space. Particle density is controlled from Wallpaper settings.",
+    "file": "ion-trail.html",
+    "thumb": "ion-trail.html"
+  },
+  {
+    "id": "cloud-city",
+    "title": "Cloud City",
+    "category": "Nature",
+    "genre": "Sky",
+    "description": "Soft cloudlets drifting over a dark sky. Particle density is controlled from Wallpaper settings.",
+    "file": "cloud-city.html",
+    "thumb": "cloud-city.html"
+  },
+  {
+    "id": "hex-bloom",
+    "title": "Hex Bloom",
+    "category": "Abstract",
+    "genre": "Geometric",
+    "description": "Blooming hexagonal particle cells. Particle density is controlled from Wallpaper settings.",
+    "file": "hex-bloom.html",
+    "thumb": "hex-bloom.html"
+  },
+  {
+    "id": "pulse-wave",
+    "title": "Pulse Wave",
+    "category": "Sci-Fi",
+    "genre": "Signal",
+    "description": "Concentric pulse waves of nodes. Particle density is controlled from Wallpaper settings.",
+    "file": "pulse-wave.html",
+    "thumb": "pulse-wave.html"
+  },
+  {
+    "id": "sakura-night",
+    "title": "Sakura Night",
+    "category": "Nature",
+    "genre": "Seasonal",
+    "description": "Night sakura petals under starlight. Particle density is controlled from Wallpaper settings.",
+    "file": "sakura-night.html",
+    "thumb": "sakura-night.html"
+  },
+  {
+    "id": "forge-sparks",
+    "title": "Forge Sparks",
+    "category": "Warm",
+    "genre": "Fire",
+    "description": "Bright forge sparks bursting upward. Particle density is controlled from Wallpaper settings.",
+    "file": "forge-sparks.html",
+    "thumb": "forge-sparks.html"
+  },
+  {
+    "id": "glass-shard",
+    "title": "Glass Shard",
+    "category": "Abstract",
+    "genre": "Light",
+    "description": "Glinting glass shard particles. Particle density is controlled from Wallpaper settings.",
+    "file": "glass-shard.html",
+    "thumb": "glass-shard.html"
+  },
+  {
+    "id": "tide-pool",
+    "title": "Tide Pool",
+    "category": "Nature",
+    "genre": "Aquatic",
+    "description": "Gentle tide-pool swirl of motes. Particle density is controlled from Wallpaper settings.",
+    "file": "tide-pool.html",
+    "thumb": "tide-pool.html"
+  },
+  {
+    "id": "nova-remnant",
+    "title": "Nova Remnant",
+    "category": "Space",
+    "genre": "Cosmic",
+    "description": "Expanding remnant shell of a nova. Particle density is controlled from Wallpaper settings.",
+    "file": "nova-remnant.html",
+    "thumb": "nova-remnant.html"
+  },
+  {
+    "id": "signal-noise",
+    "title": "Signal Noise",
+    "category": "Retro",
+    "genre": "Digital",
+    "description": "Noisy signal field of flickering dots. Particle density is controlled from Wallpaper settings.",
+    "file": "signal-noise.html",
+    "thumb": "signal-noise.html"
+  },
+  {
+    "id": "root-web",
+    "title": "Root Web",
+    "category": "Nature",
+    "genre": "Organic",
+    "description": "Branching root-web of linked nodes. Particle density is controlled from Wallpaper settings.",
+    "file": "root-web.html",
+    "thumb": "root-web.html"
+  },
+  {
+    "id": "comet-belt",
+    "title": "Comet Belt",
+    "category": "Space",
+    "genre": "Orbital",
+    "description": "Belt of slow comets on shared path. Particle density is controlled from Wallpaper settings.",
+    "file": "comet-belt.html",
+    "thumb": "comet-belt.html"
+  },
+  {
+    "id": "violet-haze",
+    "title": "Violet Haze",
+    "category": "Abstract",
+    "genre": "Soft",
+    "description": "Deep violet haze with slow sparks. Particle density is controlled from Wallpaper settings.",
+    "file": "violet-haze.html",
+    "thumb": "violet-haze.html"
+  },
+  {
+    "id": "zenith-arc",
+    "title": "Zenith Arc",
+    "category": "Weather",
+    "genre": "Sky",
+    "description": "Arcing zenith trails of light particles. Particle density is controlled from Wallpaper settings.",
+    "file": "zenith-arc.html",
+    "thumb": "zenith-arc.html"
   },
   {
     "id": "aurora-veil",
@@ -29,63 +470,27 @@
   {
     "id": "starfield-warp",
     "title": "Starfield Warp",
-    "category": "Sci-Fi",
-    "genre": "Space",
-    "description": "Hyperspace star streak tunnel.",
+    "category": "Space",
+    "genre": "Cosmic",
+    "description": "Stars warping past at light speed.",
     "file": "starfield-warp.html",
     "thumb": "starfield-warp.html"
-  },
-  {
-    "id": "neon-grid",
-    "title": "Neon Grid",
-    "category": "Sci-Fi",
-    "genre": "Cyberpunk",
-    "description": "Infinite perspective grid in neon purple.",
-    "file": "neon-grid.html",
-    "thumb": "neon-grid.html"
   },
   {
     "id": "particle-fountain",
     "title": "Particle Fountain",
     "category": "Abstract",
-    "genre": "Particles",
-    "description": "Upward fountain of glowing particles.",
+    "genre": "Motion",
+    "description": "Fountain of rising luminous particles.",
     "file": "particle-fountain.html",
     "thumb": "particle-fountain.html"
   },
   {
-    "id": "ocean-waves",
-    "title": "Ocean Waves",
-    "category": "Nature",
-    "genre": "Water",
-    "description": "Layered animated ocean waves.",
-    "file": "ocean-waves.html",
-    "thumb": "ocean-waves.html"
-  },
-  {
-    "id": "fireflies",
-    "title": "Fireflies",
-    "category": "Nature",
-    "genre": "Organic",
-    "description": "Glowing fireflies in a dark forest night.",
-    "file": "fireflies.html",
-    "thumb": "fireflies.html"
-  },
-  {
-    "id": "hex-grid",
-    "title": "Hex Grid",
-    "category": "Sci-Fi",
-    "genre": "Geometric",
-    "description": "Pulsing hexagonal mesh.",
-    "file": "hex-grid.html",
-    "thumb": "hex-grid.html"
-  },
-  {
     "id": "plasma-orbs",
     "title": "Plasma Orbs",
-    "category": "Abstract",
+    "category": "Sci-Fi",
     "genre": "Energy",
-    "description": "Floating plasma energy orbs.",
+    "description": "Floating plasma orbs in the dark.",
     "file": "plasma-orbs.html",
     "thumb": "plasma-orbs.html"
   },
@@ -94,34 +499,25 @@
     "title": "Ember Rise",
     "category": "Warm",
     "genre": "Fire",
-    "description": "Rising fire embers.",
+    "description": "Embers rising through darkness.",
     "file": "ember-rise.html",
     "thumb": "ember-rise.html"
   },
   {
     "id": "snow-drift",
     "title": "Snow Drift",
-    "category": "Nature",
-    "genre": "Weather",
-    "description": "Gentle falling snow.",
+    "category": "Weather",
+    "genre": "Winter",
+    "description": "Gentle snow drifting down.",
     "file": "snow-drift.html",
     "thumb": "snow-drift.html"
-  },
-  {
-    "id": "constellation",
-    "title": "Constellation Map",
-    "category": "Sci-Fi",
-    "genre": "Space",
-    "description": "Connected star constellations.",
-    "file": "constellation.html",
-    "thumb": "constellation.html"
   },
   {
     "id": "ripple-pond",
     "title": "Ripple Pond",
     "category": "Nature",
     "genre": "Water",
-    "description": "Expanding water ripples.",
+    "description": "Ripples expanding across a dark pond.",
     "file": "ripple-pond.html",
     "thumb": "ripple-pond.html"
   },
@@ -129,8 +525,8 @@
     "id": "cyber-tunnel",
     "title": "Cyber Tunnel",
     "category": "Sci-Fi",
-    "genre": "Cyberpunk",
-    "description": "Racing rings down a digital tunnel.",
+    "genre": "Tech",
+    "description": "Digital tunnel of cyber lines.",
     "file": "cyber-tunnel.html",
     "thumb": "cyber-tunnel.html"
   },
@@ -138,62 +534,26 @@
     "id": "lava-lamp",
     "title": "Lava Lamp",
     "category": "Retro",
-    "genre": "Organic",
-    "description": "Blobby lava lamp morphs.",
+    "genre": "Liquid",
+    "description": "Slow lava-lamp blobs.",
     "file": "lava-lamp.html",
     "thumb": "lava-lamp.html"
-  },
-  {
-    "id": "radar-sweep",
-    "title": "Radar Sweep",
-    "category": "Sci-Fi",
-    "genre": "Military",
-    "description": "Classic radar sweep.",
-    "file": "radar-sweep.html",
-    "thumb": "radar-sweep.html"
   },
   {
     "id": "dna-helix",
     "title": "DNA Helix",
     "category": "Sci-Fi",
     "genre": "Bio",
-    "description": "Rotating double helix.",
+    "description": "Double helix of orbiting nodes.",
     "file": "dna-helix.html",
     "thumb": "dna-helix.html"
   },
   {
-    "id": "metro-lines",
-    "title": "Metro Lines",
-    "category": "Abstract",
-    "genre": "Transit",
-    "description": "Animated transit map lines.",
-    "file": "metro-lines.html",
-    "thumb": "metro-lines.html"
-  },
-  {
-    "id": "pixel-storm",
-    "title": "Pixel Storm",
-    "category": "Retro",
-    "genre": "Arcade",
-    "description": "Falling coloured pixels.",
-    "file": "pixel-storm.html",
-    "thumb": "pixel-storm.html"
-  },
-  {
-    "id": "bokeh-lights",
-    "title": "Bokeh Lights",
-    "category": "Abstract",
-    "genre": "Soft",
-    "description": "Soft out-of-focus light circles.",
-    "file": "bokeh-lights.html",
-    "thumb": "bokeh-lights.html"
-  },
-  {
     "id": "spiral-galaxy",
     "title": "Spiral Galaxy",
-    "category": "Sci-Fi",
-    "genre": "Space",
-    "description": "Rotating spiral galaxy arms.",
+    "category": "Space",
+    "genre": "Cosmic",
+    "description": "Spiral galaxy of star particles.",
     "file": "spiral-galaxy.html",
     "thumb": "spiral-galaxy.html"
   },
@@ -202,7 +562,7 @@
     "title": "Lightning Field",
     "category": "Weather",
     "genre": "Storm",
-    "description": "Random lightning bolts.",
+    "description": "Crackling lightning field.",
     "file": "lightning-field.html",
     "thumb": "lightning-field.html"
   },
@@ -210,8 +570,8 @@
     "id": "bubble-rise",
     "title": "Bubble Rise",
     "category": "Nature",
-    "genre": "Water",
-    "description": "Rising underwater bubbles.",
+    "genre": "Soft",
+    "description": "Bubbles rising through liquid.",
     "file": "bubble-rise.html",
     "thumb": "bubble-rise.html"
   },
@@ -220,233 +580,134 @@
     "title": "Grid Pulse",
     "category": "Sci-Fi",
     "genre": "Tech",
-    "description": "Pulsing square grid nodes.",
+    "description": "Pulsing energy grid.",
     "file": "grid-pulse.html",
     "thumb": "grid-pulse.html"
   },
   {
     "id": "comet-tails",
     "title": "Comet Tails",
-    "category": "Sci-Fi",
-    "genre": "Space",
-    "description": "Comets streaking across space.",
+    "category": "Space",
+    "genre": "Cosmic",
+    "description": "Comets with long luminous tails.",
     "file": "comet-tails.html",
     "thumb": "comet-tails.html"
   },
   {
-    "id": "silk-waves",
-    "title": "Silk Waves",
-    "category": "Abstract",
-    "genre": "Fabric",
-    "description": "Flowing silk-like curves.",
-    "file": "silk-waves.html",
-    "thumb": "silk-waves.html"
-  },
-  {
     "id": "binary-stream",
     "title": "Binary Stream",
-    "category": "Sci-Fi",
+    "category": "Retro",
     "genre": "Digital",
-    "description": "Streaming binary digits.",
+    "description": "Streaming binary particles.",
     "file": "binary-stream.html",
     "thumb": "binary-stream.html"
   },
   {
-    "id": "moon-phases",
-    "title": "Moon Orbit",
-    "category": "Nature",
-    "genre": "Celestial",
-    "description": "Orbiting moon with glow.",
-    "file": "moon-phases.html",
-    "thumb": "moon-phases.html"
-  },
-  {
     "id": "tri-field",
-    "title": "Triangle Field",
+    "title": "Tri Field",
     "category": "Abstract",
     "genre": "Geometric",
-    "description": "Floating translucent triangles.",
+    "description": "Triangular field of linked nodes.",
     "file": "tri-field.html",
     "thumb": "tri-field.html"
-  },
-  {
-    "id": "smoke-plume",
-    "title": "Smoke Plume",
-    "category": "Abstract",
-    "genre": "Atmosphere",
-    "description": "Soft rising smoke plumes.",
-    "file": "smoke-plume.html",
-    "thumb": "smoke-plume.html"
   },
   {
     "id": "circuit-board",
     "title": "Circuit Board",
     "category": "Sci-Fi",
     "genre": "Tech",
-    "description": "Animated circuit traces.",
+    "description": "Live circuit board traces.",
     "file": "circuit-board.html",
     "thumb": "circuit-board.html"
   },
   {
     "id": "rain-glass",
-    "title": "Rain on Glass",
-    "category": "Nature",
-    "genre": "Weather",
-    "description": "Raindrops sliding on glass.",
+    "title": "Rain Glass",
+    "category": "Weather",
+    "genre": "Rain",
+    "description": "Rain on glass with soft blur.",
     "file": "rain-glass.html",
     "thumb": "rain-glass.html"
   },
   {
-    "id": "kaleido",
-    "title": "Kaleidoscope",
-    "category": "Abstract",
-    "genre": "Pattern",
-    "description": "Symmetric kaleidoscope.",
-    "file": "kaleido.html",
-    "thumb": "kaleido.html"
-  },
-  {
     "id": "orbit-rings",
     "title": "Orbit Rings",
-    "category": "Sci-Fi",
-    "genre": "Space",
-    "description": "Concentric orbiting rings.",
+    "category": "Space",
+    "genre": "Orbital",
+    "description": "Concentric orbital rings.",
     "file": "orbit-rings.html",
     "thumb": "orbit-rings.html"
-  },
-  {
-    "id": "glitch-bars",
-    "title": "Glitch Bars",
-    "category": "Retro",
-    "genre": "Glitch",
-    "description": "Horizontal glitch colour bars.",
-    "file": "glitch-bars.html",
-    "thumb": "glitch-bars.html"
   },
   {
     "id": "petal-fall",
     "title": "Petal Fall",
     "category": "Nature",
-    "genre": "Organic",
-    "description": "Falling flower petals.",
+    "genre": "Seasonal",
+    "description": "Petals falling slowly.",
     "file": "petal-fall.html",
     "thumb": "petal-fall.html"
-  },
-  {
-    "id": "sonic-rings",
-    "title": "Sonic Rings",
-    "category": "Abstract",
-    "genre": "Audio",
-    "description": "Expanding sonic shockwaves.",
-    "file": "sonic-rings.html",
-    "thumb": "sonic-rings.html"
   },
   {
     "id": "prism-beams",
     "title": "Prism Beams",
     "category": "Abstract",
     "genre": "Light",
-    "description": "Crossing prism light beams.",
+    "description": "Beams of prismatic light.",
     "file": "prism-beams.html",
     "thumb": "prism-beams.html"
   },
   {
-    "id": "dust-motes",
-    "title": "Dust Motes",
-    "category": "Abstract",
-    "genre": "Soft",
-    "description": "Floating dust in a light beam.",
-    "file": "dust-motes.html",
-    "thumb": "dust-motes.html"
-  },
-  {
     "id": "iso-cubes",
-    "title": "Isometric Cubes",
+    "title": "Iso Cubes",
     "category": "Abstract",
     "genre": "Geometric",
-    "description": "Floating isometric cubes.",
+    "description": "Isometric cube lattice.",
     "file": "iso-cubes.html",
     "thumb": "iso-cubes.html"
   },
   {
     "id": "vortex",
-    "title": "Vortex Spiral",
+    "title": "Vortex",
     "category": "Abstract",
-    "genre": "Energy",
-    "description": "Spinning vortex spiral.",
+    "genre": "Motion",
+    "description": "Spinning vortex of particles.",
     "file": "vortex.html",
     "thumb": "vortex.html"
-  },
-  {
-    "id": "horizon-glow",
-    "title": "Horizon Glow",
-    "category": "Nature",
-    "genre": "Sky",
-    "description": "Animated dawn horizon.",
-    "file": "horizon-glow.html",
-    "thumb": "horizon-glow.html"
   },
   {
     "id": "node-mesh",
     "title": "Node Mesh",
     "category": "Sci-Fi",
     "genre": "Network",
-    "description": "3D-ish node mesh network.",
+    "description": "Dense mesh of connected nodes.",
     "file": "node-mesh.html",
     "thumb": "node-mesh.html"
   },
   {
     "id": "spark-trail",
-    "title": "Spark Trails",
+    "title": "Spark Trail",
     "category": "Warm",
     "genre": "Fire",
-    "description": "Trailing sparks.",
+    "description": "Sparks leaving bright trails.",
     "file": "spark-trail.html",
     "thumb": "spark-trail.html"
-  },
-  {
-    "id": "wave-bars",
-    "title": "Wave Bars",
-    "category": "Abstract",
-    "genre": "Audio",
-    "description": "Audio equalizer wave bars.",
-    "file": "wave-bars.html",
-    "thumb": "wave-bars.html"
   },
   {
     "id": "ink-bleed",
     "title": "Ink Bleed",
     "category": "Abstract",
-    "genre": "Art",
-    "description": "Spreading ink blots.",
+    "genre": "Ink",
+    "description": "Ink bleeding through water.",
     "file": "ink-bleed.html",
     "thumb": "ink-bleed.html"
   },
   {
     "id": "geo-storm",
-    "title": "Geometry Storm",
+    "title": "Geo Storm",
     "category": "Abstract",
     "genre": "Geometric",
-    "description": "Spinning polygons storm.",
+    "description": "Geometric storm of shapes.",
     "file": "geo-storm.html",
     "thumb": "geo-storm.html"
-  },
-  {
-    "id": "portal-rings",
-    "title": "Portal Rings",
-    "category": "Sci-Fi",
-    "genre": "Portal",
-    "description": "Concentric portal rings.",
-    "file": "portal-rings.html",
-    "thumb": "portal-rings.html"
-  },
-  {
-    "id": "frost-crystal",
-    "title": "Frost Crystal",
-    "category": "Nature",
-    "genre": "Ice",
-    "description": "Growing frost patterns.",
-    "file": "frost-crystal.html",
-    "thumb": "frost-crystal.html"
   }
 ]
