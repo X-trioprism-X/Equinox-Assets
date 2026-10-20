@@ -1,0 +1,260 @@
+{
+  "version": 1,
+  "note": "Groups compress related editions into one tile. Prefer gameIds when set; match regexes apply to title+id as fallback.",
+  "groups": [
+    {
+      "id": "fnaf",
+      "title": "Five Nights at Freddy's",
+      "description": "Survive the night against animatronics.",
+      "match": [
+        "fnaf",
+        "five nights",
+        "freddy"
+      ],
+      "gameIds": [
+        "fnaf",
+        "fnaf2",
+        "fnaf3",
+        "fnaf4",
+        "fivenightsatepsteins"
+      ]
+    },
+    {
+      "id": "granny",
+      "title": "Granny",
+      "description": "Escape the house without waking Granny.",
+      "match": [
+        "^granny"
+      ],
+      "gameIds": [
+        "granny",
+        "granny2"
+      ]
+    },
+    {
+      "id": "run",
+      "title": "Run Series",
+      "description": "Classic run platformers.",
+      "match": [
+        "^run$",
+        "^run [123]$",
+        "^run\\b"
+      ],
+      "gameIds": [
+        "run1",
+        "run2",
+        "r3"
+      ]
+    },
+    {
+      "id": "ducklife",
+      "title": "Duck Life",
+      "description": "Train your duck to race.",
+      "match": [
+        "duck life"
+      ],
+      "gameIds": [
+        "dl",
+        "dl2"
+      ]
+    },
+    {
+      "id": "papas",
+      "title": "Papa's Games",
+      "description": "Cook and serve in Papa's restaurants.",
+      "match": [
+        "papa'?s "
+      ],
+      "gameIds": [
+        "pp",
+        "pbake",
+        "pburg",
+        "pcheese",
+        "pcup",
+        "pdon",
+        "phot",
+        "ppan",
+        "ppasta",
+        "pscoop",
+        "psushi",
+        "ptaco",
+        "pwing",
+        "pfreeze"
+      ]
+    },
+    {
+      "id": "timeshooter",
+      "title": "Time Shooter",
+      "description": "Stop time and take out enemies.",
+      "match": [
+        "time shooter"
+      ],
+      "gameIds": [
+        "timshoot",
+        "ts2",
+        "ts3"
+      ]
+    },
+    {
+      "id": "polytrack",
+      "title": "Poly Track",
+      "description": "Build tracks and race.",
+      "match": [
+        "poly track"
+      ],
+      "gameIds": [
+        "pt",
+        "pt52"
+      ]
+    },
+    {
+      "id": "gettingoverit",
+      "title": "Getting Over It",
+      "description": "Climb the mountain with a hammer and pot.",
+      "match": [
+        "getting over it"
+      ],
+      "gameIds": [
+        "goi-s",
+        "goi-f"
+      ]
+    },
+    {
+      "id": "paperio",
+      "title": "Paper.io 2",
+      "description": "Expand your territory.",
+      "match": [
+        "paper\\.?io"
+      ],
+      "gameIds": [
+        "p2s",
+        "p2"
+      ]
+    },
+    {
+      "id": "dadish",
+      "title": "Dadish",
+      "description": "Dadish platformer adventures.",
+      "match": [
+        "^dadish"
+      ],
+      "gameIds": [
+        "dad",
+        "dadish2",
+        "dadish3",
+        "dadish3d"
+      ]
+    },
+    {
+      "id": "blumgi",
+      "title": "Blumgi",
+      "description": "Blumgi physics and arcade games.",
+      "match": [
+        "^blumgi"
+      ],
+      "gameIds": [
+        "blumball",
+        "bslime",
+        "brock",
+        "bracers",
+        "bcastle",
+        "bsoc",
+        "bpaint",
+        "bbloom",
+        "bdrag",
+        "bmerge",
+        "bbounce"
+      ]
+    },
+    {
+      "id": "slope",
+      "title": "Slope",
+      "description": "Roll down the neon slope.",
+      "match": [
+        "^slope\\b"
+      ],
+      "gameIds": [
+        "slp",
+        "s2p"
+      ]
+    },
+    {
+      "id": "shortlife",
+      "title": "Short Life / Ride",
+      "description": "Ragdoll survival and stunt rides.",
+      "match": [
+        "^short (life|ride)"
+      ],
+      "gameIds": [
+        "sl",
+        "sr-ride"
+      ]
+    },
+    {
+      "id": "fancy",
+      "title": "Fancy Pants",
+      "description": "Stylish stickman platformers.",
+      "match": [
+        "fancy pants"
+      ],
+      "gameIds": [
+        "fancypants1",
+        "fancypants2"
+      ]
+    },
+    {
+      "id": "retrobowl",
+      "title": "Retro Bowl",
+      "description": "Retro American football management.",
+      "match": [
+        "retro bowl"
+      ],
+      "gameIds": [
+        "rb",
+        "rtrobwlcol"
+      ]
+    },
+    {
+      "id": "subnautica",
+      "title": "Subnautica",
+      "description": "Underwater survival.",
+      "match": [
+        "subnautica"
+      ],
+      "gameIds": []
+    },
+    {
+      "id": "bros",
+      "title": "Bros Games",
+      "description": "Basket, soccer, football, wrestle and more bros.",
+      "match": [
+        "bros\\b"
+      ],
+      "gameIds": [
+        "supmario1",
+        "bbros",
+        "basketbros",
+        "fbros",
+        "sbros",
+        "wrestlebros",
+        "kartbros",
+        "karatebros"
+      ]
+    },
+    {
+      "id": "stickman",
+      "title": "Stickman",
+      "description": "Stickman sports and action.",
+      "match": [
+        "stickman",
+        "stick fighter"
+      ],
+      "gameIds": [
+        "ssg",
+        "sh",
+        "sab",
+        "stickfighter"
+      ]
+    }
+  ]
+}
