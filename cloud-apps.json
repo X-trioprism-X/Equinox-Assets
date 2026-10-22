@@ -1,0 +1,183 @@
+{
+  "version": 1,
+  "note": "Catalog of desktop apps packaged as .7z on the assets repo. HTA extracts to %LOCALAPPDATA%\\Equinox\\Apps and launches. Does not bypass OS/admin policy.",
+  "baseUrl": "https://cdn.jsdelivr.net/gh/X-trioprism-X/Equinox-Assets@main/apps/",
+  "extractDir": "%LOCALAPPDATA%\\Equinox\\Apps",
+  "apps": [
+    {
+      "id": "steam",
+      "title": "Steam",
+      "group": "Platforms",
+      "category": "Platform",
+      "description": "Valve's game store and launcher for PC titles.",
+      "details": "Installs the Steam client from a portable 7z package. Requires network access to sign in and download games.",
+      "archive": "steam.7z",
+      "exe": "Steam\\steam.exe",
+      "icon": "steam.png",
+      "tags": [
+        "store",
+        "launcher"
+      ]
+    },
+    {
+      "id": "roblox",
+      "title": "Roblox",
+      "group": "Platforms",
+      "category": "Platform",
+      "description": "Play and create immersive 3D experiences.",
+      "details": "Roblox Player package. Account login required.",
+      "archive": "roblox.7z",
+      "exe": "RobloxPlayer\\RobloxPlayerBeta.exe",
+      "icon": "roblox.png",
+      "tags": [
+        "multiplayer"
+      ]
+    },
+    {
+      "id": "discord",
+      "title": "Discord",
+      "group": "Social",
+      "category": "Social",
+      "description": "Voice, video, and text chat for communities and friends.",
+      "details": "Discord desktop client portable extract.",
+      "archive": "discord.7z",
+      "exe": "Discord\\Discord.exe",
+      "icon": "discord.png",
+      "tags": [
+        "chat",
+        "voice"
+      ]
+    },
+    {
+      "id": "geometrydash",
+      "title": "Geometry Dash",
+      "group": "Geometry Dash",
+      "category": "Arcade",
+      "description": "Rhythm-based platformer with user levels.",
+      "details": "Standalone Geometry Dash build when packaged in the apps folder.",
+      "archive": "geometrydash.7z",
+      "exe": "GeometryDash\\GeometryDash.exe",
+      "icon": "gd.png",
+      "tags": [
+        "rhythm",
+        "platformer"
+      ]
+    },
+    {
+      "id": "subnautica",
+      "title": "Subnautica",
+      "group": "Subnautica",
+      "category": "Adventure",
+      "description": "Survive an alien ocean planet in a vast underwater world.",
+      "details": "Subnautica (original). Extract and run; large download.",
+      "archive": "subnautica.7z",
+      "exe": "Subnautica\\Subnautica.exe",
+      "icon": "subnautica.png",
+      "tags": [
+        "survival",
+        "ocean"
+      ]
+    },
+    {
+      "id": "subnautica2",
+      "title": "Subnautica 2",
+      "group": "Subnautica",
+      "category": "Adventure",
+      "description": "The next chapter of underwater exploration.",
+      "details": "Subnautica 2 package when available on the assets repo.",
+      "archive": "subnautica2.7z",
+      "exe": "Subnautica2\\Subnautica2.exe",
+      "icon": "subnautica2.png",
+      "tags": [
+        "survival",
+        "sequel"
+      ]
+    },
+    {
+      "id": "subnautica_bz",
+      "title": "Subnautica: Below Zero",
+      "group": "Subnautica",
+      "category": "Adventure",
+      "description": "Explore an arctic alien landscape above and below the waves.",
+      "details": "Standalone Below Zero package.",
+      "archive": "subnautica-below-zero.7z",
+      "exe": "SubnauticaZero\\SubnauticaZero.exe",
+      "icon": "subnautica_bz.png",
+      "tags": [
+        "survival",
+        "arctic"
+      ]
+    },
+    {
+      "id": "gta3",
+      "title": "Grand Theft Auto III",
+      "group": "Grand Theft Auto",
+      "category": "Action",
+      "description": "The classic 3D open-world crime saga in Liberty City.",
+      "details": "GTA III package. Own a legitimate copy; this catalog is for organizing local installs.",
+      "archive": "gta3.7z",
+      "exe": "GTA3\\gta3.exe",
+      "icon": "gta3.png",
+      "tags": [
+        "open-world"
+      ]
+    },
+    {
+      "id": "gtavc",
+      "title": "Grand Theft Auto: Vice City",
+      "group": "Grand Theft Auto",
+      "category": "Action",
+      "description": "80s Miami-inspired open world.",
+      "details": "Vice City package for local library organization.",
+      "archive": "gtavc.7z",
+      "exe": "GTAVC\\gta-vc.exe",
+      "icon": "gtavc.png",
+      "tags": [
+        "open-world"
+      ]
+    },
+    {
+      "id": "gtasa",
+      "title": "Grand Theft Auto: San Andreas",
+      "group": "Grand Theft Auto",
+      "category": "Action",
+      "description": "Three cities, one massive state.",
+      "details": "San Andreas package for local library organization.",
+      "archive": "gtasa.7z",
+      "exe": "GTASA\\gta_sa.exe",
+      "icon": "gtasa.png",
+      "tags": [
+        "open-world"
+      ]
+    },
+    {
+      "id": "gta4",
+      "title": "Grand Theft Auto IV",
+      "group": "Grand Theft Auto",
+      "category": "Action",
+      "description": "Niko Bellic's story in a denser Liberty City.",
+      "details": "GTA IV package. Large install.",
+      "archive": "gta4.7z",
+      "exe": "GTAIV\\GTAIV.exe",
+      "icon": "gta4.png",
+      "tags": [
+        "open-world"
+      ]
+    },
+    {
+      "id": "gta5",
+      "title": "Grand Theft Auto V",
+      "group": "Grand Theft Auto",
+      "category": "Action",
+      "description": "Los Santos heists and open-world sandbox.",
+      "details": "GTA V package. Very large; ensure disk space.",
+      "archive": "gta5.7z",
+      "exe": "GTAV\\GTA5.exe",
+      "icon": "gta5.png",
+      "tags": [
+        "open-world",
+        "online"
+      ]
+    }
+  ]
+}
