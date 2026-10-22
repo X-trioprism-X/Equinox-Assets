@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equinox — The Future of School Gaming</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--primary:#a855f7}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:Inter,system-ui,sans-serif;background:#020617;color:#e2e8f0;overflow:hidden}
+.bg{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 20% 30%,rgba(168,85,247,.35),transparent 55%),radial-gradient(ellipse at 80% 70%,rgba(34,211,238,.22),transparent 50%),#020617}
+.bg:after{content:'';position:absolute;inset:0;backdrop-filter:blur(14px);background:rgba(2,6,23,.4)}
+.stage{position:relative;z-index:2;height:100%;width:100%}
+.screen{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transform:scale(0.96);
+  transition:opacity .4s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1), visibility .4s;
+}
+.screen.active{
+  opacity:1;visibility:visible;pointer-events:auto;
+  transform:scale(1);
+}
+.screen.exit-left{transform:translateX(-8%) scale(.96);opacity:0}
+.screen.exit-right{transform:translateX(8%) scale(.96);opacity:0}
+.hero-title{
+  font-size:clamp(1.8rem,5vw,3.2rem);font-weight:800;text-align:center;
+  background:linear-gradient(135deg,#fff,#c4b5fd,#22d3ee,#ec4899);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.screen.active .hero-title{animation:zoomIn .85s cubic-bezier(.16,1,.3,1) both}
+.screen.active .title-line{animation:lineIn .7s cubic-bezier(.16,1,.3,1) .2s both}
+.screen.active .sub,.screen.active .btn-proceed,.screen.active .options-wrap,.screen.active .editions{
+  animation:fadeUp .55s ease .35s both;
+}
+@keyframes zoomIn{from{opacity:0;transform:scale(1.28)}to{opacity:1;transform:scale(1)}}
+@keyframes lineIn{from{opacity:0;transform:scaleX(.2)}to{opacity:1;transform:scaleX(1)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.title-line{
+  width:min(280px,60vw);height:3px;margin:12px auto 28px;border-radius:99px;
+  background:linear-gradient(90deg,transparent,var(--primary),#ec4899,#22d3ee,transparent);
+  transform-origin:center;
+}
+.sub{color:#94a3b8;text-align:center;max-width:420px;margin-bottom:32px}
+.btn-proceed{
+  display:inline-flex;align-items:center;gap:12px;padding:16px 32px;border-radius:999px;
+  border:2px solid transparent;
+  background:linear-gradient(#0f172a,#0f172a) padding-box,linear-gradient(135deg,var(--primary),#ec4899,#22d3ee) border-box;
+  color:#fff;font-weight:700;cursor:pointer;transition:transform .3s,box-shadow .3s
+}
+.btn-proceed:hover{transform:scale(1.05);box-shadow:0 0 32px rgba(168,85,247,.4)}
+.options-wrap,.editions{display:flex;flex-direction:column;gap:14px;width:min(420px,92vw)}
+.option,.ed-btn{
+  position:relative;padding:18px 20px;border-radius:18px;border:2px solid transparent;
+  background:linear-gradient(rgba(15,23,42,.9),rgba(15,23,42,.9)) padding-box,
+    linear-gradient(135deg,rgba(168,85,247,.5),rgba(236,72,153,.35),rgba(34,211,238,.4)) border-box;
+  cursor:pointer;transition:transform .3s,box-shadow .3s;text-align:left;color:#fff;font:inherit
+}
+.option:hover,.ed-btn:hover{transform:scale(1.03);box-shadow:0 0 24px rgba(168,85,247,.35)}
+.opt-inner{display:flex;align-items:center;gap:14px}
+.opt-icon{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(168,85,247,.25);color:#e9d5ff}
+.opt-label{font-weight:700}
+.opt-desc{font-size:.8rem;color:#94a3b8}
+.option-loader{
+  position:absolute;right:16px;top:50%;width:26px;height:26px;margin-top:-13px;border-radius:50%;
+  background:conic-gradient(var(--primary),#22d3ee,#ec4899,var(--primary));padding:2px;opacity:0;animation:spin .85s linear infinite
+}
+.option-loader:after{content:'';display:block;height:100%;border-radius:50%;background:#0f172a}
+.option.loading .option-loader{opacity:1}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* Back: circle + expanding pill (both animate) */
+.back-wrap{position:fixed;top:18px;left:18px;z-index:40;opacity:0;pointer-events:none;transition:opacity .25s}
+.back-wrap.show{opacity:1;pointer-events:auto}
+.back-btn{
+  display:inline-flex;align-items:center;height:44px;border:none;cursor:pointer;background:transparent;padding:0;overflow:visible
+}
+.back-circle{
+  width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  border:2px solid transparent;
+  background:linear-gradient(#0f172a,#0f172a) padding-box,linear-gradient(135deg,var(--primary),#22d3ee) border-box;
+  color:#e9d5ff;flex-shrink:0;z-index:2;
+  transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s;
+}
+.back-pill{
+  height:44px;margin-left:-22px;padding:0 0 0 0;border-radius:999px;
+  display:flex;align-items:center;justify-content:flex-end;
+  font-weight:700;font-size:.9rem;color:#e2e8f0;
+  border:2px solid transparent;
+  background:linear-gradient(#0f172a,#0f172a) padding-box,linear-gradient(135deg,var(--primary),#ec4899,#22d3ee) border-box;
+  max-width:0;opacity:0;overflow:hidden;
+  transition:max-width .4s cubic-bezier(.16,1,.3,1), opacity .3s ease, padding .4s cubic-bezier(.16,1,.3,1);
+}
+.back-btn:hover .back-circle{transform:scale(1.08);box-shadow:0 0 16px rgba(168,85,247,.4)}
+.back-btn:hover .back-pill{max-width:110px;opacity:1;padding:0 18px 0 30px}
+#embedStage{position:fixed;inset:0;z-index:50;display:none;background:#020617}
+#embedStage.show{display:block}
+#embedStage iframe{width:100%;height:100%;border:0}
+.ed-btn b{display:block;margin-bottom:4px}
+.ed-btn span{font-size:.8rem;color:#94a3b8}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="back-wrap" id="backWrap">
+  <button type="button" class="back-btn" id="btnBack" title="Back">
+    <span class="back-circle"><i class="fas fa-arrow-left"></i></span>
+    <span class="back-pill">Back</span>
+  </button>
+</div>
+<div class="stage">
+  <section class="screen active" id="hero">
+    <h1 class="hero-title">The future of School gaming</h1>
+    <div class="title-line"></div>
+    <p class="sub">Equinox brings a full game library, desktop mode, and offline-ready tools.</p>
+    <button type="button" class="btn-proceed" id="btnProceed"><i class="fas fa-rocket"></i> Proceed</button>
+  </section>
+  <section class="screen" id="options">
+    <h1 class="hero-title" style="font-size:clamp(1.4rem,4vw,2.2rem)">Where would you like to start</h1>
+    <div class="title-line"></div>
+    <div class="options-wrap">
+      <div class="option" data-action="site"><div class="opt-inner"><div class="opt-icon"><i class="fas fa-globe"></i></div><div><div class="opt-label">Open in site</div><div class="opt-desc">Run Equinox embedded here</div></div></div><div class="option-loader"></div></div>
+      <div class="option" data-action="html"><div class="opt-inner"><div class="opt-icon"><i class="fas fa-file-code"></i></div><div><div class="opt-label">Download HTML</div><div class="opt-desc">Offline games.html package</div></div></div><div class="option-loader"></div></div>
+      <div class="option" data-action="hta"><div class="opt-inner"><div class="opt-icon"><i class="fas fa-window-maximize"></i></div><div><div class="opt-label">Download application</div><div class="opt-desc">Windows .hta desktop launcher</div></div></div><div class="option-loader"></div></div>
+    </div>
+  </section>
+  <section class="screen" id="editions">
+    <h1 class="hero-title" style="font-size:clamp(1.3rem,4vw,2rem)">Editions</h1>
+    <div class="title-line"></div>
+    <div class="editions">
+      <button type="button" class="ed-btn" data-ed="stable"><b>Stable release</b><span>Recommended — playtest-v0.25 stable channel</span></button>
+      <button type="button" class="ed-btn" data-ed="experimental"><b>Experimental release</b><span>Newest features — may change often</span></button>
+    </div>
+  </section>
+</div>
+<div id="embedStage">
+  <div class="back-wrap show" style="opacity:1;pointer-events:auto">
+    <button type="button" class="back-btn" id="btnExitEmbed">
+      <span class="back-circle"><i class="fas fa-arrow-left"></i></span>
+      <span class="back-pill">Back</span>
+    </button>
+  </div>
+  <iframe id="embedFrame" title="Equinox" src="about:blank"></iframe>
+</div>
+<script>
+const order = ['hero','options','editions'];
+let idx = 0;
+let pending = null;
+let busy = false;
+
+function showBack(){
+  document.getElementById('backWrap').classList.toggle('show', idx > 0);
+}
+function goTo(nextIdx){
+  if (busy || nextIdx === idx || nextIdx < 0 || nextIdx >= order.length) return;
+  busy = true;
+  const cur = document.getElementById(order[idx]);
+  const next = document.getElementById(order[nextIdx]);
+  const forward = nextIdx > idx;
+  cur.classList.remove('active');
+  cur.classList.add(forward ? 'exit-left' : 'exit-right');
+  next.classList.remove('exit-left','exit-right');
+  // force reflow then activate
+  void next.offsetWidth;
+  next.classList.add('active');
+  setTimeout(() => {
+    cur.classList.remove('exit-left','exit-right');
+    idx = nextIdx;
+    showBack();
+    busy = false;
+  }, 420);
+}
+document.getElementById('btnProceed').onclick = () => goTo(1);
+document.getElementById('btnBack').onclick = () => goTo(idx - 1);
+document.getElementById('btnExitEmbed').onclick = () => {
+  document.getElementById('embedStage').classList.remove('show');
+  document.getElementById('embedFrame').src = 'about:blank';
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('loading'));
+};
+document.querySelectorAll('.option').forEach(opt => {
+  opt.onclick = () => {
+    const a = opt.getAttribute('data-action');
+    if (a === 'site') {
+      opt.classList.add('loading');
+      setTimeout(() => {
+        document.getElementById('embedFrame').src = 'index.html';
+        document.getElementById('embedStage').classList.add('show');
+        opt.classList.remove('loading');
+      }, 300);
+    } else {
+      pending = a;
+      goTo(2);
+    }
+  };
+});
+document.querySelectorAll('.ed-btn').forEach(btn => {
+  btn.onclick = async () => {
+    const ed = btn.getAttribute('data-ed');
+    const suffix = ed === 'experimental' ? '-experimental' : '';
+    try {
+      if (pending === 'html') {
+        let res = await fetch('games' + suffix + '.html?t=' + Date.now());
+        if (!res.ok) res = await fetch('games.html?t=' + Date.now());
+        if (!res.ok) res = await fetch('index.html?t=' + Date.now());
+        const blob = await res.blob();
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'games' + suffix + '.html';
+        document.body.appendChild(a); a.click(); a.remove();
+      } else if (pending === 'hta') {
+        let res = await fetch('games.hta?t=' + Date.now());
+        if (!res.ok) res = await fetch('Equinox.hta?t=' + Date.now());
+        const blob = await res.blob();
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'Equinox' + suffix + '.hta';
+        document.body.appendChild(a); a.click(); a.remove();
+      }
+    } catch (e) {
+      alert('Download failed — keep files next to landing.html');
+    }
+  };
+});
+</script>
+</body>
+</html>
