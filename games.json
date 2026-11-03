@@ -2159,12 +2159,12 @@
         "thumb": "karatebros.png"
     },
     {
-        "id": "chessmasters",
-        "title": "Chess Masters",
+        "id": "chess",
+        "title": "Chess",
         "category": "Strategy",
         "genre": "Chess",
         "description": "Play chess against strong AI opponents.",
-        "url": "https://raw.githack.com/hazzatazza/the-stash/main/singlefileoffline/chessmasters.html",
+        "url": "https://x-trioprism-x.github.io/Equinox-Games-Chess/",
         "thumb": "chessmasters.png"
     },
     {
